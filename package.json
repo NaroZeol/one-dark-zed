@@ -1,0 +1,28 @@
+{
+  "name": "onedark-zed",
+  "displayName": "onedark-zed",
+  "description": "One Dark theme inspired by Zed editor colors.",
+  "version": "0.0.1",
+  "engines": {
+    "vscode": "^1.118.0"
+  },
+  "categories": [
+    "Themes"
+  ],
+  "contributes": {
+    "themes": [
+      {
+        "label": "Onedark Zed",
+        "uiTheme": "vs-dark",
+        "path": "./themes/onedark-zed-color-theme.json"
+      }
+    ],
+    "iconThemes": [
+      {
+        "id": "onedark-zed-icons",
+        "label": "Onedark Zed Icons",
+        "path": "./icons/onedark-zed-icon-theme.json"
+      }
+    ]
+  }
+}
