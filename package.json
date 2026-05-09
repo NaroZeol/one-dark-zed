@@ -1,14 +1,43 @@
 {
   "name": "onedark-zed",
   "displayName": "onedark-zed",
-  "description": "One Dark theme inspired by Zed editor colors.",
-  "version": "0.0.1",
+  "description": "Dark One Dark–style color theme and file icons for VS Code/Cursor. Optional: use the Lilex font (Zed’s default monospace) via editor settings on any OS.",
+  "version": "1.0.0",
+  "publisher": "premier213",
+  "icon": "images/icon.png",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/premier213/one-dark-zed.git"
+  },
+  "homepage": "https://github.com/premier213/one-dark-zed",
+  "bugs": {
+    "url": "https://github.com/premier213/one-dark-zed/issues"
+  },
+  "keywords": [
+    "icon-theme",
+    "theme",
+    "dark-pro",
+    "onedark",
+    "onedark-zed",
+    "onedark-zed-icons",
+    "onedark-zed-color-theme",
+    "onedark-zed-icon-theme",
+    "onedark-zed-color-theme.json",
+    "onedark-zed-icon-theme.json",
+    "onedark-zed-color-theme.json",
+    "zed"
+  ],
   "engines": {
-    "vscode": "^1.118.0"
+    "vscode": "^1.74.0"
   },
   "categories": [
     "Themes"
   ],
+  "scripts": {
+    "package": "vsce package",
+    "publish": "vsce publish"
+  },
   "contributes": {
     "themes": [
       {
@@ -24,5 +53,8 @@
         "path": "./icons/onedark-zed-icon-theme.json"
       }
     ]
+  },
+  "devDependencies": {
+    "@vscode/vsce": "^3.9.1"
   }
 }
