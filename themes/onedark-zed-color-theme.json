@@ -6,6 +6,7 @@
   "colors": {
     "button.background": "#3b414dff",
     "button.border": "#464b57ff",
+    "extensionButton.background": "#3b414dff",
     "button.hoverBackground": "#2f343eff",
     "contrastActiveBorder": "#00000000",
     "contrastBorder": "#464b57ff",

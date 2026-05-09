@@ -75,6 +75,19 @@ Editor settings (same on every platform):
 }
 ```
 
+## Best experience (optional)
+
+These values tune font size, line height, letter spacing, and gutter width so the editor feels balanced with **Onedark Zed** (syntax contrast and workbench chrome). Add them to your user or workspace `settings.json` in VS Code or Cursor:
+
+```json
+{
+  "editor.fontSize": 15,
+  "editor.lineDecorationsWidth": 36,
+  "editor.lineHeight": 24,
+  "editor.letterSpacing": 0.2
+}
+```
+
 ## Copyright and third-party licenses
 
 | What                          | Notes                                                                                                                                                                                                                                                                                   |
