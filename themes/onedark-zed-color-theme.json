@@ -6,7 +6,6 @@
   "colors": {
     "button.background": "#3b414dff",
     "button.border": "#464b57ff",
-    "button.foreground": "#acb2beff",
     "button.hoverBackground": "#2f343eff",
     "contrastActiveBorder": "#00000000",
     "contrastBorder": "#464b57ff",
@@ -238,7 +237,6 @@
     "welcomePage.progress.foreground": "#5a6a87ff",
     "welcomePage.tileBackground": "#2f343eff",
     "welcomePage.tileBorder": "#464b57ff",
-    "welcomePage.tileHoverBackground": "#00ff00",
     "commandCenter.activeBackground": "#2f343eff",
     "commandCenter.activeBorder": "#464b57ff",
     "commandCenter.activeForeground": "#dce0e5ff",
@@ -285,7 +283,7 @@
     "settings.dropdownBackground": "#282c33ff",
     "settings.dropdownForeground": "#acb2beff",
     "settings.dropdownBorder": "#464b57ff",
-    "quickInputList.focusBackground": "#454a56ff",
+    "quickInputList.focusBackground": "#454a56ff"
   },
   "tokenColors": [
     {
