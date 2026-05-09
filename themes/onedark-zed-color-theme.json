@@ -230,7 +230,6 @@
     "menu.selectionBorder": "#00000000",
     "menubar.selectionBorder": "#00000000",
     "pickerGroup.foreground": "#dce0e5ff",
-    "quickInputList.focusBackground": "#2e343eff",
     "tree.indentGuidesStroke": "#464b57ff",
     "toolbar.activeBackground": "#2f343eff",
     "toolbar.hoverBackground": "#2f343eff",
@@ -285,7 +284,8 @@
     "editorOverviewRuler.findMatchForeground": "#74ade866",
     "settings.dropdownBackground": "#282c33ff",
     "settings.dropdownForeground": "#acb2beff",
-    "settings.dropdownBorder": "#464b57ff"
+    "settings.dropdownBorder": "#464b57ff",
+    "quickInputList.focusBackground": "#454a56ff",
   },
   "tokenColors": [
     {
