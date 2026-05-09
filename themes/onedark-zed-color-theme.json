@@ -6,6 +6,7 @@
   "colors": {
     "button.background": "#3b414dff",
     "button.border": "#464b57ff",
+    "settings.modifiedItemIndicator": "#464b57ff",
     "extensionButton.background": "#3b414dff",
     "button.hoverBackground": "#2f343eff",
     "contrastActiveBorder": "#00000000",
@@ -269,8 +270,7 @@
     "textPreformat.border": "#464b57ff",
     "textPreformat.foreground": "#dce0e5ff",
     "textSeparator.foreground": "#dce0e5ff",
-    "tree.tableColumnsBorder": "#74ade8ff",
-    "tree.tableOddRowsBackground": "#74ade8ff",
+    "tree.tableColumnsBorder": "#464b57ff",
     "tab.unfocusedHoverForeground": "#acb2beff",
     "tab.unfocusedActiveForeground": "#acb2beff",
     "tab.unfocusedInactiveForeground": "#acb2beff",
