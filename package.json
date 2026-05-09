@@ -35,8 +35,9 @@
     "Themes"
   ],
   "scripts": {
-    "package": "vsce package",
-    "publish": "ovsx publish"
+    "package": "ovsx package",
+    "publish": "ovsx publish",
+    "publish:vscode": "vsce publish"
   },
   "contributes": {
     "themes": [
