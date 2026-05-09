@@ -1,4 +1,24 @@
+# Editor / local dev
 .vscode/**
 .vscode-test/**
+
+# VCS & CI (not needed in the VSIX)
+.git/**
+.gitattributes
 .gitignore
+.github/**
+
+# Dependencies (theme-only extension; nothing runs from node_modules in the editor)
+/node_modules
+
+# Lockfiles (install is not performed from the package)
+bun.lock
+package-lock.json
+yarn.lock
+pnpm-lock.yaml
+
+# Packaged extension artifacts
+*.vsix
+
+# Scaffolding / unused for publish
 vsc-extension-quickstart.md
