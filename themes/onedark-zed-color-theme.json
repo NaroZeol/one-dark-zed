@@ -284,84 +284,206 @@
     "settings.dropdownBackground": "#282c33ff",
     "settings.dropdownForeground": "#acb2beff",
     "settings.dropdownBorder": "#464b57ff",
-    "quickInputList.focusBackground": "#454a56ff"
+    "quickInputList.focusBackground": "#454a56ff",
+    "editorUnnecessaryCode.opacity": "#00000099",
+    "editorUnnecessaryCode.border": "#6b728055",
+    "editorBracketHighlight.foreground1": "#abb2bfff",
+    "editorBracketHighlight.foreground2": "#abb2bfff",
+    "editorBracketHighlight.foreground3": "#abb2bfff",
+    "editorBracketHighlight.foreground4": "#abb2bfff",
+    "editorBracketHighlight.foreground5": "#abb2bfff",
+    "editorBracketHighlight.foreground6": "#abb2bfff"
   },
   "tokenColors": [
     {
-      "name": "Line Comments",
       "scope": ["comment"],
       "settings": {
         "foreground": "#5d636fff"
       }
     },
     {
-      "name": "Colon and Pipe",
       "scope": [
         "punctuation.separator.key-value",
         "keyword.operator.type.annotation",
         "keyword.operator.type",
-        "keyword.operator.bitwise"
+        "keyword.operator.bitwise",
+        "keyword.operator.optional"
       ],
       "settings": {
         "foreground": "#b1574bff"
       }
     },
     {
-      "name": "Keyword",
-      "scope": ["keyword", "storage.type", "storage.modifier"],
+      "scope": [
+        "variable.object.property",
+        "support.variable.property",
+        "meta.object-literal.key",
+        "variable.other.property",
+        "meta.object-binding-pattern-variable meta.definition.variable",
+        "meta.embedded.expression variable.other.constant.property",
+        "punctuation.definition.template-expression.begin",
+        "punctuation.definition.template-expression.end",
+        "constant.numeric.decimal.go",
+        "string.json",
+        "support.type.property-name.css",
+        "punctuation.definition.constant.css",
+        "constant.numeric.float.python",
+        "punctuation.definition.variable.shell variable.other.normal.shell",
+        "variable.parameter.positional.shell",
+        "punctuation.definition.variable.shell variable.language.special.shell"
+      ],
+      "settings": {
+        "foreground": "#d07277ff"
+      }
+    },
+    {
+      "scope": [
+        "keyword",
+        "storage.type",
+        "storage.modifier",
+        "storage.type.boolean.go",
+        "keyword.operator.address.go",
+        "meta.shebang.shell"
+      ],
       "settings": {
         "foreground": "#b477cfff"
       }
     },
     {
-      "name": "operator",
       "scope": [
         "keyword.operator.assignment",
         "keyword.operator.assignment.compound",
         "storage.type.function.arrow",
-        "storage.type.function.colon"
+        "storage.type.function.colon",
+        "keyword.control.anchor.regexp",
+        "entity.name.class",
+        "keyword.operator.ternary",
+        "keyword.operator.comparison",
+        "keyword.operator.relational",
+        "meta.type.annotation",
+        "keyword.operator.spread",
+        "meta.type.declaration.",
+        "support.type.primitive",
+        "meta.group.regexp",
+        "new.expr entity.name.function",
+        "meta.function-call variable.other.object",
+        "keyword.operator.logical",
+        "constant.other.character-class.range.regexp",
+        "keyword.operator.negation.regexp",
+        "meta.block variable.other.readwrite",
+        "entity.name.type.go",
+        "entity.name.type.any.go",
+        "storage.type.numeric.go",
+        "storage.type.string.go",
+        "storage.type.boolean.go",
+        "keyword.operator.address.go",
+        "keyword.other.unit.px.css",
+        "keyword.other.unit.rem.css",
+        "keyword.other.unit.em.css",
+        "storage.type.sql",
+        "string.quoted.other.backtick.sql",
+        "keyword.operator.arithmetic.python",
+        "meta.function-call.generic.python"
       ],
       "settings": {
         "foreground": "#6eb4bfff"
       }
     },
     {
-      "name": "Strings",
-      "scope": ["string"],
+      "scope": [
+        "punctuation.definition.group.regexp",
+        "punctuation.terminator.statement",
+        "punctuation.separator.key-value",
+        "punctuation.definition.block",
+        "punctuation.accessor",
+        "punctuation.separator.comma",
+        "punctuation.definition.typeparameters.end",
+        "punctuation.definition.typeparameters.begin",
+        "meta.tag meta.function-call variable.other.object",
+        "meta.var.expr meta.function-call variable.other.object",
+        "punctuation.definition.character-class.regexp",
+        "meta.type.annotation variable.parameter",
+        "variable.other.readwrite meta.array.literal",
+        "meta.object-binding-pattern-variable meta.definition.variable variable.other.constant",
+        "meta.tag.without-attributes variable.other.readwrite",
+        "meta.objectliteral meta.function-call variable.other.object",
+        "meta.var.expr meta.var.expr variable.other.readwrite",
+        "entity.name.type.package.go",
+        "punctuation.definition.arguments.begin.python",
+        "punctuation.definition.arguments.end.python",
+        "meta.function-call.arguments.python",
+        "variable.other.normal.shell",
+        "string.quoted.double.shell variable.parameter.positional.shell"
+      ],
+      "settings": {
+        "foreground": "#abb2bfff"
+      }
+    },
+    {
+      "scope": [
+        "constant.other.character-class.regexp",
+        "constant.character.numeric.regexp"
+      ],
+      "settings": {
+        "foreground": "#878e98ff"
+      }
+    },
+    {
+      "scope": [
+        "string.regexp",
+        "constant.numeric",
+        "keyword.operator.quantifier.regexp",
+        "support.type.builtin",
+        "constant.language.null",
+        "constant.language.boolean",
+        "variable.other.constant.go",
+        "constant.language.json",
+        "entity.other.attribute-name.class.css",
+        "support.constant.property-value.css",
+        "constant.other.color.rgb-value.hex.css",
+        "keyword.other.DDL.create.II.sql",
+        "constant.other.caps.python",
+        "string.unquoted.shell",
+        "string.quoted.double.shell variable.language.special.shell"
+      ],
+      "settings": {
+        "foreground": "#bf956aff"
+      }
+    },
+    {
+      "scope": [
+        "string.quoted.double",
+        "string.template",
+        "string.quoted.raw.go",
+        "constant.numeric.sql",
+        "string.quoted.single.sql",
+        "string.quoted.single.python"
+      ],
       "settings": {
         "foreground": "#a1c181ff"
       }
     },
     {
-      "name": "Types and classes",
       "scope": [
-        "entity.name.type",
-        "entity.name.class",
-        "support.class",
-        "support.type"
+        "support.class.component",
+        "method",
+        "function",
+        "entity.other.attribute-name",
+        "meta.definition.function",
+        "meta.function-call",
+        "entity.name.tag",
+        "meta.var.expr variable.other.readwrite",
+        "variable.other.constant entity.name.function",
+        "entity.name.function.go",
+        "entity.name.function.support.go",
+        "support.function.misc.scss",
+        "entity.name.function.python",
+        "support.function.builtin.python",
+        "support.function.builtin.shell"
       ],
       "settings": {
-        "foreground": "#6eb4bfff"
+        "foreground": "#73ade9ff"
       }
     }
-  ],
-  "semanticTokenColors": {
-    "variable": "#acb2beff",
-    "namespace": "#dce0e5ff",
-    "property": "#d07277ff",
-    "type": "#6eb4bfff",
-    "enum": "#d07277ff",
-    "number": "#bf956aff",
-    "keyword": "#b477cfff",
-    "string": "#a1c181ff",
-    "comment": "#5d636fff",
-    "operator": "#457cadff",
-    "label": "#74ade8ff",
-    "regexp": "#bf956aff",
-    "constant": "#d07277ff",
-    "class": "#d07277ff",
-    "method": "#73ade9ff",
-    "function.defaultLibrary": "#73ade9ff",
-    "*.documentation": "#878e98ff"
-  }
+  ]
 }
