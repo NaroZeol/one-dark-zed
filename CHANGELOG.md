@@ -12,6 +12,13 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 ## [Unreleased]
 
+## [1.0.5] - 2026-05-11
+
+### Fixed
+
+- Updated the color theme release metadata for the current marketplace version.
+- Documented the latest theme maintenance release.
+
 ## [1.0.0] - 2026-05-09
 
 ### Added
