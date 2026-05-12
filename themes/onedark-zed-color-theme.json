@@ -330,7 +330,8 @@
         "constant.numeric.float.python",
         "punctuation.definition.variable.shell variable.other.normal.shell",
         "variable.parameter.positional.shell",
-        "punctuation.definition.variable.shell variable.language.special.shell"
+        "punctuation.definition.variable.shell variable.language.special.shell",
+        "string.interpolated.makefile punctuation.definition.variable.makefile"
       ],
       "settings": {
         "foreground": "#d07277ff"
@@ -383,7 +384,8 @@
         "storage.type.sql",
         "string.quoted.other.backtick.sql",
         "keyword.operator.arithmetic.python",
-        "meta.function-call.generic.python"
+        "meta.function-call.generic.python",
+        "keyword.control.@.makefile"
       ],
       "settings": {
         "foreground": "#6eb4bfff"
@@ -444,7 +446,8 @@
         "keyword.other.DDL.create.II.sql",
         "constant.other.caps.python",
         "string.unquoted.shell",
-        "string.quoted.double.shell variable.language.special.shell"
+        "string.quoted.double.shell variable.language.special.shell",
+        "support.function.target.PHONY.makefile"
       ],
       "settings": {
         "foreground": "#bf956aff"
@@ -457,7 +460,8 @@
         "string.quoted.raw.go",
         "constant.numeric.sql",
         "string.quoted.single.sql",
-        "string.quoted.single.python"
+        "string.quoted.single.python",
+        "string.interpolated.makefile"
       ],
       "settings": {
         "foreground": "#a1c181ff"
@@ -479,7 +483,8 @@
         "support.function.misc.scss",
         "entity.name.function.python",
         "support.function.builtin.python",
-        "support.function.builtin.shell"
+        "support.function.builtin.shell",
+        "meta.scope.recipe.makefile"
       ],
       "settings": {
         "foreground": "#73ade9ff"
