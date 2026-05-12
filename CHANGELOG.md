@@ -12,6 +12,12 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 ## [Unreleased]
 
+## [1.0.6] - 2026-05-12
+
+### Changed
+
+- Color theme: added Makefile TextMate scopes for interpolated strings (including variable punctuation), `@` line control, `.PHONY` targets, and recipe blocks so Makefile highlighting matches the rest of the theme.
+
 ## [1.0.5] - 2026-05-11
 
 ### Fixed
