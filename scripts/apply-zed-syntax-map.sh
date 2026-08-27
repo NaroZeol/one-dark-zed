@@ -31,7 +31,9 @@ jq \
       | to_entries
       | map({key: .key, value: $zed[.value]})
       | from_entries) as $ui_colors
-  | .semanticHighlighting = true
+  # Zed defaults to Tree-sitter highlighting. Keep VS Code on its analogous
+  # TextMate path unless the user explicitly enables semantic highlighting.
+  | .semanticHighlighting = false
   | .colors += $ui_colors
   | .semanticTokenColors = $semantic_colors
   | .tokenColors = $textmate_colors

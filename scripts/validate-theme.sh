@@ -24,7 +24,7 @@ test "$actual_upstream_hash" = "$expected_upstream_hash"
 
 jq -e '
   .name == "Zed One Dark Local"
-  and .semanticHighlighting == true
+  and .semanticHighlighting == false
   and .colors["editor.background"] == "#282c33ff"
   and .colors["editor.foreground"] == "#acb2beff"
   and .colors["sideBar.background"] == "#2f343eff"
@@ -44,6 +44,32 @@ jq -e '
   and ([.tokenColors[].scope | if type == "array" then .[] else . end] | index("entity.name.function") != null)
   and ([.tokenColors[].scope | if type == "array" then .[] else . end] | index("entity.name.type") != null)
   and ([.tokenColors[].scope | if type == "array" then .[] else . end] | index("variable.other.property") != null)
+' "$theme_file" >/dev/null
+
+# Keep the static theme footprint bounded. TextMate compiles every selector
+# into its matcher; language-by-language exhaustive lists would add startup and
+# token matching cost without improving the common path.
+textmate_rule_count="$(jq '.tokenColors | length' "$theme_file")"
+textmate_selector_count="$(jq '[.tokenColors[].scope | if type == "array" then length else 1 end] | add' "$theme_file")"
+semantic_selector_count="$(jq '.semanticTokenColors | length' "$theme_file")"
+compound_selector_count="$(jq '[.tokenColors[].scope | if type == "array" then .[] else . end | select(contains(" "))] | length' "$theme_file")"
+
+test "$textmate_rule_count" -le 40
+test "$textmate_selector_count" -le 170
+test "$semantic_selector_count" -le 40
+test "$compound_selector_count" -le 16
+
+# High-risk grammar conflicts must resolve to the same semantic captures used
+# by Zed. These are intentionally compact exceptions, not complete grammars.
+jq -e '
+  def scopes($name):
+    [.tokenColors[] | select(.name == $name) | .scope | if type == "array" then .[] else . end];
+  (scopes("Zed: strings") | index("entity.name.import.go") != null)
+  and (scopes("Zed: namespaces and packages") | index("entity.name.import.go") == null)
+  and (scopes("Zed: properties") | index("entity.name.tag.yaml") != null)
+  and (scopes("Zed: properties") | index("punctuation.support.type.property-name") != null)
+  and (scopes("Zed: brackets and delimiters") | index("punctuation.definition.tag") != null)
+  and (scopes("Zed: tags") | index("punctuation.definition.tag") == null)
 ' "$theme_file" >/dev/null
 
 jq -e --slurpfile upstream "$upstream_file" --slurpfile theme "$theme_file" '

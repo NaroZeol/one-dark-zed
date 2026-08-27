@@ -12,6 +12,18 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 ## [Unreleased]
 
+## [1.0.6-local.5] - 2026-08-27
+
+### Changed
+
+- Disabled semantic highlighting by default to match Zed's Tree-sitter-first default and reduce language-server color overrides.
+- Added a hard performance budget for TextMate rules, TextMate selectors, compound selectors, and optional semantic-token selectors.
+- Aligned HTML/XML tag punctuation with Zed brackets and YAML/JSON/Proto field names with Zed properties.
+
+### Fixed
+
+- Colored Go import paths as Zed strings while keeping package aliases and package declarations as namespaces.
+
 ## [1.0.6-local.4] - 2026-08-27
 
 ### Changed

@@ -26,11 +26,17 @@ VS Code with **Onedark Zed** (color theme, file icons, and integrated terminal):
 
 | Contribution        | Id / label                                  | Description                                                      |
 | ------------------- | ------------------------------------------- | ---------------------------------------------------------------- |
-| **Color theme**     | **Onedark Zed**                             | Dark editor and workbench colors, semantic highlighting enabled. |
+| **Color theme**     | **Onedark Zed**                             | Dark editor and workbench colors, aligned with Zed's Tree-sitter-first highlighting. |
 | **File icon theme** | **Onedark Zed Icons** (`onedark-zed-icons`) | SVG icons for common languages, tools, and folders.              |
 
 Theme definition: `themes/onedark-zed-color-theme.json`.  
 Icon theme definition: `icons/onedark-zed-icon-theme.json` (assets under `icons/icons/file_icons/`).
+
+The theme leaves semantic highlighting disabled by default because Zed also
+defaults to Tree-sitter-only syntax highlighting. VS Code users who explicitly
+enable `editor.semanticHighlighting.enabled` can still use the bundled semantic
+token palette. The validation script also caps the number of theme rules and
+selectors so language coverage cannot grow into an unbounded matching table.
 
 ## Install
 

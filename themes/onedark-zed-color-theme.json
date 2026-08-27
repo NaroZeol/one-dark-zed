@@ -2,7 +2,7 @@
   "$schema": "vscode://schemas/color-theme",
   "name": "Zed One Dark Local",
   "type": "dark",
-  "semanticHighlighting": true,
+  "semanticHighlighting": false,
   "colors": {
     "button.background": "#3b414dff",
     "button.border": "#464b57ff",
@@ -380,10 +380,14 @@
         "punctuation.definition.arguments",
         "punctuation.definition.array",
         "punctuation.definition.dictionary",
+        "punctuation.definition.group",
+        "punctuation.definition.character-class",
+        "punctuation.definition.tag",
         "punctuation.definition.typeparameters",
         "punctuation.section",
         "punctuation.separator",
-        "punctuation.terminator"
+        "punctuation.terminator",
+        "punctuation.accessor"
       ],
       "settings": {
         "foreground": "#b2b9c6ff"
@@ -412,6 +416,7 @@
         "string.template",
         "string.interpolated",
         "string.quoted.raw",
+        "entity.name.import.go",
         "constant.other.rune.go",
         "punctuation.definition.string"
       ],
@@ -536,9 +541,13 @@
       "name": "Zed: properties",
       "scope": [
         "variable.other.property",
+        "variable.other.field",
         "variable.object.property",
         "support.variable.property",
         "support.type.property-name",
+        "punctuation.support.type.property-name",
+        "entity.name.tag.yaml",
+        "entity.name.tag.yaml punctuation.definition.string",
         "meta.object-literal.key",
         "meta.object-binding-pattern-variable meta.definition.variable",
         "string.json support.type.property-name.json"
@@ -562,8 +571,7 @@
     {
       "name": "Zed: tags",
       "scope": [
-        "entity.name.tag",
-        "punctuation.definition.tag"
+        "entity.name.tag"
       ],
       "settings": {
         "foreground": "#74ade8ff"
@@ -575,7 +583,6 @@
         "entity.name.namespace",
         "entity.name.type.namespace",
         "entity.name.type.package",
-        "entity.name.import.go",
         "variable.other.import.go",
         "support.other.namespace",
         "variable.other.namespace"
