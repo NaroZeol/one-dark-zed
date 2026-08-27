@@ -19,6 +19,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 - Added reproducible Zed palette and Go grammar generation with regression tests.
 - Added explicit fork provenance and complete third-party licensing notices.
 - Added Marketplace-ready metadata and Windows/VSIX installation instructions.
+- Added the unique Marketplace extension ID `NaroZeol.zed-onedark-vscode`.
 
 ### Changed
 

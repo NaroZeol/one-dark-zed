@@ -36,7 +36,7 @@ After the extension is published, search for **Zed One Dark** in the Extensions
 view or run:
 
 ```powershell
-code --install-extension NaroZeol.onedark-zed
+code --install-extension NaroZeol.zed-onedark-vscode
 ```
 
 ### VSIX
@@ -45,7 +45,7 @@ Download a `.vsix` from the repository releases, then run **Extensions: Install
 from VSIX…** in the Command Palette. From a terminal:
 
 ```powershell
-code --install-extension .\onedark-zed-1.1.0.vsix --force
+code --install-extension .\zed-onedark-vscode-1.1.0.vsix --force
 ```
 
 To build the package yourself:
@@ -53,7 +53,7 @@ To build the package yourself:
 ```sh
 npm ci
 npm test
-npm run package -- --out onedark-zed-1.1.0.vsix
+npm run package -- --out zed-onedark-vscode-1.1.0.vsix
 ```
 
 ## Activate

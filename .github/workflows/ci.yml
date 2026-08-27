@@ -23,4 +23,4 @@ jobs:
       - name: Validate generated theme and grammar
         run: npm test
       - name: Package extension
-        run: npm run package -- --out onedark-zed.vsix
+        run: npm run package -- --out zed-onedark-vscode.vsix
