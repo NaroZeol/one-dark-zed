@@ -1,0 +1,333 @@
+{
+  "providers": [
+    {
+      "id": "go",
+      "command": "gopls",
+      "args": ["serve"],
+      "initializationOptionsFromConfigurationDefault": "gopls",
+      "files": {
+        "go.mod": "module example.com/zed-semantics\n\ngo 1.25\n",
+        "sampleapi/types.go": "package sampleapi\n\ntype AlphaInput struct{}\ntype AlphaOutput struct{}\ntype BetaInput struct{}\ntype BetaOutput struct{}\ntype GammaInput struct{}\ntype GammaOutput struct{}\n\nfunc Build(AlphaInput) AlphaOutput { return AlphaOutput{} }\n",
+        "theme.go": "package theme\n\nimport \"example.com/zed-semantics/sampleapi\"\n\nconst MaxRetries = 3\n\ntype LocalAlphaInput sampleapi.AlphaInput\ntype LocalAlphaOutput sampleapi.AlphaOutput\ntype LocalBetaInput sampleapi.BetaInput\ntype LocalBetaOutput sampleapi.BetaOutput\ntype LocalGammaInput sampleapi.GammaInput\ntype LocalGammaOutput sampleapi.GammaOutput\n\ntype holder struct { value int }\n\nfunc (receiver *holder) assign(target, source holder, amount int) int {\n\ttarget.value = source.value\n\treceiver.value = target.value + amount\n\treturn receiver.value\n}\n\nfunc missing(err error) bool {\n\treturn err != nil\n}\n\nfunc builtins(items []int) bool {\n\tempty := len(items) == 0\n\treturn empty || true || false\n}\n\nfunc consume(input sampleapi.AlphaInput) sampleapi.AlphaOutput {\n\treturn sampleapi.Build(input)\n}\n",
+        "callable.go": "package theme\n\nfunc makeCleanup() func() { return func() {} }\n\nfunc scheduleCleanup() {\n\tcleanup := makeCleanup()\n\tdefer cleanup()\n}\n\nfunc invoke(callback func()) {\n\tcallback()\n}\n\ntype closer struct { onClose func() }\n\nfunc (value *closer) close() {\n\tvalue.onClose()\n}\n",
+        "format.go": "package theme\n\nimport \"fmt\"\n\nfunc render(value int) string {\n\treturn fmt.Sprintf(\"value=%d\", value)\n}\n"
+      },
+      "documents": [
+        {
+          "path": "theme.go",
+          "languageId": "go",
+          "expectations": [
+            { "line": 1, "text": "theme", "type": "namespace", "style": "namespace" },
+            { "line": 3, "text": "sampleapi", "type": "namespace", "style": "namespace" },
+            { "line": 5, "text": "MaxRetries", "type": "variable", "modifiers": ["readonly"], "style": "variable" },
+            { "line": 7, "text": "LocalAlphaInput", "type": "type", "modifiers": ["definition"], "style": "type" },
+            { "line": 7, "text": "sampleapi", "type": "namespace", "style": "namespace", "contextStyle": "namespace" },
+            { "line": 7, "text": "AlphaInput", "type": "type", "style": "type" },
+            { "line": 8, "text": "LocalAlphaOutput", "type": "type", "modifiers": ["definition"], "style": "type" },
+            { "line": 8, "text": "AlphaOutput", "type": "type", "style": "type" },
+            { "line": 9, "text": "LocalBetaInput", "type": "type", "modifiers": ["definition"], "style": "type" },
+            { "line": 9, "text": "sampleapi", "type": "namespace", "style": "namespace" },
+            { "line": 9, "text": "BetaInput", "type": "type", "style": "type" },
+            { "line": 10, "text": "LocalBetaOutput", "type": "type", "modifiers": ["definition"], "style": "type" },
+            { "line": 10, "text": "sampleapi", "type": "namespace", "style": "namespace" },
+            { "line": 10, "text": "BetaOutput", "type": "type", "style": "type" },
+            { "line": 11, "text": "LocalGammaInput", "type": "type", "modifiers": ["definition"], "style": "type" },
+            { "line": 11, "text": "sampleapi", "type": "namespace", "style": "namespace" },
+            { "line": 11, "text": "GammaInput", "type": "type", "style": "type" },
+            { "line": 12, "text": "LocalGammaOutput", "type": "type", "modifiers": ["definition"], "style": "type" },
+            { "line": 12, "text": "sampleapi", "type": "namespace", "style": "namespace" },
+            { "line": 12, "text": "GammaOutput", "type": "type", "style": "type" },
+            { "line": 14, "text": "holder", "type": "type", "modifiers": ["definition"], "style": "type" },
+            { "line": 14, "text": "value", "type": "property", "modifiers": ["definition"], "style": "property" },
+            { "line": 16, "text": "receiver", "type": "parameter", "modifiers": ["definition"], "style": "variable" },
+            { "line": 16, "text": "assign", "type": "method", "modifiers": ["definition"], "style": "function" },
+            { "line": 16, "text": "target", "type": "parameter", "modifiers": ["definition"], "style": "variable" },
+            { "line": 16, "text": "source", "type": "parameter", "modifiers": ["definition"], "style": "variable" },
+            { "line": 16, "text": "amount", "type": "parameter", "modifiers": ["definition"], "style": "variable" },
+            { "line": 17, "text": "target", "type": "parameter", "style": "variable" },
+            { "line": 17, "text": "value", "occurrence": 1, "type": "property", "style": "property" },
+            { "line": 17, "text": "source", "type": "parameter", "style": "variable" },
+            { "line": 17, "text": "value", "occurrence": 2, "type": "property", "style": "property" },
+            { "line": 18, "text": "receiver", "type": "parameter", "style": "variable" },
+            { "line": 18, "text": "value", "occurrence": 1, "type": "property", "style": "property" },
+            { "line": 18, "text": "target", "type": "parameter", "style": "variable" },
+            { "line": 18, "text": "value", "occurrence": 2, "type": "property", "style": "property" },
+            { "line": 18, "text": "amount", "type": "parameter", "style": "variable" },
+            { "line": 19, "text": "value", "type": "property", "style": "property" },
+            { "line": 23, "text": "nil", "type": "variable", "modifiers": ["readonly", "defaultLibrary"], "style": "constant" },
+            { "line": 26, "text": "builtins", "type": "function", "modifiers": ["definition"], "style": "function" },
+            { "line": 26, "text": "items", "type": "parameter", "modifiers": ["definition"], "style": "variable" },
+            { "line": 26, "text": "int", "type": "type", "modifiers": ["defaultLibrary"], "style": "type" },
+            { "line": 26, "text": "bool", "type": "type", "modifiers": ["defaultLibrary"], "style": "type" },
+            { "line": 27, "text": "empty", "type": "variable", "modifiers": ["definition"], "style": "variable" },
+            { "line": 27, "text": "len", "type": "function", "modifiers": ["defaultLibrary"], "style": "function" },
+            { "line": 27, "text": "items", "type": "parameter", "style": "variable" },
+            { "line": 28, "text": "empty", "type": "variable", "style": "variable" },
+            { "line": 28, "text": "true", "type": "variable", "modifiers": ["readonly", "defaultLibrary"], "style": "constant" },
+            { "line": 28, "text": "false", "type": "variable", "modifiers": ["readonly", "defaultLibrary"], "style": "constant" },
+            { "line": 31, "text": "consume", "type": "function", "modifiers": ["definition"], "style": "function" },
+            { "line": 31, "text": "input", "type": "parameter", "modifiers": ["definition"], "style": "variable" },
+            { "line": 31, "text": "sampleapi", "occurrence": 1, "type": "namespace", "style": "namespace", "contextStyle": "namespace" },
+            { "line": 31, "text": "AlphaInput", "type": "type", "style": "type" },
+            { "line": 31, "text": "sampleapi", "occurrence": 2, "type": "namespace", "style": "namespace", "contextStyle": "namespace" },
+            { "line": 31, "text": "AlphaOutput", "type": "type", "style": "type" },
+            { "line": 32, "text": "sampleapi", "type": "namespace", "style": "namespace", "contextStyle": "variable" },
+            { "line": 32, "text": "Build", "type": "function", "style": "function" },
+            { "line": 32, "text": "input", "type": "parameter", "style": "variable" }
+          ]
+        },
+        {
+          "path": "callable.go",
+          "languageId": "go",
+          "expectations": [
+            { "line": 5, "text": "scheduleCleanup", "type": "function", "modifiers": ["definition"], "style": "function" },
+            { "line": 6, "text": "cleanup", "type": "variable", "modifiers": ["definition", "signature"], "style": "function" },
+            { "line": 7, "text": "cleanup", "type": "variable", "modifiers": ["signature"], "style": "function" },
+            { "line": 10, "text": "invoke", "type": "function", "modifiers": ["definition"], "style": "function" },
+            { "line": 10, "text": "callback", "type": "parameter", "modifiers": ["definition", "signature"], "style": "function" },
+            { "line": 11, "text": "callback", "type": "parameter", "modifiers": ["signature"], "style": "function" },
+            { "line": 14, "text": "closer", "type": "type", "modifiers": ["definition"], "style": "type" },
+            { "line": 14, "text": "onClose", "type": "property", "modifiers": ["definition", "signature"], "style": "function" },
+            { "line": 16, "text": "close", "type": "method", "modifiers": ["definition"], "style": "function" },
+            { "line": 17, "text": "onClose", "type": "property", "modifiers": ["signature"], "style": "function" }
+          ]
+        },
+        {
+          "path": "format.go",
+          "languageId": "go",
+          "expectations": [
+            { "line": 5, "text": "render", "type": "function", "modifiers": ["definition"], "style": "function" },
+            { "line": 5, "text": "value", "type": "parameter", "modifiers": ["definition"], "style": "variable" },
+            { "line": 6, "text": "fmt", "type": "namespace", "style": "namespace", "contextStyle": "variable" },
+            { "line": 6, "text": "Sprintf", "type": "function", "style": "function" },
+            { "line": 6, "text": "%d", "type": "string", "modifiers": ["format"], "style": "string.escape" },
+            { "line": 6, "text": "value", "type": "parameter", "style": "variable" }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "typescript",
+      "command": "${repoRoot}/node_modules/.bin/typescript-language-server",
+      "args": ["--stdio"],
+      "initializationOptions": {
+        "tsserver": { "path": "${repoRoot}/node_modules/typescript/lib/tsserver.js" }
+      },
+      "files": {
+        "tsconfig.json": "{\"compilerOptions\":{\"strict\":true,\"target\":\"ES2022\"}}\n",
+        "theme.ts": "namespace Domain {\n  export interface Item { value: number }\n  export const MAX_RETRIES = 3\n  export function make(input: Item): Item {\n    return { value: input.value }\n  }\n}\n\nclass Store {\n  private current: Domain.Item\n  update(next: Domain.Item): Domain.Item {\n    this.current.value = next.value\n    return Domain.make(this.current)\n  }\n}\n\nenum Status { Ready, Stopped }\nclass Config { readonly label = \"theme\" }\nasync function load(): Promise<number> {\n  console.log(Status.Ready)\n  return Promise.resolve(1)\n}\n\ntype Callback = (value: number) => number\nfunction invokeCallback(callback: Callback): number {\n  const local = callback\n  return local(1)\n}\nconst arrow = (value: number) => value + 1\narrow(2)\n",
+        "theme.js": "/** @class */\nclass Holder {\n  constructor(value) { this.value = value }\n  assign(other, amount) {\n    this.value = other.value + amount\n    return this.value\n  }\n}\n\nfunction build(input) { return new Holder(input.value) }\n\nfunction invokeCallback(callback) {\n  const local = callback\n  return local(1)\n}\nconst arrow = (value) => value + 1\narrow(2)\n"
+      },
+      "documents": [
+        {
+          "path": "theme.ts",
+          "languageId": "typescript",
+          "expectations": [
+            { "line": 1, "text": "Domain", "type": "namespace", "modifiers": ["declaration"], "style": "namespace" },
+            { "line": 2, "text": "Item", "type": "interface", "modifiers": ["declaration"], "style": "type" },
+            { "line": 2, "text": "value", "type": "property", "modifiers": ["declaration"], "style": "property" },
+            { "line": 3, "text": "MAX_RETRIES", "type": "variable", "modifiers": ["readonly"], "style": "variable" },
+            { "line": 4, "text": "make", "type": "function", "modifiers": ["declaration"], "style": "function" },
+            { "line": 4, "text": "input", "type": "parameter", "modifiers": ["declaration"], "style": "variable" },
+            { "line": 4, "text": "Item", "occurrence": 1, "type": "interface", "style": "type" },
+            { "line": 4, "text": "Item", "occurrence": 2, "type": "interface", "style": "type" },
+            { "line": 5, "text": "value", "occurrence": 1, "type": "property", "modifiers": ["declaration"], "style": "property" },
+            { "line": 5, "text": "input", "type": "parameter", "style": "variable" },
+            { "line": 5, "text": "value", "occurrence": 2, "type": "property", "style": "property" },
+            { "line": 9, "text": "Store", "type": "class", "modifiers": ["declaration"], "style": "type" },
+            { "line": 10, "text": "current", "type": "property", "modifiers": ["declaration"], "style": "property" },
+            { "line": 10, "text": "Domain", "type": "namespace", "style": "namespace", "contextStyle": "namespace" },
+            { "line": 10, "text": "Item", "type": "interface", "style": "type" },
+            { "line": 11, "text": "update", "type": "member", "modifiers": ["declaration"], "style": "function" },
+            { "line": 11, "text": "next", "type": "parameter", "modifiers": ["declaration"], "style": "variable" },
+            { "line": 12, "text": "current", "type": "property", "style": "property" },
+            { "line": 12, "text": "value", "occurrence": 1, "type": "property", "style": "property" },
+            { "line": 12, "text": "next", "type": "parameter", "style": "variable" },
+            { "line": 12, "text": "value", "occurrence": 2, "type": "property", "style": "property" },
+            { "line": 13, "text": "Domain", "type": "namespace", "style": "namespace", "contextStyle": "variable" },
+            { "line": 13, "text": "make", "type": "function", "style": "function" },
+            { "line": 13, "text": "current", "type": "property", "style": "property" },
+            { "line": 17, "text": "Status", "type": "enum", "modifiers": ["declaration"], "style": "enum" },
+            { "line": 17, "text": "Ready", "type": "enumMember", "modifiers": ["declaration", "readonly"], "style": "variant" },
+            { "line": 17, "text": "Stopped", "type": "enumMember", "modifiers": ["declaration", "readonly"], "style": "variant" },
+            { "line": 18, "text": "Config", "type": "class", "modifiers": ["declaration"], "style": "type" },
+            { "line": 18, "text": "label", "type": "property", "modifiers": ["declaration", "readonly"], "style": "property" },
+            { "line": 19, "text": "load", "type": "function", "modifiers": ["declaration"], "style": "function" },
+            { "line": 19, "text": "Promise", "type": "interface", "modifiers": ["defaultLibrary"], "style": "type" },
+            { "line": 20, "text": "console", "type": "variable", "modifiers": ["defaultLibrary"], "style": "constant" },
+            { "line": 20, "text": "log", "type": "member", "modifiers": ["defaultLibrary"], "style": "function" },
+            { "line": 20, "text": "Status", "type": "enum", "style": "enum" },
+            { "line": 20, "text": "Ready", "type": "enumMember", "modifiers": ["readonly"], "style": "variant" },
+            { "line": 21, "text": "Promise", "type": "class", "modifiers": ["defaultLibrary"], "style": "type" },
+            { "line": 21, "text": "resolve", "type": "member", "modifiers": ["defaultLibrary"], "style": "function" },
+            { "line": 24, "text": "Callback", "type": "type", "modifiers": ["declaration"], "style": "type" },
+            { "line": 25, "text": "invokeCallback", "type": "function", "modifiers": ["declaration"], "style": "function" },
+            { "line": 25, "text": "callback", "type": "function", "modifiers": ["declaration"], "style": "function" },
+            { "line": 25, "text": "Callback", "type": "type", "style": "type" },
+            { "line": 26, "text": "local", "type": "function", "modifiers": ["declaration", "readonly"], "style": "function" },
+            { "line": 26, "text": "callback", "type": "function", "style": "function" },
+            { "line": 27, "text": "local", "type": "function", "style": "function" },
+            { "line": 29, "text": "arrow", "type": "function", "modifiers": ["declaration", "readonly"], "style": "function" },
+            { "line": 29, "text": "value", "occurrence": 1, "type": "parameter", "modifiers": ["declaration"], "style": "variable" },
+            { "line": 30, "text": "arrow", "type": "function", "modifiers": ["readonly"], "style": "function" }
+          ]
+        },
+        {
+          "path": "theme.js",
+          "languageId": "javascript",
+          "expectations": [
+            { "line": 2, "text": "Holder", "type": "class", "style": "type" },
+            { "line": 10, "text": "build", "type": "function", "modifiers": ["declaration"], "style": "function" },
+            { "line": 10, "text": "input", "occurrence": 1, "type": "parameter", "modifiers": ["declaration"], "style": "variable" },
+            { "line": 10, "text": "input", "occurrence": 2, "type": "parameter", "style": "variable" },
+            { "line": 12, "text": "invokeCallback", "type": "function", "modifiers": ["declaration"], "style": "function" },
+            { "line": 12, "text": "callback", "type": "parameter", "modifiers": ["declaration"], "style": "variable" },
+            { "line": 13, "text": "local", "type": "variable", "modifiers": ["declaration", "readonly"], "style": "variable" },
+            { "line": 13, "text": "callback", "type": "parameter", "style": "variable" },
+            { "line": 14, "text": "local", "type": "function", "modifiers": ["readonly"], "style": "function" },
+            { "line": 16, "text": "arrow", "type": "function", "modifiers": ["declaration", "readonly"], "style": "function" },
+            { "line": 16, "text": "value", "occurrence": 1, "type": "parameter", "modifiers": ["declaration"], "style": "variable" },
+            { "line": 17, "text": "arrow", "type": "function", "modifiers": ["readonly"], "style": "function" }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "cpp",
+      "command": "clangd",
+      "args": ["--background-index=false", "--clang-tidy=false"],
+      "files": {
+        "compile_flags.txt": "-std=c++20\n",
+        "theme.cpp": "#define RETRY_LIMIT 3\n\nnamespace net {\nenum class State { ready, stopped };\n\nstruct Holder {\n  int value;\n  int assign(const Holder& other, int amount);\n};\n\nint Holder::assign(const Holder& other, int amount) {\n  value = other.value + amount;\n  return value;\n}\n}\n\nusing Callback = int (*)(int);\nint invokeCallback(Callback callback, int value) {\n  auto local = callback;\n  return local(value);\n}\n\nnamespace api { struct Record {}; int create(); }\napi::Record record;\nint result = api::create();\n",
+        "theme.c": "typedef struct User { int value; } User;\n\nint assign(User *target, const User *source, int amount) {\n  target->value = source->value + amount;\n  return target->value;\n}\n\ntypedef int (*Callback)(int);\nint invokeCallback(Callback callback, int value) {\n  return callback(value);\n}\n"
+      },
+      "documents": [
+        {
+          "path": "theme.cpp",
+          "languageId": "cpp",
+          "expectations": [
+            { "line": 1, "text": "RETRY_LIMIT", "type": "macro", "modifiers": ["declaration"], "style": "function" },
+            { "line": 3, "text": "net", "type": "namespace", "modifiers": ["declaration"], "style": "namespace" },
+            { "line": 4, "text": "State", "type": "enum", "modifiers": ["declaration"], "style": "enum" },
+            { "line": 4, "text": "ready", "type": "enumMember", "modifiers": ["declaration"], "style": "variant" },
+            { "line": 4, "text": "stopped", "type": "enumMember", "modifiers": ["declaration"], "style": "variant" },
+            { "line": 6, "text": "Holder", "type": "class", "modifiers": ["declaration", "definition"], "style": "type" },
+            { "line": 7, "text": "value", "type": "property", "modifiers": ["declaration"], "style": "property" },
+            { "line": 8, "text": "assign", "type": "method", "modifiers": ["declaration"], "style": "function" },
+            { "line": 8, "text": "other", "type": "parameter", "modifiers": ["declaration", "readonly"], "style": "variable" },
+            { "line": 8, "text": "amount", "type": "parameter", "modifiers": ["declaration"], "style": "variable" },
+            { "line": 11, "text": "Holder", "occurrence": 1, "type": "class", "style": "type" },
+            { "line": 11, "text": "assign", "type": "method", "modifiers": ["declaration", "definition"], "style": "function" },
+            { "line": 11, "text": "Holder", "occurrence": 2, "type": "class", "style": "type" },
+            { "line": 11, "text": "other", "type": "parameter", "modifiers": ["declaration", "readonly"], "style": "variable" },
+            { "line": 11, "text": "amount", "type": "parameter", "modifiers": ["declaration"], "style": "variable" },
+            { "line": 12, "text": "value", "occurrence": 1, "type": "property", "style": "property" },
+            { "line": 12, "text": "other", "type": "parameter", "style": "variable" },
+            { "line": 12, "text": "value", "occurrence": 2, "type": "property", "style": "property" },
+            { "line": 12, "text": "amount", "type": "parameter", "style": "variable" },
+            { "line": 13, "text": "value", "type": "property", "style": "property" },
+            { "line": 17, "text": "Callback", "type": "type", "modifiers": ["declaration"], "style": "type" },
+            { "line": 18, "text": "invokeCallback", "type": "function", "modifiers": ["declaration", "definition"], "style": "function" },
+            { "line": 18, "text": "Callback", "type": "type", "style": "type" },
+            { "line": 18, "text": "callback", "type": "parameter", "modifiers": ["declaration", "definition"], "style": "variable" },
+            { "line": 18, "text": "value", "type": "parameter", "modifiers": ["declaration", "definition"], "style": "variable" },
+            { "line": 19, "text": "local", "type": "variable", "modifiers": ["declaration", "definition"], "style": "variable" },
+            { "line": 19, "text": "callback", "type": "parameter", "style": "variable" },
+            { "line": 20, "text": "local", "type": "variable", "style": "variable" },
+            { "line": 20, "text": "value", "type": "parameter", "style": "variable" },
+            { "line": 24, "text": "api", "type": "namespace", "style": "namespace", "contextStyle": "namespace" },
+            { "line": 24, "text": "Record", "type": "class", "style": "type" },
+            { "line": 25, "text": "api", "type": "namespace", "style": "namespace", "contextStyle": "variable" },
+            { "line": 25, "text": "create", "type": "function", "style": "function" }
+          ]
+        },
+        {
+          "path": "theme.c",
+          "languageId": "c",
+          "expectations": [
+            { "line": 1, "text": "User", "occurrence": 1, "type": "class", "modifiers": ["declaration", "definition"], "style": "type" },
+            { "line": 1, "text": "value", "type": "property", "modifiers": ["declaration"], "style": "property" },
+            { "line": 1, "text": "User", "occurrence": 2, "type": "class", "modifiers": ["declaration"], "style": "type" },
+            { "line": 3, "text": "assign", "type": "function", "modifiers": ["declaration", "definition"], "style": "function" },
+            { "line": 3, "text": "User", "occurrence": 1, "type": "class", "style": "type" },
+            { "line": 3, "text": "target", "type": "parameter", "modifiers": ["declaration"], "style": "variable" },
+            { "line": 3, "text": "User", "occurrence": 2, "type": "class", "style": "type" },
+            { "line": 3, "text": "source", "type": "parameter", "modifiers": ["declaration", "readonly"], "style": "variable" },
+            { "line": 3, "text": "amount", "type": "parameter", "modifiers": ["declaration"], "style": "variable" },
+            { "line": 4, "text": "target", "type": "parameter", "style": "variable" },
+            { "line": 4, "text": "value", "occurrence": 1, "type": "property", "style": "property" },
+            { "line": 4, "text": "source", "type": "parameter", "style": "variable" },
+            { "line": 4, "text": "value", "occurrence": 2, "type": "property", "style": "property" },
+            { "line": 4, "text": "amount", "type": "parameter", "style": "variable" },
+            { "line": 5, "text": "value", "type": "property", "style": "property" },
+            { "line": 8, "text": "Callback", "type": "type", "modifiers": ["declaration"], "style": "type" },
+            { "line": 9, "text": "invokeCallback", "type": "function", "modifiers": ["declaration", "definition"], "style": "function" },
+            { "line": 9, "text": "Callback", "type": "type", "style": "type" },
+            { "line": 9, "text": "callback", "type": "parameter", "modifiers": ["declaration", "definition"], "style": "variable" },
+            { "line": 9, "text": "value", "type": "parameter", "modifiers": ["declaration", "definition"], "style": "variable" },
+            { "line": 10, "text": "callback", "type": "parameter", "style": "variable" },
+            { "line": 10, "text": "value", "type": "parameter", "style": "variable" }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "rust",
+      "command": "rust-analyzer",
+      "args": [],
+      "initializationOptions": {
+        "semanticHighlighting": {
+          "nonStandardTokens": true
+        }
+      },
+      "files": {
+        "Cargo.toml": "[package]\nname = \"zed-semantics\"\nversion = \"0.1.0\"\nedition = \"2024\"\n",
+        "src/main.rs": "mod sampleapi {\n    pub struct ExternalRecord;\n}\n\ntype LocalRecord = sampleapi::ExternalRecord;\nconst MAX_RETRIES: i32 = 3;\n\nstruct Holder { value: i32 }\n\nimpl Holder {\n    fn assign(&mut self, other: &Holder, amount: i32) -> i32 {\n        self.value = other.value + amount;\n        self.value\n    }\n}\n\nfn build(input_value: i32) -> Holder {\n    Holder { value: input_value }\n}\n\nfn main() {}\n\nfn invoke_callback<F: Fn(i32) -> i32>(callback: F) -> i32 {\n    let local = callback;\n    local(1)\n}\n\nfn use_closure() {\n    let closure = |value: i32| value + 1;\n    let _result = closure(2);\n}\n\nmod runtime { pub fn execute() {} }\nfn call_runtime() { runtime::execute(); }\n"
+      },
+      "documents": [
+        {
+          "path": "src/main.rs",
+          "languageId": "rust",
+          "expectations": [
+            { "line": 1, "text": "sampleapi", "type": "namespace", "modifiers": ["declaration"], "style": "namespace" },
+            { "line": 2, "text": "ExternalRecord", "type": "struct", "modifiers": ["declaration"], "style": "type" },
+            { "line": 5, "text": "LocalRecord", "type": "typeAlias", "modifiers": ["declaration"], "style": "type" },
+            { "line": 5, "text": "sampleapi", "type": "namespace", "style": "namespace", "contextStyle": "namespace" },
+            { "line": 5, "text": "ExternalRecord", "type": "struct", "style": "type" },
+            { "line": 6, "text": "MAX_RETRIES", "type": "const", "modifiers": ["declaration"], "style": "constant" },
+            { "line": 8, "text": "Holder", "type": "struct", "modifiers": ["declaration"], "style": "type" },
+            { "line": 8, "text": "value", "type": "property", "modifiers": ["declaration"], "style": "property" },
+            { "line": 10, "text": "Holder", "type": "struct", "style": "type" },
+            { "line": 11, "text": "assign", "type": "function", "modifiers": ["declaration"], "style": "function" },
+            { "line": 11, "text": "self", "type": "selfKeyword", "modifiers": ["declaration"], "style": "variable.special" },
+            { "line": 11, "text": "other", "type": "variable", "modifiers": ["declaration"], "style": "variable" },
+            { "line": 11, "text": "Holder", "type": "struct", "style": "type" },
+            { "line": 11, "text": "amount", "type": "variable", "modifiers": ["declaration"], "style": "variable" },
+            { "line": 12, "text": "value", "occurrence": 1, "type": "property", "style": "property" },
+            { "line": 12, "text": "value", "occurrence": 2, "type": "property", "style": "property" },
+            { "line": 13, "text": "value", "type": "property", "style": "property" },
+            { "line": 17, "text": "build", "type": "function", "modifiers": ["declaration"], "style": "function" },
+            { "line": 17, "text": "input_value", "type": "variable", "modifiers": ["declaration"], "style": "variable" },
+            { "line": 17, "text": "Holder", "type": "struct", "style": "type" },
+            { "line": 18, "text": "Holder", "type": "struct", "style": "type" },
+            { "line": 18, "text": "value", "type": "property", "style": "property" },
+            { "line": 21, "text": "main", "type": "function", "modifiers": ["declaration"], "style": "function" },
+            { "line": 23, "text": "invoke_callback", "type": "function", "modifiers": ["declaration"], "style": "function" },
+            { "line": 23, "text": "F", "occurrence": 1, "type": "typeParameter", "modifiers": ["declaration"], "style": "type" },
+            { "line": 23, "text": "Fn", "type": "struct", "style": "type" },
+            { "line": 23, "text": "callback", "type": "variable", "modifiers": ["declaration"], "style": "variable" },
+            { "line": 24, "text": "local", "type": "variable", "modifiers": ["declaration"], "style": "variable" },
+            { "line": 25, "text": "local", "type": "function", "style": "function" },
+            { "line": 28, "text": "use_closure", "type": "function", "modifiers": ["declaration"], "style": "function" },
+            { "line": 29, "text": "closure", "type": "variable", "modifiers": ["declaration"], "style": "variable" },
+            { "line": 29, "text": "value", "occurrence": 1, "type": "variable", "modifiers": ["declaration"], "style": "variable" },
+            { "line": 30, "text": "_result", "type": "variable", "modifiers": ["declaration"], "style": "variable" },
+            { "line": 30, "text": "closure", "type": "function", "style": "function" },
+            { "line": 34, "text": "runtime", "type": "namespace", "style": "namespace", "contextStyle": "variable" },
+            { "line": 34, "text": "execute", "type": "function", "style": "function" }
+          ]
+        }
+      ]
+    }
+  ]
+}

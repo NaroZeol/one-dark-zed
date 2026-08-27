@@ -15,7 +15,6 @@ const fixture = JSON.parse(await readFile(resolve(repoDir, "tests/vscode-syntax-
 const theme = JSON.parse(
   await readFile(resolve(repoDir, "themes/onedark-zed-color-theme.json"), "utf8"),
 );
-const extensionManifest = JSON.parse(await readFile(resolve(repoDir, "package.json"), "utf8"));
 const upstream = JSON.parse(
   await readFile(resolve(repoDir, "themes/zed-one-theme.upstream.json"), "utf8"),
 );
@@ -53,17 +52,6 @@ for (const path of await grammarFiles(resolve(appRoot, "extensions"))) {
     // Some extension resources resemble TextMate files but are not standalone grammars.
   }
 }
-grammarPaths.set("source.go", resolve(repoDir, "grammars/go.tmLanguage.json"));
-const injectionsByTarget = new Map();
-for (const contribution of extensionManifest.contributes.grammars) {
-  if (!contribution.injectTo) continue;
-  grammarPaths.set(contribution.scopeName, resolve(repoDir, contribution.path));
-  for (const target of contribution.injectTo) {
-    const injections = injectionsByTarget.get(target) ?? [];
-    injections.push(contribution.scopeName);
-    injectionsByTarget.set(target, injections);
-  }
-}
 
 const rawTheme = {
   settings: [
@@ -90,7 +78,6 @@ const registry = new Registry({
     loadedGrammarScopes.add(scopeName);
     return parseRawGrammar(await readFile(path, "utf8"), path);
   },
-  getInjections: (scopeName) => injectionsByTarget.get(scopeName),
 });
 
 function textOffset(line, text, occurrence = 1) {
@@ -129,6 +116,7 @@ function expectedStyle(styleName) {
 
 const failures = [];
 let assertionCount = 0;
+let providerExpectationCount = 0;
 
 for (const language of fixture.languages) {
   const grammar = await registry.loadGrammar(language.scopeName);
@@ -144,6 +132,10 @@ for (const language of fixture.languages) {
   });
 
   for (const expectation of language.expect) {
+    if (expectation.requiresProvider) {
+      providerExpectationCount += 1;
+      if (process.env.CHECK_PROVIDER_EXPECTATIONS !== "1") continue;
+    }
     assertionCount += 1;
     const tokenizedLine = tokenized[expectation.line ?? 0];
     const offset = textOffset(tokenizedLine.line, expectation.text, expectation.occurrence ?? 1);
@@ -179,7 +171,7 @@ if (failures.length) {
 }
 
 console.log(
-  `VS Code grammar integration passed: ${assertionCount} tokens across ${fixture.languages.length} languages`,
+  `VS Code grammar integration passed: ${assertionCount} lexical tokens across ${fixture.languages.length} languages; ${providerExpectationCount} semantic-only expectations excluded from the lexical layer`,
 );
 if (process.env.TRACE_GRAMMARS === "1") {
   for (const scopeName of [...loadedGrammarScopes].sort()) {

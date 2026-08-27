@@ -12,6 +12,59 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 ## [Unreleased]
 
+Nothing yet.
+
+## [1.3.0] - 2026-08-28
+
+### Changed
+
+- Adopted a shared semantic-token palette without making any language server a
+  runtime dependency of the theme.
+- Mapped common provider-defined semantic types from Pylance, C#, C/C++,
+  rust-analyzer, and TOML to consistent roles in the pinned Zed syntax palette.
+
+### Added
+
+- Added a real semantic-token integration matrix for Go, TypeScript,
+  JavaScript, C, C++, and Rust with 223 symbol contracts across four language
+  servers.
+- Added 109 static type/modifier rules for five widely used language extensions
+  and 102 generated role-precedence contracts.
+- Made provider tests fail on unclassified semantic modifiers so new callable
+  metadata cannot silently fall back to a generic variable role.
+- Added regression coverage for properties on both sides of assignments in
+  Go, C, C++, TypeScript, JavaScript, Python, and Rust, plus all six reported Go
+  qualified type aliases.
+- Expanded the pinned VS Code grammar fallback suite to 334 executable lexical
+  checks across 61 languages.
+- Added a small, parser-tested Go import decoration so semantic namespace
+  overlays cannot split the color of an import string.
+- Added a provider-driven namespace context layer: qualifiers that resolve
+  types retain the namespace color, while qualifiers that carry runtime
+  functions or values use the normal variable color across languages.
+
+### Fixed
+
+- Regenerated the committed theme so readonly variables use the normal Zed
+  variable color instead of the stale named-constant color.
+- Enabled Go and gopls semantic tokens through the extension manifest so
+  packages, types, parameters, and fields remain distinguishable.
+- Made the Go provider regression consume the shipped gopls default, preventing
+  test-only configuration from masking editor behavior.
+- Styled readonly default-library variables as built-in constants, restoring
+  visible coloring for values such as Go's `nil`, `true`, and `false`.
+- Styled standard-library globals as built-in constants and events as members
+  instead of types.
+- Styled function-valued variables, parameters, and fields as callable symbols,
+  including callbacks used by deferred cleanup.
+- Unified ordinary function parameters with normal variable coloring across
+  languages; callable parameters still use the higher-priority function role.
+
+### Removed
+
+- Removed the forked Go grammar and all language-specific injection grammars;
+  TextMate is now a lexical fallback instead of a replacement semantic parser.
+
 ## [1.2.0] - 2026-08-28
 
 ### Added

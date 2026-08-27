@@ -8,10 +8,9 @@ bindings_file="$repo_dir/themes/zed-style-bindings.json"
 ui_bindings_file="$repo_dir/themes/zed-ui-bindings.json"
 upstream_file="$repo_dir/themes/zed-one-theme.upstream.json"
 upstream_metadata_file="$repo_dir/themes/zed-upstream-metadata.json"
-go_grammar_file="$repo_dir/grammars/go.tmLanguage.json"
-go_upstream_file="$repo_dir/grammars/go.tmLanguage.upstream.json"
-go_upstream_metadata_file="$repo_dir/grammars/go-upstream-metadata.json"
 vscode_fixture_file="$repo_dir/tests/vscode-syntax-cases.json"
+semantic_fixture_file="$repo_dir/tests/semantic-provider-cases.json"
+modifier_policy_file="$repo_dir/tests/semantic-modifier-policy.json"
 
 jq empty \
   "$repo_dir/package.json" \
@@ -21,71 +20,45 @@ jq empty \
   "$ui_bindings_file" \
   "$upstream_file" \
   "$upstream_metadata_file" \
-  "$go_grammar_file" \
-  "$go_upstream_file" \
-  "$go_upstream_metadata_file" \
   "$vscode_fixture_file" \
-  "$repo_dir/grammars/zed-js-constants.injection.tmLanguage.json" \
-  "$repo_dir/grammars/zed-ini-values.injection.tmLanguage.json" \
-  "$repo_dir/grammars/zed-literals.injection.tmLanguage.json" \
-  "$repo_dir/grammars/zed-objcpp-types.injection.tmLanguage.json" \
-  "$repo_dir/grammars/zed-raku-symbols.injection.tmLanguage.json" \
-  "$repo_dir/grammars/zed-struct-types.injection.tmLanguage.json" \
-  "$repo_dir/grammars/zed-vb-symbols.injection.tmLanguage.json" \
-  "$repo_dir/grammars/zed-wat-symbols.injection.tmLanguage.json"
+  "$semantic_fixture_file" \
+  "$modifier_policy_file"
 
 jq -e '
   .vscodeVersion == "1.135.0"
   and .vscodeCommit == "08d4889f9ec4a1685d257b9b95de036c8e1ce1e5"
   and (.languages | length) >= 61
   and ([.languages[].id] | length == (unique | length))
-  and ([.languages[].expect | length] | add) >= 310
+  and ([.languages[].expect | length] | add) >= 354
+  and ([.languages[].expect[] | select(.requiresProvider == true)] | length) == 20
 ' "$vscode_fixture_file" >/dev/null
 
-while IFS= read -r grammar_path; do
-  test -f "$repo_dir/${grammar_path#./}"
-done < <(jq -r '.contributes.grammars[].path' "$repo_dir/package.json")
+jq -e '
+  (.providers | length) == 4
+  and ([.providers[].id] | sort) == ["cpp", "go", "rust", "typescript"]
+  and ([.providers[].documents[]] | length) == 8
+  and ([.providers[].documents[].expectations | length] | add) >= 223
+  and ([.providers[].documents[].expectations[] | select(.contextStyle != null)] | length) >= 11
+  and ([.providers[].documents[].expectations[] | select(.style == null)] | length) == 0
+' "$semantic_fixture_file" >/dev/null
 
 expected_upstream_hash="$(jq -r '.normalizedSha256' "$upstream_metadata_file")"
 actual_upstream_hash="$(jq -S . "$upstream_file" | shasum -a 256 | awk '{print $1}')"
 test "$actual_upstream_hash" = "$expected_upstream_hash"
 
-expected_go_upstream_hash="$(jq -r '.normalizedSha256' "$go_upstream_metadata_file")"
-actual_go_upstream_hash="$(jq -S . "$go_upstream_file" | shasum -a 256 | awk '{print $1}')"
-test "$actual_go_upstream_hash" = "$expected_go_upstream_hash"
-
 jq -e '
-  .contributes.configurationDefaults["[go]"]["editor.semanticHighlighting.enabled"] == false
-  and (.contributes.grammars[]
-    | select(.language == "go")
-    | .scopeName == "source.go"
-      and .path == "./grammars/go.tmLanguage.json")
+  (.contributes | has("grammars") | not)
+  and .main == "./src/extension.cjs"
+  and (.activationEvents | index("onStartupFinished") != null)
+  and (.contributes.colors | any(.id == "zedOneDark.importStringForeground" and .defaults.dark == "#a1c181"))
+  and (.contributes.colors | any(.id == "zedOneDark.variableForeground" and .defaults.dark == "#acb2be"))
+  and .contributes.configurationDefaults["[go]"]["editor.semanticHighlighting.enabled"] == true
+  and .contributes.configurationDefaults.gopls["ui.semanticTokens"] == true
 ' "$repo_dir/package.json" >/dev/null
-
-jq -e '
-  ([.contributes.grammars[] | select(.injectTo != null) | .scopeName] | sort)
-    == ([
-      "zed.one-dark.js-constants",
-      "zed.one-dark.ini-values",
-      "zed.one-dark.literals",
-      "zed.one-dark.objcpp-types",
-      "zed.one-dark.raku-symbols",
-      "zed.one-dark.struct-types",
-      "zed.one-dark.vb-symbols",
-      "zed.one-dark.wat-symbols"
-    ] | sort)
-' "$repo_dir/package.json" >/dev/null
-
-jq -e '
-  .repository.property_variables.patterns[0]
-  | .name == "variable.other.property.go"
-    and (.match | contains("(?<=\\.)"))
-    and (.match | contains("\\s*\\("))
-' "$go_grammar_file" >/dev/null
 
 jq -e '
   .name == "Zed One Dark"
-  and .semanticHighlighting == false
+  and .semanticHighlighting == true
   and .colors["editor.background"] == "#282c33ff"
   and .colors["editor.foreground"] == "#acb2beff"
   and .colors["sideBar.background"] == "#2f343eff"
@@ -126,6 +99,16 @@ jq -e '
   and .semanticTokenColors.function.foreground == "#73ade9ff"
   and .semanticTokenColors.type.foreground == "#6eb4bfff"
   and .semanticTokenColors.property.foreground == "#d07277ff"
+  and .semanticTokenColors["variable.readonly"].foreground == "#acb2beff"
+  and .semanticTokenColors["variable.readonly.defaultLibrary"].foreground == "#dfc184ff"
+  and .semanticTokenColors["variable.defaultLibrary"].foreground == "#dfc184ff"
+  and .semanticTokenColors.event.foreground == .semanticTokenColors.property.foreground
+  and .semanticTokenColors.parameter.foreground == .semanticTokenColors.variable.foreground
+  and .semanticTokenColors.selfParameter.foreground == .semanticTokenColors.variable.foreground
+  and .semanticTokenColors.clsParameter.foreground == .semanticTokenColors.variable.foreground
+  and .semanticTokenColors.constParameter.foreground == .semanticTokenColors.constant.foreground
+  and .semanticTokenColors["*.signature"].foreground == .semanticTokenColors.function.foreground
+  and .semanticTokenColors["*.callable"].foreground == .semanticTokenColors.function.foreground
   and .semanticTokenColors.keyword.foreground == "#b477cfff"
   and ([.tokenColors[].scope | if type == "array" then .[] else . end] | index("string") != null)
   and ([.tokenColors[].scope | if type == "array" then .[] else . end] | index("entity.name.function") != null)
@@ -143,7 +126,7 @@ compound_selector_count="$(jq '[.tokenColors[].scope | if type == "array" then .
 
 test "$textmate_rule_count" -le 40
 test "$textmate_selector_count" -le 220
-test "$semantic_selector_count" -le 80
+test "$semantic_selector_count" -le 140
 test "$compound_selector_count" -le 32
 
 # High-risk grammar conflicts must resolve to the same semantic captures used

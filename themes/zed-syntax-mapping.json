@@ -197,7 +197,6 @@
         "support.constant",
         "entity.name.other.preprocessor.macro.predefined",
         "constant.other",
-        "variable.other.constant.zed",
         "string.interpolated.makefile variable.other.makefile"
       ],
       "settings": { "foreground": "#dfc184ff" }

@@ -2,7 +2,7 @@
   "$schema": "vscode://schemas/color-theme",
   "name": "Zed One Dark",
   "type": "dark",
-  "semanticHighlighting": false,
+  "semanticHighlighting": true,
   "colors": {
     "button.background": "#454a56ff",
     "button.border": "#464b57ff",
@@ -498,7 +498,6 @@
         "support.constant",
         "entity.name.other.preprocessor.macro.predefined",
         "constant.other",
-        "variable.other.constant.zed",
         "string.interpolated.makefile variable.other.makefile"
       ],
       "settings": {
@@ -581,7 +580,7 @@
         "meta.function.definition variable.parameter"
       ],
       "settings": {
-        "foreground": "#d07277ff"
+        "foreground": "#acb2beff"
       }
     },
     {
@@ -845,7 +844,7 @@
       "foreground": "#6eb4bfff"
     },
     "parameter": {
-      "foreground": "#d07277ff"
+      "foreground": "#acb2beff"
     },
     "variable": {
       "foreground": "#acb2beff"
@@ -857,7 +856,7 @@
       "foreground": "#73ade9ff"
     },
     "event": {
-      "foreground": "#6eb4bfff"
+      "foreground": "#d07277ff"
     },
     "function": {
       "foreground": "#73ade9ff"
@@ -902,6 +901,9 @@
       "foreground": "#b477cfff"
     },
     "variable.readonly": {
+      "foreground": "#acb2beff"
+    },
+    "variable.readonly.defaultLibrary": {
       "foreground": "#dfc184ff"
     },
     "variable.constant": {
@@ -911,7 +913,7 @@
       "foreground": "#d07277ff"
     },
     "variable.defaultLibrary": {
-      "foreground": "#acb2beff"
+      "foreground": "#dfc184ff"
     },
     "function.defaultLibrary": {
       "foreground": "#73ade9ff"
@@ -921,6 +923,66 @@
     },
     "type.defaultLibrary": {
       "foreground": "#6eb4bfff"
+    },
+    "*.signature": {
+      "foreground": "#73ade9ff"
+    },
+    "*.callable": {
+      "foreground": "#73ade9ff"
+    },
+    "variable.signature": {
+      "foreground": "#73ade9ff"
+    },
+    "parameter.signature": {
+      "foreground": "#73ade9ff"
+    },
+    "property.signature": {
+      "foreground": "#73ade9ff"
+    },
+    "const.signature": {
+      "foreground": "#73ade9ff"
+    },
+    "static.signature": {
+      "foreground": "#73ade9ff"
+    },
+    "variable.callable": {
+      "foreground": "#73ade9ff"
+    },
+    "parameter.callable": {
+      "foreground": "#73ade9ff"
+    },
+    "property.callable": {
+      "foreground": "#73ade9ff"
+    },
+    "const.callable": {
+      "foreground": "#73ade9ff"
+    },
+    "static.callable": {
+      "foreground": "#73ade9ff"
+    },
+    "variable.signature.readonly.defaultLibrary": {
+      "foreground": "#73ade9ff"
+    },
+    "variable.callable.readonly.defaultLibrary": {
+      "foreground": "#73ade9ff"
+    },
+    "function.decorator": {
+      "foreground": "#74ade8ff"
+    },
+    "class.decorator": {
+      "foreground": "#74ade8ff"
+    },
+    "string.format": {
+      "foreground": "#878e98ff"
+    },
+    "string.escapeCharacter": {
+      "foreground": "#878e98ff"
+    },
+    "*.invalid": {
+      "foreground": "#d07277ff"
+    },
+    "*.overridden": {
+      "foreground": "#73ade9ff"
     },
     "attribute": {
       "foreground": "#74ade8ff"
@@ -938,7 +1000,7 @@
       "foreground": "#dfc184ff"
     },
     "constParameter": {
-      "foreground": "#d07277ff"
+      "foreground": "#dfc184ff"
     },
     "selfKeyword": {
       "foreground": "#bf956aff"
@@ -1035,6 +1097,144 @@
     },
     "markupTagDelimiter": {
       "foreground": "#b2b9c6ff"
+    },
+    "member": {
+      "foreground": "#73ade9ff"
+    },
+    "typeAlias": {
+      "foreground": "#6eb4bfff"
+    },
+    "builtinType": {
+      "foreground": "#6eb4bfff"
+    },
+    "builtinAttribute": {
+      "foreground": "#74ade8ff"
+    },
+    "attributeBracket": {
+      "foreground": "#b2b9c6ff"
+    },
+    "character": {
+      "foreground": "#a1c181ff"
+    },
+    "union": {
+      "foreground": "#6eb4bfff"
+    },
+    "generic": {
+      "foreground": "#6eb4bfff"
+    },
+    "derive": {
+      "foreground": "#74ade8ff"
+    },
+    "deriveHelper": {
+      "foreground": "#74ade8ff"
+    },
+    "procMacro": {
+      "foreground": "#73ade9ff"
+    },
+    "toolModule": {
+      "foreground": "#dce0e5ff"
+    },
+    "unresolvedReference": {
+      "foreground": "#acb2beff"
+    },
+    "arithmetic": {
+      "foreground": "#6eb4bfff"
+    },
+    "bitwise": {
+      "foreground": "#6eb4bfff"
+    },
+    "comparison": {
+      "foreground": "#6eb4bfff"
+    },
+    "logical": {
+      "foreground": "#6eb4bfff"
+    },
+    "negation": {
+      "foreground": "#6eb4bfff"
+    },
+    "module": {
+      "foreground": "#dce0e5ff"
+    },
+    "intrinsic": {
+      "foreground": "#6eb4bfff"
+    },
+    "selfParameter": {
+      "foreground": "#acb2beff"
+    },
+    "clsParameter": {
+      "foreground": "#acb2beff"
+    },
+    "magicFunction": {
+      "foreground": "#73ade9ff"
+    },
+    "builtinConstant": {
+      "foreground": "#dfc184ff"
+    },
+    "recordClass": {
+      "foreground": "#6eb4bfff"
+    },
+    "delegate": {
+      "foreground": "#6eb4bfff"
+    },
+    "recordStruct": {
+      "foreground": "#6eb4bfff"
+    },
+    "field": {
+      "foreground": "#d07277ff"
+    },
+    "extensionMethod": {
+      "foreground": "#73ade9ff"
+    },
+    "controlKeyword": {
+      "foreground": "#b477cfff"
+    },
+    "stringVerbatim": {
+      "foreground": "#a1c181ff"
+    },
+    "stringEscapeCharacter": {
+      "foreground": "#878e98ff"
+    },
+    "referenceType": {
+      "foreground": "#6eb4bfff"
+    },
+    "cliProperty": {
+      "foreground": "#d07277ff"
+    },
+    "genericType": {
+      "foreground": "#6eb4bfff"
+    },
+    "valueType": {
+      "foreground": "#6eb4bfff"
+    },
+    "templateFunction": {
+      "foreground": "#73ade9ff"
+    },
+    "templateType": {
+      "foreground": "#6eb4bfff"
+    },
+    "operatorOverload": {
+      "foreground": "#6eb4bfff"
+    },
+    "memberOperatorOverload": {
+      "foreground": "#6eb4bfff"
+    },
+    "newOperator": {
+      "foreground": "#6eb4bfff"
+    },
+    "customLiteral": {
+      "foreground": "#bf956aff"
+    },
+    "numberLiteral": {
+      "foreground": "#bf956aff"
+    },
+    "stringLiteral": {
+      "foreground": "#a1c181ff"
+    },
+    "tomlArrayKey": {
+      "foreground": "#d07277ff"
+    },
+    "tomlTableKey": {
+      "foreground": "#d07277ff"
     }
   }
 }

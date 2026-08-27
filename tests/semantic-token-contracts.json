@@ -1,0 +1,125 @@
+{
+  "providers": [
+    {
+      "id": "vscode-pylance",
+      "modifiers": [
+        "typeHint",
+        "typeHintComment",
+        "decorator",
+        "builtin",
+        "overridden",
+        "callable",
+        "classMember",
+        "keywordArgument",
+        "escapeCharacter",
+        "invalid"
+      ],
+      "tokenStyles": {
+        "module": "namespace",
+        "intrinsic": "operator",
+        "selfParameter": "variable",
+        "clsParameter": "variable",
+        "magicFunction": "function",
+        "builtinConstant": "constant",
+        "parenthesis": "punctuation.bracket",
+        "bracket": "punctuation.bracket",
+        "curlybrace": "punctuation.bracket",
+        "colon": "punctuation.delimiter",
+        "semicolon": "punctuation.delimiter",
+        "arrow": "operator"
+      }
+    },
+    {
+      "id": "vscode-csharp",
+      "modifiers": [],
+      "tokenStyles": {
+        "recordClass": "type",
+        "delegate": "type",
+        "module": "namespace",
+        "recordStruct": "type",
+        "field": "property",
+        "constant": "constant",
+        "extensionMethod": "function",
+        "controlKeyword": "keyword",
+        "operatorOverloaded": "operator",
+        "stringVerbatim": "string",
+        "stringEscapeCharacter": "string.escape",
+        "markupElement": "tag",
+        "markupAttribute": "attribute",
+        "markupAttributeValue": "string",
+        "markupComment": "comment",
+        "markupTagDelimiter": "punctuation.bracket",
+        "jsonComment": "comment",
+        "jsonNumber": "number",
+        "jsonString": "string",
+        "jsonKeyword": "number",
+        "jsonOperator": "operator",
+        "jsonPunctuation": "punctuation.bracket",
+        "jsonPropertyName": "property"
+      }
+    },
+    {
+      "id": "vscode-cpptools",
+      "modifiers": ["global", "local"],
+      "tokenStyles": {
+        "referenceType": "type",
+        "cliProperty": "property",
+        "genericType": "type",
+        "valueType": "type",
+        "templateFunction": "function",
+        "templateType": "type",
+        "operatorOverload": "operator",
+        "memberOperatorOverload": "operator",
+        "newOperator": "operator",
+        "customLiteral": "number",
+        "numberLiteral": "number",
+        "stringLiteral": "string"
+      }
+    },
+    {
+      "id": "rust-analyzer",
+      "modifiers": [
+        "async",
+        "attribute",
+        "callable",
+        "constant",
+        "consuming",
+        "controlFlow",
+        "crateRoot",
+        "injected",
+        "intraDocLink",
+        "library",
+        "macro",
+        "mutable",
+        "procMacro",
+        "public",
+        "reference",
+        "trait",
+        "unsafe"
+      ],
+      "tokenStyles": {
+        "builtinType": "type",
+        "builtinAttribute": "attribute",
+        "constParameter": "constant",
+        "const": "constant",
+        "selfKeyword": "variable.special",
+        "selfTypeKeyword": "type",
+        "lifetime": "type",
+        "static": "constant",
+        "typeAlias": "type",
+        "union": "type",
+        "procMacro": "function",
+        "toolModule": "namespace",
+        "unresolvedReference": "variable"
+      }
+    },
+    {
+      "id": "even-better-toml",
+      "modifiers": [],
+      "tokenStyles": {
+        "tomlArrayKey": "property",
+        "tomlTableKey": "property"
+      }
+    }
+  ]
+}

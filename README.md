@@ -22,12 +22,16 @@ theme, with a matching file icon theme and carefully aligned syntax colors.
 
 | Contribution | ID / label | Notes |
 | --- | --- | --- |
-| Color theme | **Zed One Dark** | Workbench, editor, terminal, and TextMate colors generated from a pinned Zed One Dark palette. Semantic colors remain available as an opt-in. |
+| Color theme | **Zed One Dark** | Workbench, editor, terminal, semantic-token, and TextMate colors generated from a pinned Zed One Dark palette. |
 | File icon theme | **Onedark Zed Icons** (`onedark-zed-icons`) | Icons for common languages, tools, and folders. |
-| Go grammar override | `source.go` | A generated, tested fallback that distinguishes property selectors while retaining type and function scopes. |
-| Scope corrections | eight scoped grammar injections | Restores narrow distinctions present in Zed's Tree-sitter captures but missing from selected VS Code TextMate grammars. |
 
-The extension has no activation code and executes no runtime JavaScript.
+The extension enables semantic highlighting for Go and gopls so packages,
+types, parameters, and fields receive the classifications consumed by the
+theme. A provider-driven context layer keeps type qualifiers namespace-colored
+while runtime function and value qualifiers use the normal variable color. A
+small Go-only decoration keeps import paths uniformly string-colored when gopls
+emits a namespace token inside the import literal. TextMate scopes remain the
+fallback before a provider loads or where none is available.
 
 ## Install
 
@@ -45,7 +49,7 @@ Download a `.vsix` from the repository releases, then run **Extensions: Install
 from VSIX…** in the Command Palette. From a terminal:
 
 ```powershell
-code --install-extension .\zed-onedark-vscode-1.2.0.vsix --force
+code --install-extension .\zed-onedark-vscode-1.3.0.vsix --force
 ```
 
 To build the package yourself:
@@ -53,7 +57,7 @@ To build the package yourself:
 ```sh
 npm ci
 npm test
-npm run package -- --out zed-onedark-vscode-1.2.0.vsix
+npm run package -- --out zed-onedark-vscode-1.3.0.vsix
 ```
 
 ## Activate
@@ -92,24 +96,38 @@ The generated theme deliberately has explicit, reproducible inputs:
   One Dark theme.
 - `themes/zed-style-bindings.json`, `themes/zed-ui-bindings.json`, and
   `themes/zed-syntax-mapping.json` define how Zed styles map to VS Code.
-- `grammars/go.tmLanguage.upstream.json` is a pinned VS Code Go grammar used to
-  generate the narrow runtime override.
 
-Run the generators only after changing their corresponding inputs:
+Run the theme generator only after changing its inputs:
 
 ```sh
 npm run sync:theme
-npm run sync:grammar
 npm test
 ```
 
-The pinned VS Code 1.135.0 integration suite exercises 310 tokens across 61
-bundled grammars. Point it at that VS Code installation's `resources/app`
-directory:
+The pinned VS Code 1.135.0 TextMate integration suite verifies 334 lexical
+tokens across 61 bundled grammars and records 20 classifications that cannot
+be derived from those grammars alone. The provider suite separately verifies
+223 real semantic symbols across Go, TypeScript/JavaScript, C/C++, and Rust,
+including declaration/reference pairs and properties on both sides of
+assignments. It also checks namespace qualifiers in both type and runtime-value
+contexts. The Go test consumes the same gopls defaults shipped in the
+extension manifest so test and editor behavior cannot silently diverge. Point
+the TextMate suite at that VS Code installation's `resources/app` directory.
+The provider suite requires `gopls`, `clangd`, and `rust-analyzer` on `PATH`:
 
 ```sh
 VSCODE_APP_ROOT=/path/to/VSCode/resources/app npm run test:vscode
+npm run test:semantic
 ```
+
+Python, shell, JSON/JSONC, HTML, CSS/SCSS, Markdown, YAML, SQL, Java, C#,
+PHP, Ruby, and the remaining bundled languages are exercised through their
+official VS Code TextMate grammars. An installed language extension may add a
+semantic overlay on top of that tested fallback. Separate provider contracts
+keep 109 custom token types and modifier rules from Pylance, C#, C/C++,
+rust-analyzer, and TOML mapped to the same semantic roles. The provider harness
+also rejects newly advertised modifiers until their role precedence is
+explicitly classified.
 
 Do not hand-edit generated colors. See
 [`docs/DEVELOPMENT_LOG.md`](docs/DEVELOPMENT_LOG.md) for design constraints and
@@ -122,9 +140,8 @@ This fork preserves and extends work from
 original portions were published under the MIT License. The palette snapshot
 and generated theme incorporate material from
 [`zed-industries/zed`](https://github.com/zed-industries/zed), whose unmarked
-source and assets are licensed under GPL-3.0-or-later. The Go grammar is derived
-from [`microsoft/vscode`](https://github.com/microsoft/vscode) under the MIT
-License. Some icons include Lucide/Feather material under ISC/MIT terms.
+source and assets are licensed under GPL-3.0-or-later. Some icons include
+Lucide/Feather material under ISC/MIT terms.
 
 The combined fork is distributed under **GPL-3.0-or-later**. Required copyright
 and permission notices are retained in [`THIRD_PARTY_NOTICES.md`](THIRD_PARTY_NOTICES.md)

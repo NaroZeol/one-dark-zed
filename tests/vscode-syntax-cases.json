@@ -17,15 +17,40 @@
     {
       "id": "python",
       "scopeName": "source.python",
-      "lines": ["def greet(name: str) -> str:", "    # comment", "    return name.upper()"],
+      "lines": [
+        "def greet(name: str) -> str:",
+        "    # comment",
+        "    return name.upper()",
+        "",
+        "class Holder:",
+        "    def assign(self, other, amount: int) -> int:",
+        "        self.value = other.value + amount",
+        "        return self.value",
+        "",
+        "def invoke(callback):",
+        "    local = callback",
+        "    return local()"
+      ],
       "expect": [
         { "text": "def", "style": "keyword" },
         { "text": "greet", "style": "function" },
-        { "text": "name", "style": "variable.parameter" },
+        { "text": "name", "style": "variable" },
         { "text": "str", "style": "type" },
         { "line": 1, "text": "#", "style": "comment" },
         { "line": 2, "text": "return", "style": "keyword" },
-        { "line": 2, "text": "upper", "style": "function" }
+        { "line": 2, "text": "upper", "style": "function" },
+        { "line": 4, "text": "Holder", "style": "type" },
+        { "line": 5, "text": "assign", "style": "function" },
+        { "line": 5, "text": "other", "style": "variable" },
+        { "line": 5, "text": "amount", "style": "variable" },
+        { "line": 6, "text": "value", "occurrence": 1, "style": "property" },
+        { "line": 6, "text": "value", "occurrence": 2, "style": "property" },
+        { "line": 7, "text": "value", "style": "property" },
+        { "line": 9, "text": "invoke", "style": "function" },
+        { "line": 9, "text": "callback", "style": "variable" },
+        { "line": 10, "text": "local", "style": "variable" },
+        { "line": 10, "text": "callback", "style": "variable" },
+        { "line": 11, "text": "local", "style": "function" }
       ]
     },
     {
@@ -46,25 +71,34 @@
       "lines": [
         "const lowercase = /a+b?/gi;",
         "const UPPER_CASE = `hello ${name}`;",
-        "function greet(user) { return user.name; }"
+        "function greet(user) { return user.name; }",
+        "target.left = source.right;"
       ],
       "expect": [
         { "text": "const", "style": "keyword" },
         { "text": "lowercase", "style": "variable" },
         { "text": "/", "style": "string.regex" },
         { "text": "/", "occurrence": 2, "style": "string.regex" },
-        { "line": 1, "text": "UPPER_CASE", "style": "constant" },
+        { "line": 1, "text": "UPPER_CASE", "style": "constant", "requiresProvider": true },
         { "line": 1, "text": "name", "style": "variable" },
         { "line": 2, "text": "function", "style": "keyword" },
         { "line": 2, "text": "greet", "style": "function" },
-        { "line": 2, "text": "user", "style": "variable.parameter" },
-        { "line": 2, "text": "name", "style": "property" }
+        { "line": 2, "text": "user", "style": "variable" },
+        { "line": 2, "text": "name", "style": "property" },
+        { "line": 3, "text": "target", "style": "variable" },
+        { "line": 3, "text": "left", "style": "property" },
+        { "line": 3, "text": "source", "style": "variable" },
+        { "line": 3, "text": "right", "style": "property" }
       ]
     },
     {
       "id": "typescript",
       "scopeName": "source.ts",
-      "lines": ["interface User { name: string }", "const lowercase: User = { name: \"Ada\" };"],
+      "lines": [
+        "interface User { name: string }",
+        "const lowercase: User = { name: \"Ada\" };",
+        "target.left = source.right;"
+      ],
       "expect": [
         { "text": "interface", "style": "keyword" },
         { "text": "User", "style": "type" },
@@ -74,7 +108,11 @@
         { "line": 1, "text": "lowercase", "style": "variable" },
         { "line": 1, "text": "User", "style": "type" },
         { "line": 1, "text": "name", "style": "property" },
-        { "line": 1, "text": "Ada", "style": "string" }
+        { "line": 1, "text": "Ada", "style": "string" },
+        { "line": 2, "text": "target", "style": "variable" },
+        { "line": 2, "text": "left", "style": "property" },
+        { "line": 2, "text": "source", "style": "variable" },
+        { "line": 2, "text": "right", "style": "property" }
       ]
     },
     {
@@ -84,7 +122,7 @@
       "expect": [
         { "text": "fn", "style": "keyword" },
         { "text": "greet", "style": "function" },
-        { "text": "name", "style": "variable.parameter" },
+        { "text": "name", "style": "variable", "requiresProvider": true },
         { "text": "str", "style": "type" },
         { "text": "String", "style": "type" },
         { "line": 1, "text": "println", "style": "function" },
@@ -94,15 +132,27 @@
     {
       "id": "go",
       "scopeName": "source.go",
-      "lines": ["package demo", "func greet(name string) string {", "    return user.Profile.Name", "}"],
+      "lines": [
+        "package demo",
+        "import \"example.com/toolkit/transport/client\"",
+        "type LocalRecord sampleapi.ExternalRecord",
+        "func greet(name string) string {",
+        "    return user.Profile.Name",
+        "}"
+      ],
       "expect": [
         { "text": "package", "style": "keyword" },
-        { "line": 1, "text": "func", "style": "keyword" },
-        { "line": 1, "text": "greet", "style": "function" },
-        { "line": 1, "text": "name", "style": "variable.parameter" },
-        { "line": 1, "text": "string", "style": "type" },
-        { "line": 2, "text": "Profile", "style": "property" },
-        { "line": 2, "text": "Name", "style": "property" }
+        { "line": 1, "text": "example.com/toolkit/transport/client", "style": "string" },
+        { "line": 2, "text": "type", "style": "type" },
+        { "line": 2, "text": "LocalRecord", "style": "type" },
+        { "line": 2, "text": "sampleapi", "style": "namespace", "requiresProvider": true },
+        { "line": 2, "text": "ExternalRecord", "style": "type" },
+        { "line": 3, "text": "func", "style": "keyword" },
+        { "line": 3, "text": "greet", "style": "function" },
+        { "line": 3, "text": "name", "style": "variable" },
+        { "line": 3, "text": "string", "style": "type" },
+        { "line": 4, "text": "Profile", "style": "property", "requiresProvider": true },
+        { "line": 4, "text": "Name", "style": "property", "requiresProvider": true }
       ]
     },
     {
@@ -111,7 +161,7 @@
       "lines": ["struct User { int count; };", "int main(void) { return 0; }"],
       "expect": [
         { "text": "struct", "style": "keyword" },
-        { "text": "User", "style": "type" },
+        { "text": "User", "style": "type", "requiresProvider": true },
         { "text": "int", "style": "type" },
         { "line": 1, "text": "main", "style": "function" },
         { "line": 1, "text": "return", "style": "keyword" },
@@ -134,50 +184,83 @@
     {
       "id": "csharp",
       "scopeName": "source.cs",
-      "lines": ["public class Theme { public string Name { get; init; } }"],
+      "lines": [
+        "public class Theme { public string Name { get; init; } }",
+        "public class Runner { public static int Invoke(Func<int> callback) { return callback(); } }"
+      ],
       "expect": [
         { "text": "public", "style": "keyword" },
         { "text": "class", "style": "keyword" },
         { "text": "Theme", "style": "type" },
         { "text": "string", "style": "type" },
-        { "text": "Name", "style": "property" }
+        { "text": "Name", "style": "property" },
+        { "line": 1, "text": "Invoke", "style": "function" },
+        { "line": 1, "text": "Func", "style": "type" },
+        { "line": 1, "text": "callback", "occurrence": 1, "style": "variable" },
+        { "line": 1, "text": "callback", "occurrence": 2, "style": "function" }
       ]
     },
     {
       "id": "java",
       "scopeName": "source.java",
-      "lines": ["public final class Theme { String name() { return \"dark\"; } }"],
+      "lines": [
+        "public final class Theme { String name() { return \"dark\"; } }",
+        "class Runner { int invoke(java.util.function.IntSupplier callback) { return callback.getAsInt(); } }"
+      ],
       "expect": [
         { "text": "public", "style": "keyword" },
         { "text": "class", "style": "keyword" },
         { "text": "Theme", "style": "type" },
         { "text": "String", "style": "type" },
         { "text": "name", "style": "function" },
-        { "text": "dark", "style": "string" }
+        { "text": "dark", "style": "string" },
+        { "line": 1, "text": "invoke", "style": "function" },
+        { "line": 1, "text": "IntSupplier", "style": "type" },
+        { "line": 1, "text": "callback", "occurrence": 1, "style": "variable" },
+        { "line": 1, "text": "getAsInt", "style": "function" }
       ]
     },
     {
       "id": "php",
       "scopeName": "source.php",
-      "lines": ["function greet(string $name): string { return $name; }"],
+      "lines": [
+        "function greet(string $name): string { return $name; }",
+        "function invoke(callable $callback) { return $callback(); }"
+      ],
       "expect": [
         { "text": "function", "style": "keyword" },
         { "text": "greet", "style": "function" },
         { "text": "string", "style": "type" },
         { "text": "$name", "style": "variable" },
-        { "text": "return", "style": "keyword" }
+        { "text": "return", "style": "keyword" },
+        { "line": 1, "text": "invoke", "style": "function" },
+        { "line": 1, "text": "callable", "style": "type" },
+        { "line": 1, "text": "$callback", "occurrence": 1, "style": "variable" },
+        { "line": 1, "text": "$callback", "occurrence": 2, "style": "variable" }
       ]
     },
     {
       "id": "ruby",
       "scopeName": "source.ruby",
-      "lines": ["def greet(name)", "  puts \"hello #{name}\"", "end"],
+      "lines": [
+        "def greet(name)",
+        "  puts \"hello #{name}\"",
+        "end",
+        "",
+        "def invoke(callback)",
+        "  callback.call",
+        "end"
+      ],
       "expect": [
         { "text": "def", "style": "keyword" },
         { "text": "greet", "style": "function" },
-        { "text": "name", "style": "variable.parameter" },
+        { "text": "name", "style": "variable" },
         { "line": 1, "text": "hello", "style": "string" },
-        { "line": 2, "text": "end", "style": "keyword" }
+        { "line": 2, "text": "end", "style": "keyword" },
+        { "line": 4, "text": "invoke", "style": "function" },
+        { "line": 4, "text": "callback", "style": "variable" },
+        { "line": 5, "text": "callback", "style": "variable" },
+        { "line": 5, "text": "call", "style": "variable" }
       ]
     },
     {
@@ -201,7 +284,7 @@
         { "text": "SELECT", "style": "keyword" },
         { "text": "FROM", "style": "keyword" },
         { "text": "WHERE", "style": "keyword" },
-        { "text": "TRUE", "style": "boolean" }
+        { "text": "TRUE", "style": "boolean", "requiresProvider": true }
       ]
     },
     {
@@ -210,10 +293,10 @@
       "lines": ["{\"enabled\": true, \"count\": 2, \"value\": null}"],
       "expect": [
         { "text": "enabled", "style": "property" },
-        { "text": "true", "style": "boolean" },
+        { "text": "true", "style": "boolean", "requiresProvider": true },
         { "text": "count", "style": "property" },
         { "text": "2", "style": "number" },
-        { "text": "null", "style": "constant" }
+        { "text": "null", "style": "constant", "requiresProvider": true }
       ]
     },
     {
@@ -223,7 +306,7 @@
       "expect": [
         { "line": 1, "text": "//", "style": "comment" },
         { "line": 2, "text": "enabled", "style": "property" },
-        { "line": 2, "text": "false", "style": "boolean" }
+        { "line": 2, "text": "false", "style": "boolean", "requiresProvider": true }
       ]
     },
     {
@@ -324,14 +407,24 @@
     {
       "id": "lua",
       "scopeName": "source.lua",
-      "lines": ["local function greet(name)", "  return theme.name", "end"],
+      "lines": [
+        "local function greet(name)",
+        "  return theme.name",
+        "end",
+        "",
+        "local callback = function() return 1 end",
+        "callback()"
+      ],
       "expect": [
         { "text": "local", "style": "keyword" },
         { "text": "function", "style": "keyword" },
         { "text": "greet", "style": "function" },
-        { "text": "name", "style": "variable.parameter" },
+        { "text": "name", "style": "variable" },
         { "line": 1, "text": "return", "style": "keyword" },
-        { "line": 1, "text": "name", "style": "property" }
+        { "line": 1, "text": "name", "style": "property" },
+        { "line": 4, "text": "callback", "style": "function" },
+        { "line": 4, "text": "function", "style": "keyword" },
+        { "line": 5, "text": "callback", "style": "function" }
       ]
     },
     {
@@ -405,7 +498,7 @@
       "expect": [
         { "text": "let", "style": "keyword" },
         { "text": "greet", "style": "function" },
-        { "text": "name", "style": "variable.parameter" },
+        { "text": "name", "style": "variable" },
         { "text": "string", "style": "type" },
         { "text": "hello", "style": "string" }
       ]
@@ -417,7 +510,7 @@
       "expect": [
         { "text": "greet", "style": "function" },
         { "text": "function", "style": "keyword" },
-        { "text": "name", "style": "variable.parameter" },
+        { "text": "name", "style": "variable" },
         { "text": "paste", "style": "function" },
         { "text": "hello", "style": "string" }
       ]
@@ -477,7 +570,7 @@
       "lines": ["greet = (name) -> \"hello #{name}\"", "# comment"],
       "expect": [
         { "text": "greet", "style": "function" },
-        { "text": "name", "style": "variable.parameter" },
+        { "text": "name", "style": "variable" },
         { "text": "->", "style": "operator" },
         { "text": "hello", "style": "string" },
         { "line": 1, "text": "#", "style": "comment" }
@@ -612,9 +705,9 @@
       "lines": ["theme.name=dark", "enabled=true"],
       "expect": [
         { "text": "theme.name", "style": "property" },
-        { "text": "dark", "style": "string" },
+        { "text": "dark", "style": "string", "requiresProvider": true },
         { "line": 1, "text": "enabled", "style": "property" },
-        { "line": 1, "text": "true", "style": "string" }
+        { "line": 1, "text": "true", "style": "string", "requiresProvider": true }
       ]
     },
     {
@@ -623,9 +716,9 @@
       "lines": ["{\"enabled\":true,\"value\":null}"],
       "expect": [
         { "text": "enabled", "style": "property" },
-        { "text": "true", "style": "boolean" },
+        { "text": "true", "style": "boolean", "requiresProvider": true },
         { "text": "value", "style": "property" },
-        { "text": "null", "style": "constant" }
+        { "text": "null", "style": "constant", "requiresProvider": true }
       ]
     },
     {
@@ -647,9 +740,9 @@
       "expect": [
         { "text": "module", "style": "keyword" },
         { "text": "func", "style": "keyword" },
-        { "text": "greet", "style": "function" },
+        { "text": "greet", "style": "function", "requiresProvider": true },
         { "text": "param", "style": "keyword" },
-        { "text": "i32", "style": "type" },
+        { "text": "i32", "style": "type", "requiresProvider": true },
         { "text": "local.get", "style": "keyword" }
       ]
     },
@@ -660,7 +753,7 @@
       "expect": [
         { "text": "//", "style": "comment" },
         { "line": 1, "text": "std", "style": "namespace" },
-        { "line": 1, "text": "string", "style": "type" },
+        { "line": 1, "text": "string", "style": "type", "requiresProvider": true },
         { "line": 1, "text": "name", "style": "variable" },
         { "line": 1, "text": "dark", "style": "string" }
       ]
@@ -671,9 +764,9 @@
       "lines": ["sub greet(Str $name) { say \"hello $name\" }"],
       "expect": [
         { "text": "sub", "style": "keyword" },
-        { "text": "greet", "style": "function" },
+        { "text": "greet", "style": "function", "requiresProvider": true },
         { "text": "Str", "style": "type" },
-        { "text": "name", "style": "variable.parameter" },
+        { "text": "name", "style": "variable", "requiresProvider": true },
         { "text": "hello", "style": "string" }
       ]
     },
@@ -698,7 +791,7 @@
         { "text": "Public", "style": "keyword" },
         { "text": "Function", "style": "keyword" },
         { "text": "Greet", "style": "function" },
-        { "text": "name", "style": "variable.parameter" },
+        { "text": "name", "style": "variable", "requiresProvider": true },
         { "text": "String", "style": "type" },
         { "line": 1, "text": "Return", "style": "keyword" },
         { "line": 1, "text": "hello", "style": "string" }
@@ -713,7 +806,7 @@
         { "text": "void", "style": "type" },
         { "text": "kernel", "style": "function" },
         { "text": "float", "style": "type" },
-        { "text": "data", "style": "variable.parameter" },
+        { "text": "data", "style": "variable" },
         { "text": "1.0f", "style": "number" }
       ]
     },

@@ -8,7 +8,7 @@
 .gitignore
 .github/**
 
-# Dependencies (theme-only extension; nothing runs from node_modules in the editor)
+# Dependencies (the runtime helper has no external packages)
 /node_modules
 
 # Lockfiles (install is not performed from the package)
@@ -22,8 +22,6 @@ pnpm-lock.yaml
 
 # Scaffolding / unused for publish
 vsc-extension-quickstart.md
-grammars/*.upstream.json
-grammars/*-upstream-metadata.json
 scripts/**
 tests/**
 themes/zed-one-theme.upstream.json

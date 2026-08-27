@@ -1,0 +1,104 @@
+{
+  "roleRules": {
+    "signature": [
+      { "selector": "*.signature", "style": "function" }
+    ],
+    "callable": [
+      { "selector": "*.callable", "style": "function" }
+    ],
+    "decorator": [
+      { "selector": "function.decorator", "style": "attribute" },
+      { "selector": "class.decorator", "style": "attribute" }
+    ],
+    "format": [
+      { "selector": "string.format", "style": "string.escape" }
+    ],
+    "escapeCharacter": [
+      { "selector": "string.escapeCharacter", "style": "string.escape" }
+    ],
+    "invalid": [
+      { "selector": "*.invalid", "style": "error" }
+    ],
+    "overridden": [
+      { "selector": "*.overridden", "style": "function" }
+    ],
+    "documentation": [
+      { "selector": "comment.documentation", "style": "comment.doc" },
+      { "selector": "string.documentation", "style": "string" }
+    ],
+    "defaultLibrary": [
+      { "selector": "variable.defaultLibrary", "style": "constant" },
+      { "selector": "function.defaultLibrary", "style": "function" },
+      { "selector": "method.defaultLibrary", "style": "function" },
+      { "selector": "type.defaultLibrary", "style": "type" }
+    ],
+    "readonly": [
+      { "selector": "variable.readonly", "style": "variable" },
+      { "selector": "property.readonly", "style": "property" }
+    ],
+    "constant": [
+      { "selector": "variable.constant", "style": "constant" }
+    ]
+  },
+  "combinationRules": [
+    {
+      "modifiers": ["readonly", "defaultLibrary"],
+      "rules": [
+        { "selector": "variable.readonly.defaultLibrary", "style": "constant" }
+      ]
+    }
+  ],
+  "contextual": [
+    "abstract",
+    "array",
+    "associated",
+    "async",
+    "attribute",
+    "bool",
+    "builtin",
+    "chan",
+    "classMember",
+    "classScope",
+    "constructorOrDestructor",
+    "consuming",
+    "controlFlow",
+    "crateRoot",
+    "declaration",
+    "deduced",
+    "definition",
+    "dependentName",
+    "deprecated",
+    "fileScope",
+    "functionScope",
+    "global",
+    "globalScope",
+    "injected",
+    "interface",
+    "intraDocLink",
+    "keywordArgument",
+    "library",
+    "local",
+    "macro",
+    "map",
+    "modification",
+    "mutable",
+    "number",
+    "pointer",
+    "procMacro",
+    "public",
+    "reference",
+    "shadowing",
+    "slice",
+    "static",
+    "string",
+    "struct",
+    "trait",
+    "typeHint",
+    "typeHintComment",
+    "unsafe",
+    "usedAsMutablePointer",
+    "usedAsMutableReference",
+    "userDefined",
+    "virtual"
+  ]
+}

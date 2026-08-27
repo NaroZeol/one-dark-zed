@@ -2,7 +2,7 @@
   "name": "zed-onedark-vscode",
   "displayName": "Zed One Dark",
   "description": "A community-maintained VS Code port of Zed's built-in One Dark theme, with matching file icons.",
-  "version": "1.2.0",
+  "version": "1.3.0",
   "publisher": "NaroZeol",
   "icon": "images/icon.png",
   "license": "GPL-3.0-or-later",
@@ -30,6 +30,10 @@
   "engines": {
     "vscode": "^1.74.0"
   },
+  "main": "./src/extension.cjs",
+  "activationEvents": [
+    "onStartupFinished"
+  ],
   "categories": [
     "Themes"
   ],
@@ -42,67 +46,17 @@
   ],
   "scripts": {
     "sync:theme": "bash scripts/apply-zed-syntax-map.sh",
-    "sync:grammar": "bash scripts/sync-go-grammar.sh",
-    "test": "bash scripts/validate-theme.sh && node scripts/test-go-grammar.mjs && node scripts/test-theme-token-colors.mjs",
-    "test:grammar": "node scripts/test-go-grammar.mjs && node scripts/test-theme-token-colors.mjs",
+    "test": "bash scripts/validate-theme.sh && node scripts/test-theme-token-colors.mjs && node scripts/test-go-import-decorations.mjs && node scripts/test-semantic-namespace-context.mjs && node scripts/test-semantic-token-contracts.mjs && node scripts/test-semantic-role-model.mjs",
+    "test:textmate": "node scripts/test-theme-token-colors.mjs",
+    "test:semantic:go": "node scripts/test-go-semantic-tokens.mjs",
+    "test:semantic": "node scripts/test-semantic-providers.mjs && node scripts/test-go-semantic-tokens.mjs",
     "test:vscode": "node scripts/test-vscode-grammars.mjs",
+    "test:all": "npm test && npm run test:semantic && npm run test:vscode",
     "package": "vsce package",
     "publish": "ovsx publish",
     "publish:vscode": "vsce publish"
   },
   "contributes": {
-    "configurationDefaults": {
-      "[go]": {
-        "editor.semanticHighlighting.enabled": false
-      }
-    },
-    "grammars": [
-      {
-        "language": "go",
-        "scopeName": "source.go",
-        "path": "./grammars/go.tmLanguage.json"
-      },
-      {
-        "scopeName": "zed.one-dark.js-constants",
-        "path": "./grammars/zed-js-constants.injection.tmLanguage.json",
-        "injectTo": ["source.js", "source.js.jsx", "source.ts", "source.tsx"]
-      },
-      {
-        "scopeName": "zed.one-dark.literals",
-        "path": "./grammars/zed-literals.injection.tmLanguage.json",
-        "injectTo": ["source.json", "source.json.comments", "source.json.lines", "source.sql"]
-      },
-      {
-        "scopeName": "zed.one-dark.struct-types",
-        "path": "./grammars/zed-struct-types.injection.tmLanguage.json",
-        "injectTo": ["source.c", "source.rust"]
-      },
-      {
-        "scopeName": "zed.one-dark.ini-values",
-        "path": "./grammars/zed-ini-values.injection.tmLanguage.json",
-        "injectTo": ["source.ini"]
-      },
-      {
-        "scopeName": "zed.one-dark.wat-symbols",
-        "path": "./grammars/zed-wat-symbols.injection.tmLanguage.json",
-        "injectTo": ["text.wat"]
-      },
-      {
-        "scopeName": "zed.one-dark.objcpp-types",
-        "path": "./grammars/zed-objcpp-types.injection.tmLanguage.json",
-        "injectTo": ["source.objcpp"]
-      },
-      {
-        "scopeName": "zed.one-dark.raku-symbols",
-        "path": "./grammars/zed-raku-symbols.injection.tmLanguage.json",
-        "injectTo": ["source.perl.6"]
-      },
-      {
-        "scopeName": "zed.one-dark.vb-symbols",
-        "path": "./grammars/zed-vb-symbols.injection.tmLanguage.json",
-        "injectTo": ["source.asp.vb.net"]
-      }
-    ],
     "themes": [
       {
         "label": "Zed One Dark",
@@ -116,11 +70,43 @@
         "label": "Onedark Zed Icons",
         "path": "./icons/onedark-zed-icon-theme.json"
       }
-    ]
+    ],
+    "colors": [
+      {
+        "id": "zedOneDark.importStringForeground",
+        "description": "Foreground used to keep Go import paths visually consistent when semantic tokens overlap strings.",
+        "defaults": {
+          "dark": "#a1c181",
+          "light": "#a1c181",
+          "highContrast": "#a1c181",
+          "highContrastLight": "#a1c181"
+        }
+      },
+      {
+        "id": "zedOneDark.variableForeground",
+        "description": "Foreground used for namespace and module qualifiers that carry runtime values.",
+        "defaults": {
+          "dark": "#acb2be",
+          "light": "#acb2be",
+          "highContrast": "#acb2be",
+          "highContrastLight": "#acb2be"
+        }
+      }
+    ],
+    "configurationDefaults": {
+      "[go]": {
+        "editor.semanticHighlighting.enabled": true
+      },
+      "gopls": {
+        "ui.semanticTokens": true
+      }
+    }
   },
   "devDependencies": {
     "@vscode/vsce": "^3.9.1",
     "ovsx": "^0.10.12",
+    "typescript": "^6.0.3",
+    "typescript-language-server": "^6.0.0",
     "vscode-oniguruma": "^2.0.1",
     "vscode-textmate": "^9.3.2"
   }

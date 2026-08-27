@@ -34,10 +34,10 @@ jq \
           | {key: .key, value: (if ($path | type) == "array" then $zed | getpath($path) else $zed[$path] end)}
         )
       | from_entries) as $ui_colors
-  # Zed uses Tree-sitter highlighting by default and keeps language-server
-  # semantic tokens opt-in. Keep the same default here; the generated semantic
-  # palette remains available when a user explicitly enables it in VS Code.
-  | .semanticHighlighting = false
+  # VS Code TextMate grammars do not expose the same syntax-tree information
+  # as Zed Tree-sitter queries. Let language providers supply semantic symbol
+  # classes, then color those classes with the pinned Zed palette.
+  | .semanticHighlighting = true
   | .colors += $ui_colors
   | .semanticTokenColors = $semantic_colors
   | .tokenColors = $textmate_colors
