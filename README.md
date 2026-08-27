@@ -1,142 +1,124 @@
-# Onedark Zed
-
-> Local maintenance branch: `local/zed-aligned`. The color theme is exposed to
-> VS Code as **Zed One Dark Local**. Run `npm run sync:theme` after changing
-> `themes/zed-syntax-mapping.json`, or `npm run sync:grammar` after updating the
-> vendored Go grammar, then run `npm test` before committing.
-> The vendored `themes/zed-one-theme.upstream.json` was extracted from the
-> locally installed Zed 1.17.2 application. Its normalized hash is pinned in
-> `themes/zed-upstream-metadata.json`, and every generated color is validated
-> against that upstream palette.
+# Zed One Dark for VS Code
 
 <p align="center">
-  <img src="images/icon.png" width="128" height="128" alt="Onedark Zed extension icon" />
+  <img src="images/icon.png" width="128" height="128" alt="Zed One Dark extension icon" />
 </p>
 
-Source: **[github.com/premier213/one-dark-zed](https://github.com/premier213/one-dark-zed)** · clone with `git clone https://github.com/premier213/one-dark-zed.git`
+A community-maintained Visual Studio Code port of Zed's built-in **One Dark**
+theme, with a matching file icon theme and carefully aligned syntax colors.
 
-A dark UI theme and file icon set for [Visual Studio Code](https://code.visualstudio.com/) and compatible editors (including [Cursor](https://cursor.com/)). The color palette follows **One Dark** conventions while tuning accents and surfaces to feel closer to the **Zed** editor’s dark mode.
+> [!IMPORTANT]
+> This repository is a fork of
+> [`premier213/one-dark-zed`](https://github.com/premier213/one-dark-zed).
+> It is not affiliated with, endorsed by, or maintained by Zed Industries,
+> Microsoft, or the original repository owner. “Zed” and “Visual Studio Code”
+> are used only to identify compatibility and the source of the ported theme.
 
 ## Preview
 
-VS Code with **Onedark Zed** (color theme, file icons, and integrated terminal):
+![Zed One Dark theme in VS Code](docs/preview.png)
 
-![Onedark Zed theme preview in VS Code](docs/preview.png)
+## Included
 
-## What’s included
+| Contribution | ID / label | Notes |
+| --- | --- | --- |
+| Color theme | **Zed One Dark** | Workbench, editor, terminal, semantic-token, and TextMate colors generated from a pinned Zed One Dark palette. |
+| File icon theme | **Onedark Zed Icons** (`onedark-zed-icons`) | Icons for common languages, tools, and folders. |
+| Go grammar override | `source.go` | A generated, tested fallback that distinguishes property selectors while retaining type and function scopes. |
 
-| Contribution        | Id / label                                  | Description                                                      |
-| ------------------- | ------------------------------------------- | ---------------------------------------------------------------- |
-| **Color theme**     | **Zed One Dark Local**                      | Dark editor and workbench colors aligned with Zed syntax categories.                 |
-| **File icon theme** | **Onedark Zed Icons** (`onedark-zed-icons`) | SVG icons for common languages, tools, and folders.              |
-
-Theme definition: `themes/onedark-zed-color-theme.json`.  
-Icon theme definition: `icons/onedark-zed-icon-theme.json` (assets under `icons/icons/file_icons/`).
-
-The theme prefers semantic highlighting for languages whose language servers
-distinguish fields, methods, types, and constants reliably. Go is intentionally
-kept on a maintained TextMate grammar path because gopls currently reports
-fields as generic variables. The generated Go patch adds only one fallback
-selector rule, and its token-level tests ensure types and calls retain their
-original scopes. Validation caps both TextMate and semantic selector counts so
-coverage cannot grow into an unbounded matching table.
+The extension has no activation code and executes no runtime JavaScript.
 
 ## Install
 
-**From a VSIX or unpacked folder**
+### VS Code Marketplace
 
-1. In VS Code / Cursor, open the Command Palette (`Ctrl+Shift+P` / `Cmd+Shift+P`).
-2. Run **Extensions: Install from VSIX…** and choose the packaged `.vsix`, or use **Developer: Install Extension from Location…** and point at this repository folder if you develop locally.
+After the extension is published, search for **Zed One Dark** in the Extensions
+view or run:
 
-**From source (development)**
+```powershell
+code --install-extension NaroZeol.onedark-zed
+```
 
-Clone [the repository](https://github.com/premier213/one-dark-zed), open the folder in the editor, press `F5` (or run the **Extension** launch configuration in `.vscode/launch.json`) to open a new window with this extension loaded.
+### VSIX
 
-## Use the theme and icons
+Download a `.vsix` from the repository releases, then run **Extensions: Install
+from VSIX…** in the Command Palette. From a terminal:
 
-1. Open the Command Palette.
-2. For colors: **Preferences: Color Theme** → choose **Zed One Dark Local**.
-3. For icons: **Preferences: File Icon Theme** → choose **Onedark Zed Icons**.
+```powershell
+code --install-extension .\onedark-zed-1.1.0.vsix --force
+```
 
-You can also set them in `settings.json`:
+To build the package yourself:
+
+```sh
+npm ci
+npm test
+npm run package -- --out onedark-zed-1.1.0.vsix
+```
+
+## Activate
+
+Choose **Preferences: Color Theme → Zed One Dark** and **Preferences: File Icon
+Theme → Onedark Zed Icons**, or add:
 
 ```json
 {
-  "workbench.colorTheme": "Zed One Dark Local",
+  "workbench.colorTheme": "Zed One Dark",
   "workbench.iconTheme": "onedark-zed-icons"
 }
 ```
 
-## Requirements
+## Optional font settings
 
-Editor engine compatible with **VS Code `^1.74.0`** or newer (see `package.json` → `engines`). The extension contains static theme/icon data and a generated Go TextMate grammar; it has no runtime JavaScript activation code.
-
-## Font (optional)
-
-This extension **does not ship fonts**; the editor font is whatever you configure in the workbench.
-
-[Zed](https://zed.dev/)’s built-in monospace default is **Lilex** (documented as the font behind the `.ZedMono` setting). To get a similar look in VS Code or Cursor on **any OS**, install [Lilex](https://github.com/mishamyrt/Lilex) from the [releases](https://github.com/mishamyrt/Lilex/releases) page, then set `editor.fontFamily` as below. If the family name does not appear, use **Developer: Reload Window** after installing.
-
-**Install on your system**
-
-- **Windows** — Unzip the release, select the `.ttf` files you want, right-click → **Install** (or **Install for all users**). Alternatively open **Settings → Personalization → Fonts** and drag the files in.
-- **macOS** — Open each `.ttf` (or the whole set) and click **Install Font** in Font Book, or copy the files into `~/Library/Fonts/`.
-- **Linux** — Copy the `.ttf` files (for example from the `variable` folder) into `~/.local/share/fonts/`, then run `fc-cache -fv`. Package managers may also ship Lilex; use whatever name they register (`fc-list | grep -i lilex`).
-
-Editor settings (same on every platform):
+Fonts are not bundled. Zed's documented monospace default is
+[Lilex](https://github.com/mishamyrt/Lilex), which is available separately
+under the SIL Open Font License 1.1. A balanced starting point is:
 
 ```json
 {
   "editor.fontFamily": "Lilex",
-  "editor.fontLigatures": true
-}
-```
-
-## Best experience (optional)
-
-These values tune font size, line height, letter spacing, and gutter width so the editor feels balanced with **Onedark Zed** (syntax contrast and workbench chrome). Add them to your user or workspace `settings.json` in VS Code or Cursor:
-
-```json
-{
+  "editor.fontLigatures": true,
   "editor.fontSize": 15,
-  "editor.lineDecorationsWidth": 36,
   "editor.lineHeight": 24,
   "editor.letterSpacing": 0.2
 }
 ```
 
-## Copyright and third-party licenses
+## Development
 
-| What                          | Notes                                                                                                                                                                                                                                                                                   |
-| ----------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **Icons in this repo**        | Some file icons trace to [Lucide](https://lucide.dev/). The full copyright and permission text (ISC) is in [`icons/icons/LICENSES`](icons/icons/LICENSES), including Feather / Lucide contributor notices.                                                                              |
-| **Lilex (if you install it)** | Not bundled here. Lilex is maintained separately and is distributed under the **SIL Open Font License 1.1**; see the [Lilex repository](https://github.com/mishamyrt/Lilex).                                                                                                            |
-| **Color theme**               | The JSON theme in this repository is an original work of editor styling. It is **visually inspired** by common **One Dark**–style palettes and Zed-like dark accents; it does **not** redistribute Zed, Atom, or proprietary theme binaries.                                            |
-| **This extension (source & package)** | The project is licensed under the **MIT License**; see [`LICENSE`](LICENSE) (copyright as stated in that file). Third-party notices still apply where noted below. |
+The generated theme deliberately has explicit, reproducible inputs:
 
-## Project layout
+- `themes/zed-one-theme.upstream.json` is a pinned snapshot of Zed's built-in
+  One Dark theme.
+- `themes/zed-style-bindings.json`, `themes/zed-ui-bindings.json`, and
+  `themes/zed-syntax-mapping.json` define how Zed styles map to VS Code.
+- `grammars/go.tmLanguage.upstream.json` is a pinned VS Code Go grammar used to
+  generate the narrow runtime override.
 
-```
-LICENSE                               # MIT — extension source and packaged theme
-images/icon.png                      # Extension / marketplace logo (128×128)
-docs/preview.png                      # README / marketplace preview screenshot
-themes/onedark-zed-color-theme.json   # UI + syntax colors
-grammars/go.tmLanguage.json           # Generated Go selector-scope patch
-grammars/go.tmLanguage.upstream.json  # Pinned VS Code grammar source
-scripts/sync-go-grammar.sh            # Rebuild the generated Go grammar
-icons/onedark-zed-icon-theme.json     # Icon theme manifest
-icons/icons/file_icons/*.svg          # Per-file-type icons
-package.json                          # Extension manifest
+Run the generators only after changing their corresponding inputs:
+
+```sh
+npm run sync:theme
+npm run sync:grammar
+npm test
 ```
 
-## Local development and migration
+Do not hand-edit generated colors. See
+[`docs/DEVELOPMENT_LOG.md`](docs/DEVELOPMENT_LOG.md) for design constraints and
+known limitations.
 
-- [`docs/DEVELOPMENT_LOG.md`](docs/DEVELOPMENT_LOG.md) records the local design
-  decisions and commit sequence beyond upstream `main`.
+## Provenance and licensing
 
-## License
+This fork preserves and extends work from
+[`premier213/one-dark-zed`](https://github.com/premier213/one-dark-zed), whose
+original portions were published under the MIT License. The palette snapshot
+and generated theme incorporate material from
+[`zed-industries/zed`](https://github.com/zed-industries/zed), whose unmarked
+source and assets are licensed under GPL-3.0-or-later. The Go grammar is derived
+from [`microsoft/vscode`](https://github.com/microsoft/vscode) under the MIT
+License. Some icons include Lucide/Feather material under ISC/MIT terms.
 
-- **Extension** — [MIT](LICENSE); include the license text when redistributing as required by MIT.
-- **Bundled icons** — Portions under [Lucide / ISC](icons/icons/LICENSES); keep that notice where your distribution or marketplace rules require it.
-
-See **Copyright and third-party licenses** for Lilex (optional, not bundled) and theme inspiration notes.
+The combined fork is distributed under **GPL-3.0-or-later**. Required copyright
+and permission notices are retained in [`THIRD_PARTY_NOTICES.md`](THIRD_PARTY_NOTICES.md)
+and [`icons/icons/LICENSES`](icons/icons/LICENSES). See [`LICENSE`](LICENSE) for
+the full project license.

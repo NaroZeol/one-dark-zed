@@ -12,6 +12,25 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 ## [Unreleased]
 
+## [1.1.0] - 2026-08-27
+
+### Added
+
+- Added reproducible Zed palette and Go grammar generation with regression tests.
+- Added explicit fork provenance and complete third-party licensing notices.
+- Added Marketplace-ready metadata and Windows/VSIX installation instructions.
+
+### Changed
+
+- Renamed the published color theme to **Zed One Dark**.
+- Consolidated the local development releases into a public fork release.
+- Distributed the combined Zed-derived work under GPL-3.0-or-later while
+  preserving the original repository, VS Code, and Lucide notices.
+
+### Removed
+
+- Removed machine-transfer and migration instructions from the repository.
+
 ## [1.0.6-local.6] - 2026-08-27
 
 ### Added

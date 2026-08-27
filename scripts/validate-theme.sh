@@ -48,7 +48,7 @@ jq -e '
 ' "$go_grammar_file" >/dev/null
 
 jq -e '
-  .name == "Zed One Dark Local"
+  .name == "Zed One Dark"
   and .semanticHighlighting == true
   and .colors["editor.background"] == "#282c33ff"
   and .colors["editor.foreground"] == "#acb2beff"

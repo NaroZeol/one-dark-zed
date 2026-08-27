@@ -1,6 +1,6 @@
 {
   "$schema": "vscode://schemas/color-theme",
-  "name": "Zed One Dark Local",
+  "name": "Zed One Dark",
   "type": "dark",
   "semanticHighlighting": true,
   "colors": {

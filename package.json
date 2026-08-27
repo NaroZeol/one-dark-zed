@@ -1,31 +1,30 @@
 {
-  "name": "onedark-zed-local",
-  "displayName": "OneDark Zed Local",
-  "description": "A locally maintained VS Code port aligned with Zed's official One Dark theme.",
-  "version": "1.0.6-local.6",
+  "name": "onedark-zed",
+  "displayName": "Zed One Dark",
+  "description": "A community-maintained VS Code port of Zed's built-in One Dark theme, with matching file icons.",
+  "version": "1.1.0",
   "publisher": "NaroZeol",
   "icon": "images/icon.png",
-  "license": "MIT",
+  "license": "GPL-3.0-or-later",
   "repository": {
     "type": "git",
-    "url": "https://github.com/premier213/one-dark-zed.git"
+    "url": "https://github.com/NaroZeol/one-dark-zed.git"
   },
-  "homepage": "https://github.com/premier213/one-dark-zed",
+  "homepage": "https://github.com/NaroZeol/one-dark-zed#readme",
   "bugs": {
-    "url": "https://github.com/premier213/one-dark-zed/issues"
+    "url": "https://github.com/NaroZeol/one-dark-zed/issues"
   },
   "keywords": [
     "icon-theme",
     "theme",
-    "dark-pro",
+    "zed-one-dark",
     "onedark",
     "onedark-zed",
     "onedark-zed-icons",
     "onedark-zed-color-theme",
     "onedark-zed-icon-theme",
-    "onedark-zed-color-theme.json",
-    "onedark-zed-icon-theme.json",
-    "onedark-zed-color-theme.json",
+    "zed-theme",
+    "vscode-theme",
     "zed"
   ],
   "engines": {
@@ -33,6 +32,13 @@
   },
   "categories": [
     "Themes"
+  ],
+  "galleryBanner": {
+    "color": "#282c33",
+    "theme": "dark"
+  },
+  "extensionKind": [
+    "ui"
   ],
   "scripts": {
     "sync:theme": "bash scripts/apply-zed-syntax-map.sh",
@@ -58,7 +64,7 @@
     ],
     "themes": [
       {
-        "label": "Zed One Dark Local",
+        "label": "Zed One Dark",
         "uiTheme": "vs-dark",
         "path": "./themes/onedark-zed-color-theme.json"
       }
