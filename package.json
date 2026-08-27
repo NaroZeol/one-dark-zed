@@ -2,7 +2,7 @@
   "name": "zed-onedark-vscode",
   "displayName": "Zed One Dark",
   "description": "A community-maintained VS Code port of Zed's built-in One Dark theme, with matching file icons.",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "publisher": "NaroZeol",
   "icon": "images/icon.png",
   "license": "GPL-3.0-or-later",
@@ -45,6 +45,7 @@
     "sync:grammar": "bash scripts/sync-go-grammar.sh",
     "test": "bash scripts/validate-theme.sh && node scripts/test-go-grammar.mjs && node scripts/test-theme-token-colors.mjs",
     "test:grammar": "node scripts/test-go-grammar.mjs && node scripts/test-theme-token-colors.mjs",
+    "test:vscode": "node scripts/test-vscode-grammars.mjs",
     "package": "vsce package",
     "publish": "ovsx publish",
     "publish:vscode": "vsce publish"
@@ -60,6 +61,46 @@
         "language": "go",
         "scopeName": "source.go",
         "path": "./grammars/go.tmLanguage.json"
+      },
+      {
+        "scopeName": "zed.one-dark.js-constants",
+        "path": "./grammars/zed-js-constants.injection.tmLanguage.json",
+        "injectTo": ["source.js", "source.js.jsx", "source.ts", "source.tsx"]
+      },
+      {
+        "scopeName": "zed.one-dark.literals",
+        "path": "./grammars/zed-literals.injection.tmLanguage.json",
+        "injectTo": ["source.json", "source.json.comments", "source.json.lines", "source.sql"]
+      },
+      {
+        "scopeName": "zed.one-dark.struct-types",
+        "path": "./grammars/zed-struct-types.injection.tmLanguage.json",
+        "injectTo": ["source.c", "source.rust"]
+      },
+      {
+        "scopeName": "zed.one-dark.ini-values",
+        "path": "./grammars/zed-ini-values.injection.tmLanguage.json",
+        "injectTo": ["source.ini"]
+      },
+      {
+        "scopeName": "zed.one-dark.wat-symbols",
+        "path": "./grammars/zed-wat-symbols.injection.tmLanguage.json",
+        "injectTo": ["text.wat"]
+      },
+      {
+        "scopeName": "zed.one-dark.objcpp-types",
+        "path": "./grammars/zed-objcpp-types.injection.tmLanguage.json",
+        "injectTo": ["source.objcpp"]
+      },
+      {
+        "scopeName": "zed.one-dark.raku-symbols",
+        "path": "./grammars/zed-raku-symbols.injection.tmLanguage.json",
+        "injectTo": ["source.perl.6"]
+      },
+      {
+        "scopeName": "zed.one-dark.vb-symbols",
+        "path": "./grammars/zed-vb-symbols.injection.tmLanguage.json",
+        "injectTo": ["source.asp.vb.net"]
       }
     ],
     "themes": [

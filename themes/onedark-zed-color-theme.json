@@ -2,11 +2,11 @@
   "$schema": "vscode://schemas/color-theme",
   "name": "Zed One Dark",
   "type": "dark",
-  "semanticHighlighting": true,
+  "semanticHighlighting": false,
   "colors": {
     "button.background": "#454a56ff",
     "button.border": "#464b57ff",
-    "settings.modifiedItemIndicator": "#464b57ff",
+    "settings.modifiedItemIndicator": "#dec184ff",
     "extensionButton.background": "#3b414dff",
     "button.hoverBackground": "#363c46ff",
     "contrastActiveBorder": "#00000000",
@@ -21,11 +21,11 @@
     "editor.foreground": "#acb2beff",
     "editorGhostText.foreground": "#5a6a87ff",
     "editor.lineHighlightBackground": "#2f343ebf",
-    "editor.lineHighlightBorder": "#363c46ff",
+    "editor.lineHighlightBorder": "#00000000",
     "editor.selectionBackground": "#74ade83d",
     "editor.selectionForeground": "#acb2beff",
     "editor.selectionHighlightBackground": "#555a6366",
-    "editor.selectionHighlightBorder": "#464b57ff",
+    "editor.selectionHighlightBorder": "#00000000",
     "editor.wordHighlightBackground": "#74ade81a",
     "editor.wordHighlightStrongBackground": "#555a6366",
     "editorBracketMatch.background": "#74ade81a",
@@ -76,11 +76,11 @@
     "notificationsWarningIcon.foreground": "#dec184ff",
     "panel.background": "#2f343eff",
     "panel.border": "#464b57ff",
-    "panelTitle.activeBorder": "#47679eff",
+    "panelTitle.activeBorder": "#00000000",
     "panelTitle.activeForeground": "#dce0e5ff",
     "panelTitle.inactiveForeground": "#a9afbcff",
     "scrollbar.shadow": "#00000000",
-    "scrollbarSlider.activeBackground": "#c8ccd44c",
+    "scrollbarSlider.activeBackground": "#363c46ff",
     "scrollbarSlider.background": "#c8ccd44c",
     "scrollbarSlider.hoverBackground": "#363c46ff",
     "statusBar.background": "#3b414dff",
@@ -103,8 +103,8 @@
     "tab.hoverBackground": "#363c46ff",
     "tab.inactiveBackground": "#2f343eff",
     "tab.inactiveForeground": "#a9afbcff",
-    "tab.unfocusedActiveBorder": "#414754ff",
-    "tab.unfocusedHoverBorder": "#464b57ff",
+    "tab.unfocusedActiveBorder": "#00000000",
+    "tab.unfocusedHoverBorder": "#00000000",
     "terminal.ansiBlack": "#282c34ff",
     "terminal.ansiBlue": "#61afefff",
     "terminal.ansiBrightBlack": "#636d83ff",
@@ -124,7 +124,7 @@
     "terminal.background": "#282c34ff",
     "terminal.border": "#464b57ff",
     "terminal.foreground": "#abb2bfff",
-    "terminal.selectionBackground": "#454a56ff",
+    "terminal.selectionBackground": "#74ade83d",
     "terminal.tab.activeBorder": "#00000000",
     "terminalCursor.background": "#282c34ff",
     "terminalCursor.foreground": "#abb2bfff",
@@ -225,7 +225,7 @@
     "charts.red": "#e06c75ff",
     "charts.yellow": "#e5c07bff",
     "list.filterMatchBackground": "#74ade866",
-    "list.filterMatchBorder": "#464b57ff",
+    "list.filterMatchBorder": "#00000000",
     "list.focusBackground": "#454a56ff",
     "list.focusForeground": "#dce0e5ff",
     "list.highlightForeground": "#74ade8ff",
@@ -255,7 +255,7 @@
     "checkbox.foreground": "#acb2beff",
     "checkbox.selectBackground": "#454a56ff",
     "checkbox.selectBorder": "#464b57ff",
-    "sideBar.dropBackground": "#00000000",
+    "sideBar.dropBackground": "#83899480",
     "sideBarActivityBarTop.border": "#464b57ff",
     "sideBarStickyScroll.border": "#464b57ff",
     "sideBarStickyScroll.shadow": "#00000000",
@@ -287,13 +287,13 @@
     "settings.dropdownBorder": "#464b57ff",
     "quickInputList.focusBackground": "#454a56ff",
     "editorUnnecessaryCode.opacity": "#a9afbcff",
-    "editorUnnecessaryCode.border": "#464b57ff",
-    "editorBracketHighlight.foreground1": "#abb2bfff",
-    "editorBracketHighlight.foreground2": "#abb2bfff",
-    "editorBracketHighlight.foreground3": "#abb2bfff",
-    "editorBracketHighlight.foreground4": "#abb2bfff",
-    "editorBracketHighlight.foreground5": "#abb2bfff",
-    "editorBracketHighlight.foreground6": "#abb2bfff",
+    "editorUnnecessaryCode.border": "#00000000",
+    "editorBracketHighlight.foreground1": "#b2b9c6ff",
+    "editorBracketHighlight.foreground2": "#b2b9c6ff",
+    "editorBracketHighlight.foreground3": "#b2b9c6ff",
+    "editorBracketHighlight.foreground4": "#b2b9c6ff",
+    "editorBracketHighlight.foreground5": "#b2b9c6ff",
+    "editorBracketHighlight.foreground6": "#b2b9c6ff",
     "peekView.border": "#464b57ff",
     "peekViewEditor.background": "#2f343ebf",
     "peekViewEditorGutter.background": "#2f343ebf",
@@ -316,7 +316,9 @@
       "name": "Zed: comments",
       "scope": [
         "comment",
-        "comment punctuation.definition.comment"
+        "comment punctuation.definition.comment",
+        "comment.line.rem.batchfile keyword.command.rem.batchfile",
+        "string.comment.buffered.block.pug"
       ],
       "settings": {
         "foreground": "#5d636fff"
@@ -345,6 +347,18 @@
         "storage.type.enum",
         "storage.type.namespace",
         "storage.type.typedef",
+        "storage.type.js",
+        "storage.type.jsx",
+        "storage.type.ts",
+        "storage.type.tsx",
+        "storage.type.modifier",
+        "meta.function.powershell storage.type.powershell",
+        "meta.function.perl storage.type.sub.perl",
+        "meta.function.section.section.latex support.function.section.latex",
+        "meta.commit-command.git-rebase support.function.git-rebase",
+        "storage.type.structure.shaderlab",
+        "storage.type.declare.routine.perl",
+        "storage.type.asp",
         "meta.preprocessor",
         "entity.name.function.preprocessor",
         "keyword.control.directive",
@@ -358,7 +372,8 @@
       "name": "Zed: operators",
       "scope": [
         "keyword.operator",
-        "storage.type.function.arrow"
+        "storage.type.function.arrow",
+        "storage.type.function.coffee"
       ],
       "settings": {
         "foreground": "#6eb4bfff"
@@ -385,6 +400,8 @@
         "punctuation.definition.character-class",
         "punctuation.definition.tag",
         "punctuation.definition.typeparameters",
+        "punctuation.definition.entity.css",
+        "punctuation.definition.entity.scss",
         "punctuation.section",
         "punctuation.separator",
         "punctuation.terminator",
@@ -419,7 +436,8 @@
         "string.quoted.raw",
         "entity.name.import.go",
         "constant.other.rune.go",
-        "punctuation.definition.string"
+        "punctuation.definition.string",
+        "meta.key-assignment.bibtex"
       ],
       "settings": {
         "foreground": "#a1c181ff"
@@ -441,11 +459,18 @@
       "scope": [
         "string.regexp",
         "string.regex",
+        "string.regexp punctuation.definition.string",
         "constant.other.character-class",
         "constant.character.numeric.regexp",
         "keyword.operator.quantifier.regexp",
         "constant.other.placeholder",
         "constant.other.symbol",
+        "constant.other.color.rgb-value.hex.css",
+        "constant.other.color.rgb-value.hex.scss",
+        "constant.other.color.rgb-value.less",
+        "constant.other.color.rgb-value.less punctuation.definition.constant.less",
+        "constant.other.color.rgb-value.css",
+        "constant.other.color.rgb-value.hex.css punctuation.definition.constant.css",
         "string.other.link"
       ],
       "settings": {
@@ -467,13 +492,14 @@
       "name": "Zed: named constants",
       "scope": [
         "entity.name.constant",
-        "variable.other.constant",
         "constant.language.null",
         "constant.language.undefined",
         "constant.language.iota",
         "support.constant",
         "entity.name.other.preprocessor.macro.predefined",
-        "constant.other"
+        "constant.other",
+        "variable.other.constant.zed",
+        "string.interpolated.makefile variable.other.makefile"
       ],
       "settings": {
         "foreground": "#dfc184ff"
@@ -492,11 +518,15 @@
         "entity.other.inherited-class",
         "support.type",
         "support.class",
+        "keyword.type",
+        "keyword.other.type",
+        "storage.type.powershell",
         "storage.type",
         "storage.type.numeric",
         "storage.type.string",
         "storage.type.boolean",
-        "storage.type.primitive"
+        "storage.type.primitive",
+        "entity.name.section.group-title.ini"
       ],
       "settings": {
         "foreground": "#6eb4bfff"
@@ -523,10 +553,23 @@
         "meta.function-call entity.name.function",
         "meta.function-call variable.function",
         "meta.method-call entity.name.function",
-        "meta.method-call variable.function"
+        "meta.method-call variable.function",
+        "meta.function-call.python",
+        "binding.fsharp variable.fsharp",
+        "meta.definition.global.clojure entity.global.clojure"
       ],
       "settings": {
         "foreground": "#73ade9ff"
+      }
+    },
+    {
+      "name": "Zed: variables",
+      "scope": [
+        "variable",
+        "meta.function.inline.other.handlebars variable.parameter.handlebars"
+      ],
+      "settings": {
+        "foreground": "#acb2beff"
       }
     },
     {
@@ -558,11 +601,14 @@
         "support.variable.property",
         "support.type.property-name",
         "punctuation.support.type.property-name",
+        "keyword.other.definition.ini",
         "entity.name.tag.yaml",
         "entity.name.tag.yaml punctuation.definition.string",
         "meta.object-literal.key",
         "meta.object-binding-pattern-variable meta.definition.variable",
-        "string.json support.type.property-name.json"
+        "string.json support.type.property-name.json",
+        "support.variable.declaration.shaderlab",
+        "support.function.key.bibtex"
       ],
       "settings": {
         "foreground": "#d07277ff"
@@ -583,7 +629,8 @@
     {
       "name": "Zed: tags",
       "scope": [
-        "entity.name.tag"
+        "entity.name.tag",
+        "meta.tag support.class.component"
       ],
       "settings": {
         "foreground": "#74ade8ff"
@@ -597,7 +644,9 @@
         "entity.name.type.package",
         "variable.other.import.go",
         "support.other.namespace",
-        "variable.other.namespace"
+        "variable.other.namespace",
+        "entity.name.scope-resolution.cpp",
+        "entity.scope.name.objcpp"
       ],
       "settings": {
         "foreground": "#dce0e5ff"
@@ -632,6 +681,7 @@
       "scope": [
         "entity.other.attribute-name.class.css",
         "entity.other.attribute-name.id.css",
+        "entity.other.attribute-name.id.scss",
         "entity.name.tag.css",
         "entity.name.tag.scss"
       ],
@@ -643,7 +693,9 @@
       "name": "Zed: CSS pseudo selectors",
       "scope": [
         "entity.other.attribute-name.pseudo-class.css",
-        "entity.other.attribute-name.pseudo-element.css"
+        "entity.other.attribute-name.pseudo-element.css",
+        "entity.other.attribute-name.pseudo-class.scss",
+        "entity.other.attribute-name.pseudo-element.scss"
       ],
       "settings": {
         "foreground": "#74ade8ff"
@@ -654,7 +706,8 @@
       "scope": [
         "markup.heading",
         "entity.name.section.markdown",
-        "punctuation.definition.heading.markdown"
+        "punctuation.definition.heading.markdown",
+        "meta.function.section.section.latex entity.name.section.latex"
       ],
       "settings": {
         "foreground": "#d07277ff"
@@ -682,9 +735,9 @@
     {
       "name": "Zed: markup links",
       "scope": [
-        "markup.underline.link",
         "string.other.link.description",
-        "meta.link.inline.markdown string"
+        "meta.link.inline.markdown string.other.link.title",
+        "meta.link.inline.markdown punctuation.definition.link.title"
       ],
       "settings": {
         "foreground": "#73ade9ff",
@@ -694,8 +747,10 @@
     {
       "name": "Zed: markup link targets",
       "scope": [
+        "markup.underline.link",
         "markup.underline.link.image",
-        "meta.link.inline.markdown string.other.link"
+        "meta.link.inline.markdown string.other.link",
+        "meta.link.inline.markdown punctuation.definition.metadata"
       ],
       "settings": {
         "foreground": "#6eb4bfff"

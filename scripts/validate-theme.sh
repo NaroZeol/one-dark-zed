@@ -11,6 +11,7 @@ upstream_metadata_file="$repo_dir/themes/zed-upstream-metadata.json"
 go_grammar_file="$repo_dir/grammars/go.tmLanguage.json"
 go_upstream_file="$repo_dir/grammars/go.tmLanguage.upstream.json"
 go_upstream_metadata_file="$repo_dir/grammars/go-upstream-metadata.json"
+vscode_fixture_file="$repo_dir/tests/vscode-syntax-cases.json"
 
 jq empty \
   "$repo_dir/package.json" \
@@ -22,7 +23,28 @@ jq empty \
   "$upstream_metadata_file" \
   "$go_grammar_file" \
   "$go_upstream_file" \
-  "$go_upstream_metadata_file"
+  "$go_upstream_metadata_file" \
+  "$vscode_fixture_file" \
+  "$repo_dir/grammars/zed-js-constants.injection.tmLanguage.json" \
+  "$repo_dir/grammars/zed-ini-values.injection.tmLanguage.json" \
+  "$repo_dir/grammars/zed-literals.injection.tmLanguage.json" \
+  "$repo_dir/grammars/zed-objcpp-types.injection.tmLanguage.json" \
+  "$repo_dir/grammars/zed-raku-symbols.injection.tmLanguage.json" \
+  "$repo_dir/grammars/zed-struct-types.injection.tmLanguage.json" \
+  "$repo_dir/grammars/zed-vb-symbols.injection.tmLanguage.json" \
+  "$repo_dir/grammars/zed-wat-symbols.injection.tmLanguage.json"
+
+jq -e '
+  .vscodeVersion == "1.135.0"
+  and .vscodeCommit == "08d4889f9ec4a1685d257b9b95de036c8e1ce1e5"
+  and (.languages | length) >= 61
+  and ([.languages[].id] | length == (unique | length))
+  and ([.languages[].expect | length] | add) >= 310
+' "$vscode_fixture_file" >/dev/null
+
+while IFS= read -r grammar_path; do
+  test -f "$repo_dir/${grammar_path#./}"
+done < <(jq -r '.contributes.grammars[].path' "$repo_dir/package.json")
 
 expected_upstream_hash="$(jq -r '.normalizedSha256' "$upstream_metadata_file")"
 actual_upstream_hash="$(jq -S . "$upstream_file" | shasum -a 256 | awk '{print $1}')"
@@ -41,6 +63,20 @@ jq -e '
 ' "$repo_dir/package.json" >/dev/null
 
 jq -e '
+  ([.contributes.grammars[] | select(.injectTo != null) | .scopeName] | sort)
+    == ([
+      "zed.one-dark.js-constants",
+      "zed.one-dark.ini-values",
+      "zed.one-dark.literals",
+      "zed.one-dark.objcpp-types",
+      "zed.one-dark.raku-symbols",
+      "zed.one-dark.struct-types",
+      "zed.one-dark.vb-symbols",
+      "zed.one-dark.wat-symbols"
+    ] | sort)
+' "$repo_dir/package.json" >/dev/null
+
+jq -e '
   .repository.property_variables.patterns[0]
   | .name == "variable.other.property.go"
     and (.match | contains("(?<=\\.)"))
@@ -49,7 +85,7 @@ jq -e '
 
 jq -e '
   .name == "Zed One Dark"
-  and .semanticHighlighting == true
+  and .semanticHighlighting == false
   and .colors["editor.background"] == "#282c33ff"
   and .colors["editor.foreground"] == "#acb2beff"
   and .colors["sideBar.background"] == "#2f343eff"
@@ -74,7 +110,17 @@ jq -e '
   and .colors["menu.border"] == "#464b57ff"
   and .colors["menu.selectionBackground"] == "#454a56ff"
   and .colors["tab.activeBorder"] == "#00000000"
-  and .colors["terminal.selectionBackground"] == "#454a56ff"
+  and .colors["editor.lineHighlightBorder"] == "#00000000"
+  and .colors["editor.selectionHighlightBorder"] == "#00000000"
+  and .colors["editorBracketHighlight.foreground1"] == "#b2b9c6ff"
+  and .colors["list.filterMatchBorder"] == "#00000000"
+  and .colors["panelTitle.activeBorder"] == "#00000000"
+  and .colors["scrollbarSlider.activeBackground"] == "#363c46ff"
+  and .colors["settings.modifiedItemIndicator"] == "#dec184ff"
+  and .colors["sideBar.dropBackground"] == "#83899480"
+  and .colors["tab.unfocusedActiveBorder"] == "#00000000"
+  and .colors["tab.unfocusedHoverBorder"] == "#00000000"
+  and .colors["terminal.selectionBackground"] == "#74ade83d"
   and .colors["toolbar.hoverBackground"] == "#363c46ff"
   and .semanticTokenColors.string.foreground == "#a1c181ff"
   and .semanticTokenColors.function.foreground == "#73ade9ff"
@@ -96,9 +142,9 @@ semantic_selector_count="$(jq '.semanticTokenColors | length' "$theme_file")"
 compound_selector_count="$(jq '[.tokenColors[].scope | if type == "array" then .[] else . end | select(contains(" "))] | length' "$theme_file")"
 
 test "$textmate_rule_count" -le 40
-test "$textmate_selector_count" -le 180
+test "$textmate_selector_count" -le 220
 test "$semantic_selector_count" -le 80
-test "$compound_selector_count" -le 16
+test "$compound_selector_count" -le 32
 
 # High-risk grammar conflicts must resolve to the same semantic captures used
 # by Zed. These are intentionally compact exceptions, not complete grammars.
@@ -107,20 +153,32 @@ jq -e '
     [.tokenColors[] | select(.name == $name) | .scope | if type == "array" then .[] else . end];
   (scopes("Zed: strings") | index("entity.name.import.go") != null)
   and (scopes("Zed: comments") | index("comment punctuation.definition.comment") != null)
+  and (scopes("Zed: comments") | index("comment.line.rem.batchfile keyword.command.rem.batchfile") != null)
+  and (scopes("Zed: comments") | index("string.comment.buffered.block.pug") != null)
+  and (scopes("Zed: keywords and declarations") | index("storage.type.js") != null)
+  and (scopes("Zed: operators") | index("storage.type.function.coffee") != null)
+  and (scopes("Zed: regular expressions and special strings") | index("string.regexp punctuation.definition.string") != null)
+  and (scopes("Zed: named constants") | index("variable.other.constant") == null)
   and (scopes("Zed: namespaces and packages") | index("entity.name.import.go") == null)
   and (scopes("Zed: properties") | index("entity.name.tag.yaml") != null)
   and (scopes("Zed: properties") | index("variable.other.object.property") != null)
   and (scopes("Zed: properties") | index("entity.name.variable.field") != null)
   and (scopes("Zed: properties") | index("meta.attribute.python") != null)
   and (scopes("Zed: parameters") | index("entity.name.variable.parameter") != null)
+  and (scopes("Zed: variables") | index("meta.function.inline.other.handlebars variable.parameter.handlebars") != null)
   and (scopes("Zed: properties") | index("punctuation.support.type.property-name") != null)
   and (scopes("Zed: brackets and delimiters") | index("punctuation.definition.tag") != null)
   and (scopes("Zed: tags") | index("punctuation.definition.tag") == null)
+  and (scopes("Zed: markup links") | index("meta.link.inline.markdown string.other.link.title") != null)
+  and (scopes("Zed: markup link targets") | index("meta.link.inline.markdown string.other.link") != null)
 ' "$theme_file" >/dev/null
 
 jq -e --slurpfile upstream "$upstream_file" --slurpfile theme "$theme_file" '
   ($upstream[0].themes[] | select(.name == "One Dark") | .style) as $zed
-  | all(to_entries[]; $theme[0].colors[.key] == $zed[.value])
+  | all(to_entries[];
+      .value as $path
+      | $theme[0].colors[.key]
+        == (if ($path | type) == "array" then $zed | getpath($path) else $zed[$path] end))
 ' "$ui_bindings_file" >/dev/null
 
 jq -e \

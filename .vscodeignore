@@ -25,6 +25,7 @@ vsc-extension-quickstart.md
 grammars/*.upstream.json
 grammars/*-upstream-metadata.json
 scripts/**
+tests/**
 themes/zed-one-theme.upstream.json
 themes/zed-style-bindings.json
 themes/zed-syntax-mapping.json

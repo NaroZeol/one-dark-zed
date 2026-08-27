@@ -39,7 +39,9 @@
       "name": "Zed: comments",
       "scope": [
         "comment",
-        "comment punctuation.definition.comment"
+        "comment punctuation.definition.comment",
+        "comment.line.rem.batchfile keyword.command.rem.batchfile",
+        "string.comment.buffered.block.pug"
       ],
       "settings": { "foreground": "#5d636fff" }
     },
@@ -64,6 +66,18 @@
         "storage.type.enum",
         "storage.type.namespace",
         "storage.type.typedef",
+        "storage.type.js",
+        "storage.type.jsx",
+        "storage.type.ts",
+        "storage.type.tsx",
+        "storage.type.modifier",
+        "meta.function.powershell storage.type.powershell",
+        "meta.function.perl storage.type.sub.perl",
+        "meta.function.section.section.latex support.function.section.latex",
+        "meta.commit-command.git-rebase support.function.git-rebase",
+        "storage.type.structure.shaderlab",
+        "storage.type.declare.routine.perl",
+        "storage.type.asp",
         "meta.preprocessor",
         "entity.name.function.preprocessor",
         "keyword.control.directive",
@@ -75,7 +89,8 @@
       "name": "Zed: operators",
       "scope": [
         "keyword.operator",
-        "storage.type.function.arrow"
+        "storage.type.function.arrow",
+        "storage.type.function.coffee"
       ],
       "settings": { "foreground": "#6eb4bfff" }
     },
@@ -96,6 +111,8 @@
         "punctuation.definition.character-class",
         "punctuation.definition.tag",
         "punctuation.definition.typeparameters",
+        "punctuation.definition.entity.css",
+        "punctuation.definition.entity.scss",
         "punctuation.section",
         "punctuation.separator",
         "punctuation.terminator",
@@ -126,7 +143,8 @@
         "string.quoted.raw",
         "entity.name.import.go",
         "constant.other.rune.go",
-        "punctuation.definition.string"
+        "punctuation.definition.string",
+        "meta.key-assignment.bibtex"
       ],
       "settings": { "foreground": "#a1c181ff" }
     },
@@ -144,11 +162,18 @@
       "scope": [
         "string.regexp",
         "string.regex",
+        "string.regexp punctuation.definition.string",
         "constant.other.character-class",
         "constant.character.numeric.regexp",
         "keyword.operator.quantifier.regexp",
         "constant.other.placeholder",
         "constant.other.symbol",
+        "constant.other.color.rgb-value.hex.css",
+        "constant.other.color.rgb-value.hex.scss",
+        "constant.other.color.rgb-value.less",
+        "constant.other.color.rgb-value.less punctuation.definition.constant.less",
+        "constant.other.color.rgb-value.css",
+        "constant.other.color.rgb-value.hex.css punctuation.definition.constant.css",
         "string.other.link"
       ],
       "settings": { "foreground": "#bf956aff" }
@@ -166,13 +191,14 @@
       "name": "Zed: named constants",
       "scope": [
         "entity.name.constant",
-        "variable.other.constant",
         "constant.language.null",
         "constant.language.undefined",
         "constant.language.iota",
         "support.constant",
         "entity.name.other.preprocessor.macro.predefined",
-        "constant.other"
+        "constant.other",
+        "variable.other.constant.zed",
+        "string.interpolated.makefile variable.other.makefile"
       ],
       "settings": { "foreground": "#dfc184ff" }
     },
@@ -189,11 +215,15 @@
         "entity.other.inherited-class",
         "support.type",
         "support.class",
+        "keyword.type",
+        "keyword.other.type",
+        "storage.type.powershell",
         "storage.type",
         "storage.type.numeric",
         "storage.type.string",
         "storage.type.boolean",
-        "storage.type.primitive"
+        "storage.type.primitive",
+        "entity.name.section.group-title.ini"
       ],
       "settings": { "foreground": "#6eb4bfff" }
     },
@@ -216,9 +246,20 @@
         "meta.function-call entity.name.function",
         "meta.function-call variable.function",
         "meta.method-call entity.name.function",
-        "meta.method-call variable.function"
+        "meta.method-call variable.function",
+        "meta.function-call.python",
+        "binding.fsharp variable.fsharp",
+        "meta.definition.global.clojure entity.global.clojure"
       ],
       "settings": { "foreground": "#73ade9ff" }
+    },
+    {
+      "name": "Zed: variables",
+      "scope": [
+        "variable",
+        "meta.function.inline.other.handlebars variable.parameter.handlebars"
+      ],
+      "settings": { "foreground": "#acb2beff" }
     },
     {
       "name": "Zed: parameters",
@@ -247,11 +288,14 @@
         "support.variable.property",
         "support.type.property-name",
         "punctuation.support.type.property-name",
+        "keyword.other.definition.ini",
         "entity.name.tag.yaml",
         "entity.name.tag.yaml punctuation.definition.string",
         "meta.object-literal.key",
         "meta.object-binding-pattern-variable meta.definition.variable",
-        "string.json support.type.property-name.json"
+        "string.json support.type.property-name.json",
+        "support.variable.declaration.shaderlab",
+        "support.function.key.bibtex"
       ],
       "settings": { "foreground": "#d07277ff" }
     },
@@ -268,7 +312,8 @@
     {
       "name": "Zed: tags",
       "scope": [
-        "entity.name.tag"
+        "entity.name.tag",
+        "meta.tag support.class.component"
       ],
       "settings": { "foreground": "#74ade8ff" }
     },
@@ -280,7 +325,9 @@
         "entity.name.type.package",
         "variable.other.import.go",
         "support.other.namespace",
-        "variable.other.namespace"
+        "variable.other.namespace",
+        "entity.name.scope-resolution.cpp",
+        "entity.scope.name.objcpp"
       ],
       "settings": { "foreground": "#dce0e5ff" }
     },
@@ -309,6 +356,7 @@
       "scope": [
         "entity.other.attribute-name.class.css",
         "entity.other.attribute-name.id.css",
+        "entity.other.attribute-name.id.scss",
         "entity.name.tag.css",
         "entity.name.tag.scss"
       ],
@@ -318,7 +366,9 @@
       "name": "Zed: CSS pseudo selectors",
       "scope": [
         "entity.other.attribute-name.pseudo-class.css",
-        "entity.other.attribute-name.pseudo-element.css"
+        "entity.other.attribute-name.pseudo-element.css",
+        "entity.other.attribute-name.pseudo-class.scss",
+        "entity.other.attribute-name.pseudo-element.scss"
       ],
       "settings": { "foreground": "#74ade8ff" }
     },
@@ -327,7 +377,8 @@
       "scope": [
         "markup.heading",
         "entity.name.section.markdown",
-        "punctuation.definition.heading.markdown"
+        "punctuation.definition.heading.markdown",
+        "meta.function.section.section.latex entity.name.section.latex"
       ],
       "settings": { "foreground": "#d07277ff" }
     },
@@ -344,17 +395,19 @@
     {
       "name": "Zed: markup links",
       "scope": [
-        "markup.underline.link",
         "string.other.link.description",
-        "meta.link.inline.markdown string"
+        "meta.link.inline.markdown string.other.link.title",
+        "meta.link.inline.markdown punctuation.definition.link.title"
       ],
       "settings": { "foreground": "#73ade9ff", "fontStyle": "italic" }
     },
     {
       "name": "Zed: markup link targets",
       "scope": [
+        "markup.underline.link",
         "markup.underline.link.image",
-        "meta.link.inline.markdown string.other.link"
+        "meta.link.inline.markdown string.other.link",
+        "meta.link.inline.markdown punctuation.definition.metadata"
       ],
       "settings": { "foreground": "#6eb4bfff" }
     },

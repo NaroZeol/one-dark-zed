@@ -1,0 +1,15 @@
+{
+  "name": "Zed Objective-C++ type corrections",
+  "scopeName": "zed.one-dark.objcpp-types",
+  "injectionSelector": "L:source.objcpp -comment -string",
+  "patterns": [
+    {
+      "match": "(?<=::)[A-Za-z_]\\w*(?=\\s*[*&]*\\s*[a-z_]\\w*\\s*(?:[=;,)\\[]))",
+      "name": "entity.name.type.objcpp.zed"
+    },
+    {
+      "match": "\\b[A-Z][A-Za-z0-9_]*\\b(?=\\s*[*&]*\\s*[a-z_]\\w*\\s*(?:[=;,)\\[]))",
+      "name": "entity.name.type.objcpp.zed"
+    }
+  ]
+}

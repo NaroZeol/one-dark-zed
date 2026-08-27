@@ -15,8 +15,9 @@ The implementation follows three rules:
 1. The pinned Zed One Dark asset is the sole color source.
 2. Generated files are rebuilt from explicit mappings and pinned upstream
    inputs; generated colors are not edited by hand.
-3. Semantic tokens are preferred when a language server classifies symbols
-   reliably; a grammar patch is used only when the provider loses information.
+3. TextMate scopes are the default classification source, matching Zed's
+   default of not applying language-server semantic tokens; a narrowly scoped
+   grammar injection is used only when the provider loses information.
 
 ## Theme generation
 
@@ -28,6 +29,9 @@ The implementation follows three rules:
 - `scripts/apply-zed-syntax-map.sh`: deterministic generator.
 - `themes/onedark-zed-color-theme.json`: committed runtime output.
 
+UI binding values are either a flat Zed style key or a JSON path array for
+nested values such as the primary player's selection and syntax colors.
+
 After changing any mapping or pinned theme input:
 
 ```sh
@@ -35,16 +39,18 @@ npm run sync:theme
 npm test
 ```
 
-## Go grammar exception
+## Grammar exceptions
 
-Semantic highlighting is enabled globally but disabled for Go. The pinned gopls
-behavior distinguishes types and calls while reporting ordinary fields as
-generic variables, which prevents Zed-style property coloring.
+Semantic highlighting is disabled globally. A pinned copy of VS Code's Go
+grammar distinguishes field access from ordinary variables, and compact
+injection grammars restore distinctions exposed by Zed's Tree-sitter queries
+but absent from selected built-in TextMate grammars.
 
 - `grammars/go.tmLanguage.upstream.json`: pinned VS Code built-in Go grammar.
 - `grammars/go-upstream-metadata.json`: version and normalized hash.
 - `scripts/sync-go-grammar.sh`: adds one fallback rule for non-call selectors.
 - `grammars/go.tmLanguage.json`: committed, minified runtime grammar.
+- `grammars/zed-*.injection.tmLanguage.json`: small, reviewed scope corrections.
 - `scripts/test-go-grammar.mjs`: TextMate/Oniguruma regression test.
 
 After updating the upstream grammar:
@@ -65,13 +71,20 @@ npm test
 - selector counts stay within explicit performance budgets;
 - high-risk scope precedence remains correct;
 - the Go grammar produces the expected token scopes.
+- the pinned local VS Code grammar fixture cannot silently lose languages or
+  token assertions.
 
-The extension contains no activation code. Its only extra runtime grammar cost
-is one Go selector fallback rule.
+`npm run test:vscode` executes the separate 61-language integration suite when
+`VSCODE_APP_ROOT` points to the matching `resources/app` directory.
+
+The extension contains no activation code. Its runtime grammar additions are
+bounded by explicit selector and injection tests.
 
 ## Known limitations
 
 - Exact token classification is bounded by each VS Code language provider.
+- VS Code's reStructuredText TextMate grammar cannot retroactively scope a
+  heading line from its underline on the following line; Zed's parser can.
 - The Go grammar snapshot must be consciously rebased when VS Code changes its
   built-in grammar; hash validation detects edits but not new releases.
 - Visual comparison remains useful for editor decorations that are not theme

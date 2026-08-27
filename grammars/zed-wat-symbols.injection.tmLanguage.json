@@ -1,0 +1,15 @@
+{
+  "name": "Zed WebAssembly symbol corrections",
+  "scopeName": "zed.one-dark.wat-symbols",
+  "injectionSelector": "L:text.wat -comment -string",
+  "patterns": [
+    {
+      "match": "(?<=\\(func\\s)\\$[A-Za-z_][A-Za-z0-9_.-]*",
+      "name": "entity.name.function.wat.zed"
+    },
+    {
+      "match": "\\b(?:i32|i64|f32|f64|v128|funcref|externref)\\b",
+      "name": "support.type.builtin.wat.zed"
+    }
+  ]
+}

@@ -22,9 +22,10 @@ theme, with a matching file icon theme and carefully aligned syntax colors.
 
 | Contribution | ID / label | Notes |
 | --- | --- | --- |
-| Color theme | **Zed One Dark** | Workbench, editor, terminal, semantic-token, and TextMate colors generated from a pinned Zed One Dark palette. |
+| Color theme | **Zed One Dark** | Workbench, editor, terminal, and TextMate colors generated from a pinned Zed One Dark palette. Semantic colors remain available as an opt-in. |
 | File icon theme | **Onedark Zed Icons** (`onedark-zed-icons`) | Icons for common languages, tools, and folders. |
 | Go grammar override | `source.go` | A generated, tested fallback that distinguishes property selectors while retaining type and function scopes. |
+| Scope corrections | eight scoped grammar injections | Restores narrow distinctions present in Zed's Tree-sitter captures but missing from selected VS Code TextMate grammars. |
 
 The extension has no activation code and executes no runtime JavaScript.
 
@@ -32,8 +33,7 @@ The extension has no activation code and executes no runtime JavaScript.
 
 ### VS Code Marketplace
 
-After the extension is published, search for **Zed One Dark** in the Extensions
-view or run:
+Search for **Zed One Dark** in the Extensions view or run:
 
 ```powershell
 code --install-extension NaroZeol.zed-onedark-vscode
@@ -45,7 +45,7 @@ Download a `.vsix` from the repository releases, then run **Extensions: Install
 from VSIX…** in the Command Palette. From a terminal:
 
 ```powershell
-code --install-extension .\zed-onedark-vscode-1.1.0.vsix --force
+code --install-extension .\zed-onedark-vscode-1.2.0.vsix --force
 ```
 
 To build the package yourself:
@@ -53,7 +53,7 @@ To build the package yourself:
 ```sh
 npm ci
 npm test
-npm run package -- --out zed-onedark-vscode-1.1.0.vsix
+npm run package -- --out zed-onedark-vscode-1.2.0.vsix
 ```
 
 ## Activate
@@ -101,6 +101,14 @@ Run the generators only after changing their corresponding inputs:
 npm run sync:theme
 npm run sync:grammar
 npm test
+```
+
+The pinned VS Code 1.135.0 integration suite exercises 310 tokens across 61
+bundled grammars. Point it at that VS Code installation's `resources/app`
+directory:
+
+```sh
+VSCODE_APP_ROOT=/path/to/VSCode/resources/app npm run test:vscode
 ```
 
 Do not hand-edit generated colors. See

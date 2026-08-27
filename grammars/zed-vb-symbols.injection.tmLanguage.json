@@ -1,0 +1,19 @@
+{
+  "name": "Zed Visual Basic symbol corrections",
+  "scopeName": "zed.one-dark.vb-symbols",
+  "injectionSelector": "L:source.asp.vb.net -comment -string",
+  "patterns": [
+    {
+      "match": "(?i:\\b(?:function|sub)\\s+)([A-Za-z_]\\w*)",
+      "captures": {
+        "1": { "name": "entity.name.function.vb.zed" }
+      }
+    },
+    {
+      "match": "(?i:\\b)([A-Za-z_]\\w*)(?=\\s+As\\s+[A-Za-z_]\\w*\\s*[,)])",
+      "captures": {
+        "1": { "name": "variable.parameter.vb.zed" }
+      }
+    }
+  ]
+}

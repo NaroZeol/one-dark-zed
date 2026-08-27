@@ -1,0 +1,21 @@
+{
+  "name": "Zed Raku symbol corrections",
+  "scopeName": "zed.one-dark.raku-symbols",
+  "injectionSelector": "L:source.perl.6 -comment -string",
+  "patterns": [
+    {
+      "match": "(?<=\\bsub\\s)[A-Za-z_]\\w*",
+      "name": "entity.name.function.raku.zed"
+    },
+    {
+      "match": "\\b[A-Z][A-Za-z0-9_]*(?=\\s+\\$[A-Za-z_])",
+      "name": "entity.name.type.raku.zed"
+    },
+    {
+      "match": "\\$([A-Za-z_]\\w*)(?=\\s*[,)=])",
+      "captures": {
+        "1": { "name": "variable.parameter.raku.zed" }
+      }
+    }
+  ]
+}

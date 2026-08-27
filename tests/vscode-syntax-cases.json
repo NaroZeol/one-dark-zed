@@ -1,0 +1,747 @@
+{
+  "vscodeVersion": "1.135.0",
+  "vscodeCommit": "08d4889f9ec4a1685d257b9b95de036c8e1ce1e5",
+  "languages": [
+    {
+      "id": "shell",
+      "scopeName": "source.shell",
+      "lines": ["if test -n \"$name\"; then # comment", "  echo \"ready\"", "fi"],
+      "expect": [
+        { "text": "if", "style": "keyword" },
+        { "text": "\"", "style": "string" },
+        { "text": "#", "style": "comment" },
+        { "text": "comment", "style": "comment" },
+        { "line": 1, "text": "ready", "style": "string" }
+      ]
+    },
+    {
+      "id": "python",
+      "scopeName": "source.python",
+      "lines": ["def greet(name: str) -> str:", "    # comment", "    return name.upper()"],
+      "expect": [
+        { "text": "def", "style": "keyword" },
+        { "text": "greet", "style": "function" },
+        { "text": "name", "style": "variable.parameter" },
+        { "text": "str", "style": "type" },
+        { "line": 1, "text": "#", "style": "comment" },
+        { "line": 2, "text": "return", "style": "keyword" },
+        { "line": 2, "text": "upper", "style": "function" }
+      ]
+    },
+    {
+      "id": "yaml",
+      "scopeName": "source.yaml",
+      "lines": ["enabled: true # comment", "title: \"preview\""],
+      "expect": [
+        { "text": "enabled", "style": "property" },
+        { "text": "true", "style": "boolean" },
+        { "text": "#", "style": "comment" },
+        { "line": 1, "text": "title", "style": "property" },
+        { "line": 1, "text": "preview", "style": "string" }
+      ]
+    },
+    {
+      "id": "javascript",
+      "scopeName": "source.js",
+      "lines": [
+        "const lowercase = /a+b?/gi;",
+        "const UPPER_CASE = `hello ${name}`;",
+        "function greet(user) { return user.name; }"
+      ],
+      "expect": [
+        { "text": "const", "style": "keyword" },
+        { "text": "lowercase", "style": "variable" },
+        { "text": "/", "style": "string.regex" },
+        { "text": "/", "occurrence": 2, "style": "string.regex" },
+        { "line": 1, "text": "UPPER_CASE", "style": "constant" },
+        { "line": 1, "text": "name", "style": "variable" },
+        { "line": 2, "text": "function", "style": "keyword" },
+        { "line": 2, "text": "greet", "style": "function" },
+        { "line": 2, "text": "user", "style": "variable.parameter" },
+        { "line": 2, "text": "name", "style": "property" }
+      ]
+    },
+    {
+      "id": "typescript",
+      "scopeName": "source.ts",
+      "lines": ["interface User { name: string }", "const lowercase: User = { name: \"Ada\" };"],
+      "expect": [
+        { "text": "interface", "style": "keyword" },
+        { "text": "User", "style": "type" },
+        { "text": "name", "style": "property" },
+        { "text": "string", "style": "type" },
+        { "line": 1, "text": "const", "style": "keyword" },
+        { "line": 1, "text": "lowercase", "style": "variable" },
+        { "line": 1, "text": "User", "style": "type" },
+        { "line": 1, "text": "name", "style": "property" },
+        { "line": 1, "text": "Ada", "style": "string" }
+      ]
+    },
+    {
+      "id": "rust",
+      "scopeName": "source.rust",
+      "lines": ["fn greet(name: &str) -> String {", "    println!(\"hello {name}\");", "}"],
+      "expect": [
+        { "text": "fn", "style": "keyword" },
+        { "text": "greet", "style": "function" },
+        { "text": "name", "style": "variable.parameter" },
+        { "text": "str", "style": "type" },
+        { "text": "String", "style": "type" },
+        { "line": 1, "text": "println", "style": "function" },
+        { "line": 1, "text": "hello", "style": "string" }
+      ]
+    },
+    {
+      "id": "go",
+      "scopeName": "source.go",
+      "lines": ["package demo", "func greet(name string) string {", "    return user.Profile.Name", "}"],
+      "expect": [
+        { "text": "package", "style": "keyword" },
+        { "line": 1, "text": "func", "style": "keyword" },
+        { "line": 1, "text": "greet", "style": "function" },
+        { "line": 1, "text": "name", "style": "variable.parameter" },
+        { "line": 1, "text": "string", "style": "type" },
+        { "line": 2, "text": "Profile", "style": "property" },
+        { "line": 2, "text": "Name", "style": "property" }
+      ]
+    },
+    {
+      "id": "c",
+      "scopeName": "source.c",
+      "lines": ["struct User { int count; };", "int main(void) { return 0; }"],
+      "expect": [
+        { "text": "struct", "style": "keyword" },
+        { "text": "User", "style": "type" },
+        { "text": "int", "style": "type" },
+        { "line": 1, "text": "main", "style": "function" },
+        { "line": 1, "text": "return", "style": "keyword" },
+        { "line": 1, "text": "0", "style": "number" }
+      ]
+    },
+    {
+      "id": "cpp",
+      "scopeName": "source.cpp",
+      "lines": ["class Theme { public: std::string name() const; };"],
+      "expect": [
+        { "text": "class", "style": "keyword" },
+        { "text": "Theme", "style": "type" },
+        { "text": "public", "style": "keyword" },
+        { "text": "std", "style": "namespace" },
+        { "text": "string", "style": "type" },
+        { "text": "name", "style": "function" }
+      ]
+    },
+    {
+      "id": "csharp",
+      "scopeName": "source.cs",
+      "lines": ["public class Theme { public string Name { get; init; } }"],
+      "expect": [
+        { "text": "public", "style": "keyword" },
+        { "text": "class", "style": "keyword" },
+        { "text": "Theme", "style": "type" },
+        { "text": "string", "style": "type" },
+        { "text": "Name", "style": "property" }
+      ]
+    },
+    {
+      "id": "java",
+      "scopeName": "source.java",
+      "lines": ["public final class Theme { String name() { return \"dark\"; } }"],
+      "expect": [
+        { "text": "public", "style": "keyword" },
+        { "text": "class", "style": "keyword" },
+        { "text": "Theme", "style": "type" },
+        { "text": "String", "style": "type" },
+        { "text": "name", "style": "function" },
+        { "text": "dark", "style": "string" }
+      ]
+    },
+    {
+      "id": "php",
+      "scopeName": "source.php",
+      "lines": ["function greet(string $name): string { return $name; }"],
+      "expect": [
+        { "text": "function", "style": "keyword" },
+        { "text": "greet", "style": "function" },
+        { "text": "string", "style": "type" },
+        { "text": "$name", "style": "variable" },
+        { "text": "return", "style": "keyword" }
+      ]
+    },
+    {
+      "id": "ruby",
+      "scopeName": "source.ruby",
+      "lines": ["def greet(name)", "  puts \"hello #{name}\"", "end"],
+      "expect": [
+        { "text": "def", "style": "keyword" },
+        { "text": "greet", "style": "function" },
+        { "text": "name", "style": "variable.parameter" },
+        { "line": 1, "text": "hello", "style": "string" },
+        { "line": 2, "text": "end", "style": "keyword" }
+      ]
+    },
+    {
+      "id": "powershell",
+      "scopeName": "source.powershell",
+      "lines": ["function Get-Theme([string]$Name) {", "  # comment", "  return \"dark\"", "}"],
+      "expect": [
+        { "text": "function", "style": "keyword" },
+        { "text": "Get-Theme", "style": "function" },
+        { "text": "string", "style": "type" },
+        { "line": 1, "text": "#", "style": "comment" },
+        { "line": 2, "text": "return", "style": "keyword" },
+        { "line": 2, "text": "dark", "style": "string" }
+      ]
+    },
+    {
+      "id": "sql",
+      "scopeName": "source.sql",
+      "lines": ["SELECT name, count FROM themes WHERE enabled = TRUE;"],
+      "expect": [
+        { "text": "SELECT", "style": "keyword" },
+        { "text": "FROM", "style": "keyword" },
+        { "text": "WHERE", "style": "keyword" },
+        { "text": "TRUE", "style": "boolean" }
+      ]
+    },
+    {
+      "id": "json",
+      "scopeName": "source.json",
+      "lines": ["{\"enabled\": true, \"count\": 2, \"value\": null}"],
+      "expect": [
+        { "text": "enabled", "style": "property" },
+        { "text": "true", "style": "boolean" },
+        { "text": "count", "style": "property" },
+        { "text": "2", "style": "number" },
+        { "text": "null", "style": "constant" }
+      ]
+    },
+    {
+      "id": "jsonc",
+      "scopeName": "source.json.comments",
+      "lines": ["{", "  // comment", "  \"enabled\": false", "}"],
+      "expect": [
+        { "line": 1, "text": "//", "style": "comment" },
+        { "line": 2, "text": "enabled", "style": "property" },
+        { "line": 2, "text": "false", "style": "boolean" }
+      ]
+    },
+    {
+      "id": "html",
+      "scopeName": "text.html.basic",
+      "lines": ["<section class=\"hero\">Text</section>"],
+      "expect": [
+        { "text": "<", "style": "punctuation.bracket" },
+        { "text": "section", "style": "tag" },
+        { "text": "class", "style": "attribute" },
+        { "text": "hero", "style": "string" },
+        { "text": "Text", "style": "primary" }
+      ]
+    },
+    {
+      "id": "css",
+      "scopeName": "source.css",
+      "lines": ["#app.card:hover { color: red; }"] ,
+      "expect": [
+        { "text": "#", "style": "punctuation.bracket" },
+        { "text": "app", "style": "selector" },
+        { "text": ".", "style": "punctuation.bracket" },
+        { "text": "card", "style": "selector" },
+        { "text": ":", "style": "punctuation.bracket" },
+        { "text": "hover", "style": "selector.pseudo" },
+        { "text": "color", "style": "property" }
+      ]
+    },
+    {
+      "id": "scss",
+      "scopeName": "source.css.scss",
+      "lines": ["$accent: #74ade8;", ".card:hover { color: $accent; }"] ,
+      "expect": [
+        { "text": "$accent", "style": "variable" },
+        { "text": "#74ade8", "style": "string.special" },
+        { "line": 1, "text": "card", "style": "selector" },
+        { "line": 1, "text": "hover", "style": "selector.pseudo" },
+        { "line": 1, "text": "color", "style": "property" }
+      ]
+    },
+    {
+      "id": "markdown",
+      "scopeName": "text.html.markdown",
+      "lines": ["# Heading", "", "[label](https://example.test)", "", "> quote", "", "- item", "", "`code`"],
+      "expect": [
+        { "text": "#", "style": "title" },
+        { "text": "Heading", "style": "title" },
+        { "line": 2, "text": "[", "style": "link_text" },
+        { "line": 2, "text": "label", "style": "link_text" },
+        { "line": 2, "text": "]", "style": "link_text" },
+        { "line": 2, "text": "(", "style": "link_uri" },
+        { "line": 2, "text": "https://example.test", "style": "link_uri" },
+        { "line": 2, "text": ")", "style": "link_uri" },
+        { "line": 4, "text": ">", "style": "punctuation.markup" },
+        { "line": 6, "text": "-", "style": "punctuation.list_marker" },
+        { "line": 8, "text": "code", "style": "text.literal" }
+      ]
+    },
+    {
+      "id": "dockerfile",
+      "scopeName": "source.dockerfile",
+      "lines": ["FROM node:24", "ENV MODE=production", "RUN echo \"ready\""],
+      "expect": [
+        { "text": "FROM", "style": "keyword" },
+        { "line": 1, "text": "ENV", "style": "keyword" },
+        { "line": 2, "text": "RUN", "style": "keyword" },
+        { "line": 2, "text": "ready", "style": "string" }
+      ]
+    },
+    {
+      "id": "makefile",
+      "scopeName": "source.makefile",
+      "lines": ["build: main.c", "\t$(CC) -o app main.c"],
+      "expect": [
+        { "line": 1, "text": "CC", "style": "constant" }
+      ]
+    },
+    {
+      "id": "ini",
+      "scopeName": "source.ini",
+      "lines": ["[theme]", "name=\"dark\"", "; comment"],
+      "expect": [
+        { "text": "theme", "style": "type" },
+        { "line": 1, "text": "name", "style": "property" },
+        { "line": 1, "text": "dark", "style": "string" },
+        { "line": 2, "text": ";", "style": "comment" }
+      ]
+    },
+    {
+      "id": "diff",
+      "scopeName": "source.diff",
+      "lines": ["--- a/theme.json", "+++ b/theme.json", "-old", "+new"],
+      "expect": [
+        { "line": 2, "text": "old", "style": "diff.minus" },
+        { "line": 3, "text": "new", "style": "diff.plus" }
+      ]
+    },
+    {
+      "id": "lua",
+      "scopeName": "source.lua",
+      "lines": ["local function greet(name)", "  return theme.name", "end"],
+      "expect": [
+        { "text": "local", "style": "keyword" },
+        { "text": "function", "style": "keyword" },
+        { "text": "greet", "style": "function" },
+        { "text": "name", "style": "variable.parameter" },
+        { "line": 1, "text": "return", "style": "keyword" },
+        { "line": 1, "text": "name", "style": "property" }
+      ]
+    },
+    {
+      "id": "jsx",
+      "scopeName": "source.js.jsx",
+      "lines": ["const view = <section className=\"hero\">{user.name}</section>;"],
+      "expect": [
+        { "text": "const", "style": "keyword" },
+        { "text": "section", "style": "tag" },
+        { "text": "className", "style": "attribute" },
+        { "text": "hero", "style": "string" },
+        { "text": "user", "style": "variable" },
+        { "text": "name", "style": "property" }
+      ]
+    },
+    {
+      "id": "tsx",
+      "scopeName": "source.tsx",
+      "lines": ["const view: JSX.Element = <Button title=\"Save\" />;"],
+      "expect": [
+        { "text": "const", "style": "keyword" },
+        { "text": "view", "style": "variable" },
+        { "text": "JSX", "style": "type" },
+        { "text": "Element", "style": "type" },
+        { "text": "Button", "style": "tag" },
+        { "text": "title", "style": "attribute" },
+        { "text": "Save", "style": "string" }
+      ]
+    },
+    {
+      "id": "objective-c",
+      "scopeName": "source.objc",
+      "lines": ["// comment", "NSString *name = @\"dark\";"],
+      "expect": [
+        { "text": "//", "style": "comment" },
+        { "line": 1, "text": "NSString", "style": "type" },
+        { "line": 1, "text": "name", "style": "variable" },
+        { "line": 1, "text": "dark", "style": "string" }
+      ]
+    },
+    {
+      "id": "dart",
+      "scopeName": "source.dart",
+      "lines": ["class Theme { final String name = 'dark'; }"],
+      "expect": [
+        { "text": "class", "style": "keyword" },
+        { "text": "Theme", "style": "type" },
+        { "text": "final", "style": "keyword" },
+        { "text": "String", "style": "type" },
+        { "text": "name", "style": "variable" },
+        { "text": "dark", "style": "string" }
+      ]
+    },
+    {
+      "id": "swift",
+      "scopeName": "source.swift",
+      "lines": ["struct Theme { let name: String = \"dark\" }"],
+      "expect": [
+        { "text": "struct", "style": "keyword" },
+        { "text": "Theme", "style": "type" },
+        { "text": "let", "style": "keyword" },
+        { "text": "name", "style": "variable" },
+        { "text": "String", "style": "type" },
+        { "text": "dark", "style": "string" }
+      ]
+    },
+    {
+      "id": "fsharp",
+      "scopeName": "source.fsharp",
+      "lines": ["let greet (name: string) = printfn \"hello %s\" name"],
+      "expect": [
+        { "text": "let", "style": "keyword" },
+        { "text": "greet", "style": "function" },
+        { "text": "name", "style": "variable.parameter" },
+        { "text": "string", "style": "type" },
+        { "text": "hello", "style": "string" }
+      ]
+    },
+    {
+      "id": "r",
+      "scopeName": "source.r",
+      "lines": ["greet <- function(name) { paste(\"hello\", name) }"],
+      "expect": [
+        { "text": "greet", "style": "function" },
+        { "text": "function", "style": "keyword" },
+        { "text": "name", "style": "variable.parameter" },
+        { "text": "paste", "style": "function" },
+        { "text": "hello", "style": "string" }
+      ]
+    },
+    {
+      "id": "julia",
+      "scopeName": "source.julia",
+      "lines": ["function greet(name::String)", "    println(\"hello\")", "end"],
+      "expect": [
+        { "text": "function", "style": "keyword" },
+        { "text": "greet", "style": "function" },
+        { "text": "name", "style": "variable" },
+        { "text": "String", "style": "type" },
+        { "line": 1, "text": "println", "style": "function" },
+        { "line": 1, "text": "hello", "style": "string" },
+        { "line": 2, "text": "end", "style": "keyword" }
+      ]
+    },
+    {
+      "id": "perl",
+      "scopeName": "source.perl",
+      "lines": ["sub greet {", "  my ($name) = @_;", "  return \"hello\";", "}"],
+      "expect": [
+        { "text": "sub", "style": "keyword" },
+        { "text": "greet", "style": "function" },
+        { "line": 1, "text": "my", "style": "keyword" },
+        { "line": 2, "text": "return", "style": "keyword" },
+        { "line": 2, "text": "hello", "style": "string" }
+      ]
+    },
+    {
+      "id": "groovy",
+      "scopeName": "source.groovy",
+      "lines": ["class Theme { String name = \"dark\" }"],
+      "expect": [
+        { "text": "class", "style": "keyword" },
+        { "text": "Theme", "style": "type" },
+        { "text": "String", "style": "type" },
+        { "text": "name", "style": "variable" },
+        { "text": "dark", "style": "string" }
+      ]
+    },
+    {
+      "id": "clojure",
+      "scopeName": "source.clojure",
+      "lines": ["(defn greet [name] (str \"hello \" name))", "; comment"],
+      "expect": [
+        { "text": "defn", "style": "keyword" },
+        { "text": "greet", "style": "function" },
+        { "text": "hello", "style": "string" },
+        { "line": 1, "text": ";", "style": "comment" }
+      ]
+    },
+    {
+      "id": "coffeescript",
+      "scopeName": "source.coffee",
+      "lines": ["greet = (name) -> \"hello #{name}\"", "# comment"],
+      "expect": [
+        { "text": "greet", "style": "function" },
+        { "text": "name", "style": "variable.parameter" },
+        { "text": "->", "style": "operator" },
+        { "text": "hello", "style": "string" },
+        { "line": 1, "text": "#", "style": "comment" }
+      ]
+    },
+    {
+      "id": "batch",
+      "scopeName": "source.batchfile",
+      "lines": ["REM comment", "echo \"ready\""],
+      "expect": [
+        { "text": "REM", "style": "comment" },
+        { "text": "comment", "style": "comment" },
+        { "line": 1, "text": "ready", "style": "string" }
+      ]
+    },
+    {
+      "id": "dotenv",
+      "scopeName": "source.dotenv",
+      "lines": ["MODE=\"dark\" # comment"],
+      "expect": [
+        { "text": "MODE", "style": "variable" },
+        { "text": "dark", "style": "string" },
+        { "text": "#", "style": "comment" }
+      ]
+    },
+    {
+      "id": "latex",
+      "scopeName": "text.tex.latex",
+      "lines": ["% comment", "\\section{Theme}", "Text"],
+      "expect": [
+        { "text": "%", "style": "comment" },
+        { "text": "comment", "style": "comment" },
+        { "line": 1, "text": "section", "style": "keyword" },
+        { "line": 1, "text": "Theme", "style": "title" }
+      ]
+    },
+    {
+      "id": "restructuredtext",
+      "scopeName": "source.rst",
+      "lines": ["Heading", "=======", "", "``code``"],
+      "expect": [
+        { "line": 3, "text": "code", "style": "text.literal" }
+      ]
+    },
+    {
+      "id": "handlebars",
+      "scopeName": "text.html.handlebars",
+      "lines": ["<h1 class=\"title\">{{name}}</h1>"],
+      "expect": [
+        { "text": "h1", "style": "tag" },
+        { "text": "class", "style": "attribute" },
+        { "text": "title", "style": "string" },
+        { "text": "name", "style": "variable" }
+      ]
+    },
+    {
+      "id": "pug",
+      "scopeName": "text.pug",
+      "lines": ["h1.title Hello", "// comment"],
+      "expect": [
+        { "text": "h1", "style": "tag" },
+        { "text": "title", "style": "selector" },
+        { "line": 1, "text": "//", "style": "comment" }
+      ]
+    },
+    {
+      "id": "gitignore",
+      "scopeName": "source.ignore",
+      "lines": ["# comment", "node_modules/"],
+      "expect": [
+        { "text": "#", "style": "comment" },
+        { "text": "comment", "style": "comment" }
+      ]
+    },
+    {
+      "id": "git-commit",
+      "scopeName": "text.git-commit",
+      "lines": ["feat: improve theme", "", "# comment"],
+      "expect": [
+        { "line": 2, "text": "#", "style": "comment" },
+        { "line": 2, "text": "comment", "style": "comment" }
+      ]
+    },
+    {
+      "id": "git-rebase",
+      "scopeName": "text.git-rebase",
+      "lines": ["pick abcdef0 improve theme", "# comment"],
+      "expect": [
+        { "text": "pick", "style": "keyword" },
+        { "line": 1, "text": "#", "style": "comment" }
+      ]
+    },
+    {
+      "id": "hlsl",
+      "scopeName": "source.hlsl",
+      "lines": ["float4 main() : SV_Target { return float4(1, 0, 0, 1); }"],
+      "expect": [
+        { "text": "float4", "style": "type" },
+        { "text": "main", "style": "function" },
+        { "text": "return", "style": "keyword" },
+        { "text": "1", "style": "number" }
+      ]
+    },
+    {
+      "id": "shaderlab",
+      "scopeName": "source.shaderlab",
+      "lines": ["Shader \"Preview/Theme\" { Properties { _Color (\"Color\", Color) = (1,1,1,1) } }"],
+      "expect": [
+        { "text": "Shader", "style": "keyword" },
+        { "text": "Preview/Theme", "style": "string" },
+        { "text": "Properties", "style": "keyword" },
+        { "text": "_Color", "style": "property" },
+        { "text": "1", "style": "number" }
+      ]
+    },
+    {
+      "id": "less",
+      "scopeName": "source.css.less",
+      "lines": [".card { @gap: 8px; color: #fff; &:hover { color: red; } }"],
+      "expect": [
+        { "text": "card", "style": "tag" },
+        { "text": "gap", "style": "variable" },
+        { "text": "8", "style": "number" },
+        { "text": "color", "style": "property" },
+        { "text": "#fff", "style": "string.special" },
+        { "text": "hover", "style": "tag" }
+      ]
+    },
+    {
+      "id": "properties",
+      "scopeName": "source.ini",
+      "lines": ["theme.name=dark", "enabled=true"],
+      "expect": [
+        { "text": "theme.name", "style": "property" },
+        { "text": "dark", "style": "string" },
+        { "line": 1, "text": "enabled", "style": "property" },
+        { "line": 1, "text": "true", "style": "string" }
+      ]
+    },
+    {
+      "id": "json-lines",
+      "scopeName": "source.json.lines",
+      "lines": ["{\"enabled\":true,\"value\":null}"],
+      "expect": [
+        { "text": "enabled", "style": "property" },
+        { "text": "true", "style": "boolean" },
+        { "text": "value", "style": "property" },
+        { "text": "null", "style": "constant" }
+      ]
+    },
+    {
+      "id": "bibtex",
+      "scopeName": "text.bibtex",
+      "lines": ["@article{theme,", "  title = {One Dark},", "  year = 2026", "}"],
+      "expect": [
+        { "text": "article", "style": "keyword" },
+        { "line": 1, "text": "title", "style": "property" },
+        { "line": 1, "text": "One Dark", "style": "string" },
+        { "line": 2, "text": "year", "style": "property" },
+        { "line": 2, "text": "2026", "style": "number" }
+      ]
+    },
+    {
+      "id": "webassembly",
+      "scopeName": "text.wat",
+      "lines": ["(module (func $greet (param $name i32) (result i32) local.get $name))"],
+      "expect": [
+        { "text": "module", "style": "keyword" },
+        { "text": "func", "style": "keyword" },
+        { "text": "greet", "style": "function" },
+        { "text": "param", "style": "keyword" },
+        { "text": "i32", "style": "type" },
+        { "text": "local.get", "style": "keyword" }
+      ]
+    },
+    {
+      "id": "objective-cpp",
+      "scopeName": "source.objcpp",
+      "lines": ["// comment", "std::string name = \"dark\";"],
+      "expect": [
+        { "text": "//", "style": "comment" },
+        { "line": 1, "text": "std", "style": "namespace" },
+        { "line": 1, "text": "string", "style": "type" },
+        { "line": 1, "text": "name", "style": "variable" },
+        { "line": 1, "text": "dark", "style": "string" }
+      ]
+    },
+    {
+      "id": "raku",
+      "scopeName": "source.perl.6",
+      "lines": ["sub greet(Str $name) { say \"hello $name\" }"],
+      "expect": [
+        { "text": "sub", "style": "keyword" },
+        { "text": "greet", "style": "function" },
+        { "text": "Str", "style": "type" },
+        { "text": "name", "style": "variable.parameter" },
+        { "text": "hello", "style": "string" }
+      ]
+    },
+    {
+      "id": "razor",
+      "scopeName": "text.html.cshtml",
+      "lines": ["@model Theme", "<h1 class=\"title\">@Model.Name</h1>"],
+      "expect": [
+        { "text": "model", "style": "keyword" },
+        { "text": "Theme", "style": "type" },
+        { "line": 1, "text": "h1", "style": "tag" },
+        { "line": 1, "text": "class", "style": "attribute" },
+        { "line": 1, "text": "title", "style": "string" },
+        { "line": 1, "text": "Name", "style": "property" }
+      ]
+    },
+    {
+      "id": "visual-basic",
+      "scopeName": "source.asp.vb.net",
+      "lines": ["Public Function Greet(name As String) As String", "  Return \"hello\"", "End Function"],
+      "expect": [
+        { "text": "Public", "style": "keyword" },
+        { "text": "Function", "style": "keyword" },
+        { "text": "Greet", "style": "function" },
+        { "text": "name", "style": "variable.parameter" },
+        { "text": "String", "style": "type" },
+        { "line": 1, "text": "Return", "style": "keyword" },
+        { "line": 1, "text": "hello", "style": "string" }
+      ]
+    },
+    {
+      "id": "cuda-cpp",
+      "scopeName": "source.cuda-cpp",
+      "lines": ["__global__ void kernel(float *data) { data[0] = 1.0f; }"],
+      "expect": [
+        { "text": "__global__", "style": "keyword" },
+        { "text": "void", "style": "type" },
+        { "text": "kernel", "style": "function" },
+        { "text": "float", "style": "type" },
+        { "text": "data", "style": "variable.parameter" },
+        { "text": "1.0f", "style": "number" }
+      ]
+    },
+    {
+      "id": "xsl",
+      "scopeName": "text.xml.xsl",
+      "lines": ["<xsl:template match=\"/\"><theme name=\"dark\" /></xsl:template>"],
+      "expect": [
+        { "text": "xsl", "style": "tag" },
+        { "text": "template", "style": "tag" },
+        { "text": "match", "style": "attribute" },
+        { "text": "\"/\"", "style": "string" },
+        { "text": "theme", "style": "tag" },
+        { "text": "name", "style": "attribute" },
+        { "text": "dark", "style": "string" }
+      ]
+    },
+    {
+      "id": "xml",
+      "scopeName": "text.xml",
+      "lines": ["<theme name=\"dark\">value</theme>"],
+      "expect": [
+        { "text": "<", "style": "punctuation.bracket" },
+        { "text": "theme", "style": "tag" },
+        { "text": "name", "style": "attribute" },
+        { "text": "dark", "style": "string" },
+        { "text": "value", "style": "primary" }
+      ]
+    }
+  ]
+}

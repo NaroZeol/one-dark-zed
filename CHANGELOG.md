@@ -12,6 +12,32 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 ## [Unreleased]
 
+## [1.2.0] - 2026-08-28
+
+### Added
+
+- Added a pinned VS Code 1.135.0 integration suite covering 310 tokens across
+  61 bundled language grammars.
+- Added narrowly scoped grammar corrections for JavaScript/TypeScript
+  constants, JSON/SQL literals, C/Rust types, INI values, WAT symbols,
+  Objective-C++ types, Raku symbols, and Visual Basic symbols.
+
+### Changed
+
+- Disabled semantic highlighting by default to match Zed's Tree-sitter-first
+  highlighting behavior while retaining an opt-in semantic palette.
+- Aligned selection, drag target, modified state, scrollbar, bracket, and
+  border colors with the pinned Zed One Dark source.
+- Expanded syntax mappings for declarations, regex delimiters, Markdown links,
+  CSS selectors, markup, and language-specific scopes backed by Zed queries.
+
+### Fixed
+
+- Made comment delimiters use the same color as their comment body across
+  shell, batch, Pug, and other TextMate grammars.
+- Prevented lowercase JavaScript/TypeScript constants and type annotations from
+  being colored as named constants.
+
 ## [1.1.0] - 2026-08-27
 
 ### Added
