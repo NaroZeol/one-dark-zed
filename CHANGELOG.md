@@ -12,6 +12,20 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 ## [Unreleased]
 
+## [1.0.6-local.2] - 2026-08-27
+
+### Changed
+
+- Pinned the palette to the One Dark asset embedded in Zed 1.17.2.
+- Generated TextMate and semantic-token colors from Zed syntax style names instead of hand-maintained hex values.
+- Matched Zed's default semantic-token classification for macros, events, documentation comments, constants, and default-library symbols.
+- Corrected Go, C/C++, JSON, Bash, Python, and Markdown scope mappings.
+
+### Fixed
+
+- Removed six colors that were not present in Zed's One Dark palette.
+- Corrected search matches, bracket matches, validation borders, unnecessary code, JSON delimiters, Go built-in constants, and Markdown emphasis.
+
 ## [1.0.6] - 2026-05-12
 
 ### Changed

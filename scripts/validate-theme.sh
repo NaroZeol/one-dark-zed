@@ -4,8 +4,21 @@ set -euo pipefail
 repo_dir="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 theme_file="$repo_dir/themes/onedark-zed-color-theme.json"
 mapping_file="$repo_dir/themes/zed-syntax-mapping.json"
+bindings_file="$repo_dir/themes/zed-style-bindings.json"
+upstream_file="$repo_dir/themes/zed-one-theme.upstream.json"
+upstream_metadata_file="$repo_dir/themes/zed-upstream-metadata.json"
 
-jq empty "$repo_dir/package.json" "$theme_file" "$mapping_file"
+jq empty \
+  "$repo_dir/package.json" \
+  "$theme_file" \
+  "$mapping_file" \
+  "$bindings_file" \
+  "$upstream_file" \
+  "$upstream_metadata_file"
+
+expected_upstream_hash="$(jq -r '.normalizedSha256' "$upstream_metadata_file")"
+actual_upstream_hash="$(jq -S . "$upstream_file" | shasum -a 256 | awk '{print $1}')"
+test "$actual_upstream_hash" = "$expected_upstream_hash"
 
 jq -e '
   .name == "Zed One Dark Local"
@@ -27,12 +40,50 @@ jq -e '
   and ([.tokenColors[].scope | if type == "array" then .[] else . end] | index("variable.other.property") != null)
 ' "$theme_file" >/dev/null
 
-jq -e --slurpfile mapping "$mapping_file" '
-  .semanticTokenColors == $mapping[0].semanticTokenColors
-  and .tokenColors == $mapping[0].tokenColors
+jq -e \
+  --slurpfile mapping "$mapping_file" \
+  --slurpfile bindings "$bindings_file" \
+  --slurpfile upstream "$upstream_file" '
+  ($upstream[0].themes[] | select(.name == "One Dark") | .style) as $zed
+  | ($bindings[0].semanticTokenStyles
+      | to_entries
+      | map({key: .key, value: {foreground: ($zed.syntax[.value].color // $zed[.value])}})
+      | from_entries) as $expected_semantic
+  | ($mapping[0].tokenColors
+      | map(
+          ($bindings[0].textMateRuleStyles[.name]) as $zed_style
+          | .settings.foreground = ($zed.syntax[$zed_style].color // $zed[$zed_style])
+        )) as $expected_textmate
+  | .semanticTokenColors == $expected_semantic
+    and .tokenColors == $expected_textmate
 ' "$theme_file" >/dev/null
 
-if rg -n ':not\(' "$theme_file" "$mapping_file"; then
+jq -e --slurpfile mapping "$mapping_file" --slurpfile upstream "$upstream_file" '
+  ($upstream[0].themes[] | select(.name == "One Dark") | .style) as $zed
+  | ([.semanticTokenStyles[], .textMateRuleStyles[]]
+      | all(. as $style | ($zed.syntax[$style].color // $zed[$style]) != null))
+    and ((.textMateRuleStyles | keys | sort) == ($mapping[0].tokenColors | map(.name) | sort))
+' "$bindings_file" >/dev/null
+
+# No visual color may come from outside Zed's built-in One Dark palette.
+jq -e --slurpfile upstream "$upstream_file" '
+  ($upstream[0].themes[]
+    | select(.name == "One Dark")
+    | .style
+    | [.. | strings | select(test("^#[0-9A-Fa-f]{6,8}$")) | ascii_downcase]
+    | unique) as $zed_palette
+  | ([
+      (.colors | .. | strings),
+      (.tokenColors[]?.settings.foreground // empty),
+      (.semanticTokenColors[]?.foreground // empty)
+    ]
+    | map(select(test("^#[0-9A-Fa-f]{6,8}$")) | ascii_downcase)
+    | unique
+    | . - $zed_palette
+    | length == 0)
+' "$theme_file" >/dev/null
+
+if rg -n ':not\(' "$theme_file" "$mapping_file" "$bindings_file"; then
   echo "Unsupported TextMate selector found" >&2
   exit 1
 fi

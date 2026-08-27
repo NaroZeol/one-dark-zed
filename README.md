@@ -3,6 +3,10 @@
 > Local maintenance branch: `local/zed-aligned`. The color theme is exposed to
 > VS Code as **Zed One Dark Local**. Run `npm run sync:theme` after changing
 > `themes/zed-syntax-mapping.json`, then run `npm test` before committing.
+> The vendored `themes/zed-one-theme.upstream.json` was extracted from the
+> locally installed Zed 1.17.2 application. Its normalized hash is pinned in
+> `themes/zed-upstream-metadata.json`, and every generated color is validated
+> against that upstream palette.
 
 <p align="center">
   <img src="images/icon.png" width="128" height="128" alt="Onedark Zed extension icon" />

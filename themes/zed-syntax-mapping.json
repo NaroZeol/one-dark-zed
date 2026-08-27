@@ -11,21 +11,25 @@
     "variable": { "foreground": "#acb2beff" },
     "property": { "foreground": "#d07277ff" },
     "enumMember": { "foreground": "#73ade9ff" },
-    "event": { "foreground": "#73ade9ff" },
+    "event": { "foreground": "#6eb4bfff" },
     "function": { "foreground": "#73ade9ff" },
     "method": { "foreground": "#73ade9ff" },
-    "macro": { "foreground": "#b477cfff" },
+    "macro": { "foreground": "#73ade9ff" },
     "label": { "foreground": "#74ade8ff" },
+    "comment.documentation": { "foreground": "#878e98ff" },
     "comment": { "foreground": "#5d636fff" },
+    "string.documentation": { "foreground": "#a1c181ff" },
     "string": { "foreground": "#a1c181ff" },
     "keyword": { "foreground": "#b477cfff" },
     "number": { "foreground": "#bf956aff" },
     "regexp": { "foreground": "#bf956aff" },
     "operator": { "foreground": "#6eb4bfff" },
     "decorator": { "foreground": "#74ade8ff" },
+    "modifier": { "foreground": "#b477cfff" },
     "variable.readonly": { "foreground": "#dfc184ff" },
-    "property.readonly": { "foreground": "#dfc184ff" },
-    "variable.defaultLibrary": { "foreground": "#bf956aff" },
+    "variable.constant": { "foreground": "#dfc184ff" },
+    "property.readonly": { "foreground": "#d07277ff" },
+    "variable.defaultLibrary": { "foreground": "#acb2beff" },
     "function.defaultLibrary": { "foreground": "#73ade9ff" },
     "method.defaultLibrary": { "foreground": "#73ade9ff" },
     "type.defaultLibrary": { "foreground": "#6eb4bfff" }
@@ -49,8 +53,14 @@
       "name": "Zed: keywords and declarations",
       "scope": [
         "keyword",
-        "storage.type",
         "storage.modifier",
+        "storage.type.function",
+        "storage.type.class",
+        "storage.type.interface",
+        "storage.type.struct",
+        "storage.type.enum",
+        "storage.type.namespace",
+        "storage.type.typedef",
         "meta.preprocessor",
         "entity.name.function.preprocessor",
         "keyword.control.directive",
@@ -91,9 +101,11 @@
       "scope": [
         "punctuation.definition.template-expression",
         "punctuation.definition.interpolation",
-        "punctuation.separator.key-value",
-        "keyword.operator.type.annotation",
-        "keyword.operator.optional"
+        "punctuation.definition.decorator",
+        "punctuation.definition.variable.shell",
+        "punctuation.section.bracket.curly.variable.begin.shell",
+        "punctuation.section.bracket.curly.variable.end.shell",
+        "punctuation.definition.evaluation.backticks.shell"
       ],
       "settings": { "foreground": "#b1574bff" }
     },
@@ -105,6 +117,7 @@
         "string.template",
         "string.interpolated",
         "string.quoted.raw",
+        "constant.other.rune.go",
         "punctuation.definition.string"
       ],
       "settings": { "foreground": "#a1c181ff" }
@@ -126,6 +139,7 @@
         "constant.other.character-class",
         "constant.character.numeric.regexp",
         "keyword.operator.quantifier.regexp",
+        "constant.other.placeholder",
         "constant.other.symbol",
         "string.other.link"
       ],
@@ -136,9 +150,7 @@
       "scope": [
         "constant.numeric",
         "constant.language.boolean",
-        "constant.language.null",
-        "constant.language.undefined",
-        "support.constant"
+        "punctuation.separator.constant.numeric"
       ],
       "settings": { "foreground": "#bf956aff" }
     },
@@ -147,6 +159,11 @@
       "scope": [
         "entity.name.constant",
         "variable.other.constant",
+        "constant.language.null",
+        "constant.language.undefined",
+        "constant.language.iota",
+        "support.constant",
+        "entity.name.other.preprocessor.macro.predefined",
         "constant.other"
       ],
       "settings": { "foreground": "#dfc184ff" }
@@ -163,6 +180,7 @@
         "entity.name.type.parameter",
         "support.type",
         "support.class",
+        "storage.type",
         "storage.type.numeric",
         "storage.type.string",
         "storage.type.boolean",
@@ -238,6 +256,8 @@
         "entity.name.namespace",
         "entity.name.type.namespace",
         "entity.name.type.package",
+        "entity.name.import.go",
+        "variable.other.import.go",
         "support.other.namespace",
         "variable.other.namespace"
       ],
@@ -248,6 +268,7 @@
       "scope": [
         "entity.name.label",
         "entity.name.section",
+        "variable.other.label.go",
         "variable.other.label"
       ],
       "settings": { "foreground": "#74ade8ff" }
@@ -297,7 +318,7 @@
     {
       "name": "Zed: markup italic",
       "scope": ["markup.italic"],
-      "settings": { "foreground": "#74ade8ff", "fontStyle": "italic" }
+      "settings": { "foreground": "#74ade8ff" }
     },
     {
       "name": "Zed: markup links",
@@ -320,10 +341,22 @@
       "name": "Zed: markup literals",
       "scope": [
         "markup.inline.raw",
+        "markup.inline.raw.string.markdown",
+        "markup.raw.block.markdown",
+        "markup.fenced_code.block.markdown",
         "markup.fenced_code",
-        "markup.quote"
+        "markup.raw"
       ],
       "settings": { "foreground": "#a1c181ff" }
+    },
+    {
+      "name": "Zed: markup punctuation",
+      "scope": [
+        "punctuation.definition.quote.begin.markdown",
+        "punctuation.definition.table.markdown",
+        "punctuation.separator.table.markdown"
+      ],
+      "settings": { "foreground": "#d07277ff" }
     },
     {
       "name": "Zed: markup list markers",
