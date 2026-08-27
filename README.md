@@ -129,6 +129,11 @@ icons/icons/file_icons/*.svg          # Per-file-type icons
 package.json                          # Extension manifest
 ```
 
+## Local development and migration
+
+- [`docs/DEVELOPMENT_LOG.md`](docs/DEVELOPMENT_LOG.md) records the local design
+  decisions and commit sequence beyond upstream `main`.
+
 ## License
 
 - **Extension** — [MIT](LICENSE); include the license text when redistributing as required by MIT.

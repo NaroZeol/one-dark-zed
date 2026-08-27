@@ -30,3 +30,4 @@ themes/zed-style-bindings.json
 themes/zed-syntax-mapping.json
 themes/zed-ui-bindings.json
 themes/zed-upstream-metadata.json
+docs/*.md
