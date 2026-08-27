@@ -37,7 +37,10 @@
   "tokenColors": [
     {
       "name": "Zed: comments",
-      "scope": ["comment"],
+      "scope": [
+        "comment",
+        "comment punctuation.definition.comment"
+      ],
       "settings": { "foreground": "#5d636fff" }
     },
     {

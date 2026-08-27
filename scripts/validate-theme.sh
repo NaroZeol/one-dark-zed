@@ -60,6 +60,22 @@ jq -e '
   and .colors["peekViewEditorGutter.background"] == "#2f343ebf"
   and .colors["peekViewResult.background"] == "#2f343eff"
   and .colors["peekViewTitle.background"] == "#2f343eff"
+  and .colors["activityBar.activeBackground"] == "#454a56ff"
+  and .colors["breadcrumb.foreground"] == "#a9afbcff"
+  and .colors["breadcrumbPicker.background"] == "#2f343eff"
+  and .colors["button.hoverBackground"] == "#363c46ff"
+  and .colors["editorCodeLens.foreground"] == "#a9afbcff"
+  and .colors["editorLink.activeForeground"] == "#74ade8ff"
+  and .colors["editorRuler.foreground"] == "#c8ccd40d"
+  and .colors["gitDecoration.renamedResourceForeground"] == "#74ade8ff"
+  and .colors["gitDecoration.untrackedResourceForeground"] == "#a1c181ff"
+  and .colors["list.filterMatchBackground"] == "#74ade866"
+  and .colors["list.hoverBackground"] == "#363c46ff"
+  and .colors["menu.border"] == "#464b57ff"
+  and .colors["menu.selectionBackground"] == "#454a56ff"
+  and .colors["tab.activeBorder"] == "#00000000"
+  and .colors["terminal.selectionBackground"] == "#454a56ff"
+  and .colors["toolbar.hoverBackground"] == "#363c46ff"
   and .semanticTokenColors.string.foreground == "#a1c181ff"
   and .semanticTokenColors.function.foreground == "#73ade9ff"
   and .semanticTokenColors.type.foreground == "#6eb4bfff"
@@ -90,6 +106,7 @@ jq -e '
   def scopes($name):
     [.tokenColors[] | select(.name == $name) | .scope | if type == "array" then .[] else . end];
   (scopes("Zed: strings") | index("entity.name.import.go") != null)
+  and (scopes("Zed: comments") | index("comment punctuation.definition.comment") != null)
   and (scopes("Zed: namespaces and packages") | index("entity.name.import.go") == null)
   and (scopes("Zed: properties") | index("entity.name.tag.yaml") != null)
   and (scopes("Zed: properties") | index("variable.other.object.property") != null)
