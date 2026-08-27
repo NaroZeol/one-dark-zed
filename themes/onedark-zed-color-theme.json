@@ -2,7 +2,7 @@
   "$schema": "vscode://schemas/color-theme",
   "name": "Zed One Dark Local",
   "type": "dark",
-  "semanticHighlighting": false,
+  "semanticHighlighting": true,
   "colors": {
     "button.background": "#3b414dff",
     "button.border": "#464b57ff",
@@ -488,6 +488,7 @@
         "entity.name.enum",
         "entity.name.trait",
         "entity.name.type.parameter",
+        "entity.other.inherited-class",
         "support.type",
         "support.class",
         "storage.type",
@@ -505,7 +506,8 @@
       "scope": [
         "entity.name.function.constructor",
         "entity.name.type.variant",
-        "variable.other.enummember"
+        "variable.other.enummember",
+        "entity.name.variable.enum-member"
       ],
       "settings": {
         "foreground": "#73ade9ff"
@@ -530,6 +532,7 @@
       "name": "Zed: parameters",
       "scope": [
         "variable.parameter",
+        "entity.name.variable.parameter",
         "meta.function.parameters variable",
         "meta.function.definition variable.parameter"
       ],
@@ -543,6 +546,14 @@
         "variable.other.property",
         "variable.other.field",
         "variable.object.property",
+        "variable.other.object.property",
+        "variable.other.constant.property",
+        "variable.other.constant.object.property",
+        "entity.name.variable.field",
+        "entity.name.variable.property",
+        "entity.name.variable.tuple-element",
+        "entity.other.attribute.lua",
+        "meta.attribute.python",
         "support.variable.property",
         "support.type.property-name",
         "punctuation.support.type.property-name",
@@ -854,6 +865,120 @@
     },
     "type.defaultLibrary": {
       "foreground": "#6eb4bfff"
+    },
+    "attribute": {
+      "foreground": "#74ade8ff"
+    },
+    "boolean": {
+      "foreground": "#bf956aff"
+    },
+    "const": {
+      "foreground": "#dfc184ff"
+    },
+    "constant": {
+      "foreground": "#dfc184ff"
+    },
+    "static": {
+      "foreground": "#dfc184ff"
+    },
+    "constParameter": {
+      "foreground": "#d07277ff"
+    },
+    "selfKeyword": {
+      "foreground": "#bf956aff"
+    },
+    "selfTypeKeyword": {
+      "foreground": "#6eb4bfff"
+    },
+    "lifetime": {
+      "foreground": "#6eb4bfff"
+    },
+    "escapeSequence": {
+      "foreground": "#878e98ff"
+    },
+    "formatSpecifier": {
+      "foreground": "#878e98ff"
+    },
+    "invalidEscapeSequence": {
+      "foreground": "#d07277ff"
+    },
+    "punctuation": {
+      "foreground": "#acb2beff"
+    },
+    "angle": {
+      "foreground": "#b2b9c6ff"
+    },
+    "brace": {
+      "foreground": "#b2b9c6ff"
+    },
+    "bracket": {
+      "foreground": "#b2b9c6ff"
+    },
+    "curlybrace": {
+      "foreground": "#b2b9c6ff"
+    },
+    "parenthesis": {
+      "foreground": "#b2b9c6ff"
+    },
+    "colon": {
+      "foreground": "#b2b9c6ff"
+    },
+    "comma": {
+      "foreground": "#b2b9c6ff"
+    },
+    "dot": {
+      "foreground": "#b2b9c6ff"
+    },
+    "semicolon": {
+      "foreground": "#b2b9c6ff"
+    },
+    "arrow": {
+      "foreground": "#6eb4bfff"
+    },
+    "macroBang": {
+      "foreground": "#b1574bff"
+    },
+    "operatorOverloaded": {
+      "foreground": "#6eb4bfff"
+    },
+    "jsonComment": {
+      "foreground": "#5d636fff"
+    },
+    "jsonKeyword": {
+      "foreground": "#bf956aff"
+    },
+    "jsonNumber": {
+      "foreground": "#bf956aff"
+    },
+    "jsonOperator": {
+      "foreground": "#6eb4bfff"
+    },
+    "jsonPropertyName": {
+      "foreground": "#d07277ff"
+    },
+    "jsonPunctuation": {
+      "foreground": "#b2b9c6ff"
+    },
+    "jsonString": {
+      "foreground": "#a1c181ff"
+    },
+    "markupAttribute": {
+      "foreground": "#74ade8ff"
+    },
+    "markupAttributeValue": {
+      "foreground": "#a1c181ff"
+    },
+    "markupComment": {
+      "foreground": "#5d636fff"
+    },
+    "markupElement": {
+      "foreground": "#74ade8ff"
+    },
+    "markupOperator": {
+      "foreground": "#6eb4bfff"
+    },
+    "markupTagDelimiter": {
+      "foreground": "#b2b9c6ff"
     }
   }
 }

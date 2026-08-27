@@ -183,6 +183,7 @@
         "entity.name.enum",
         "entity.name.trait",
         "entity.name.type.parameter",
+        "entity.other.inherited-class",
         "support.type",
         "support.class",
         "storage.type",
@@ -198,7 +199,8 @@
       "scope": [
         "entity.name.function.constructor",
         "entity.name.type.variant",
-        "variable.other.enummember"
+        "variable.other.enummember",
+        "entity.name.variable.enum-member"
       ],
       "settings": { "foreground": "#73ade9ff" }
     },
@@ -219,6 +221,7 @@
       "name": "Zed: parameters",
       "scope": [
         "variable.parameter",
+        "entity.name.variable.parameter",
         "meta.function.parameters variable",
         "meta.function.definition variable.parameter"
       ],
@@ -230,6 +233,14 @@
         "variable.other.property",
         "variable.other.field",
         "variable.object.property",
+        "variable.other.object.property",
+        "variable.other.constant.property",
+        "variable.other.constant.object.property",
+        "entity.name.variable.field",
+        "entity.name.variable.property",
+        "entity.name.variable.tuple-element",
+        "entity.other.attribute.lua",
+        "meta.attribute.python",
         "support.variable.property",
         "support.type.property-name",
         "punctuation.support.type.property-name",

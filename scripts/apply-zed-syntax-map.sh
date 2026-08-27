@@ -31,9 +31,12 @@ jq \
       | to_entries
       | map({key: .key, value: $zed[.value]})
       | from_entries) as $ui_colors
-  # Zed defaults to Tree-sitter highlighting. Keep VS Code on its analogous
-  # TextMate path unless the user explicitly enables semantic highlighting.
-  | .semanticHighlighting = false
+  # Prefer language-server semantics when available. They are the closest
+  # VS Code equivalent to the Zed Tree-sitter captures and remove grammar-specific
+  # gaps across TypeScript, Python, Rust, C/C++, C#, Lua, and similar languages.
+  # Go is intentionally opted out in package.json: gopls currently reports
+  # fields as generic variables, so the maintained TextMate patch is better.
+  | .semanticHighlighting = true
   | .colors += $ui_colors
   | .semanticTokenColors = $semantic_colors
   | .tokenColors = $textmate_colors

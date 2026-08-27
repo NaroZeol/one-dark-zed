@@ -12,6 +12,19 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 ## [Unreleased]
 
+## [1.0.6-local.6] - 2026-08-27
+
+### Added
+
+- Added a generated Go grammar patch that classifies non-call selectors as Zed-style properties while preserving type and function scopes.
+- Added token-level regression tests using VS Code's TextMate and Oniguruma engines.
+
+### Changed
+
+- Enabled semantic highlighting by default for languages with mature semantic providers; Go remains on the patched TextMate path because gopls does not distinguish fields from generic variables.
+- Expanded cross-language TextMate coverage for Python attributes, Java/C++/JavaScript object properties, C# fields/properties/parameters, Lua attributes, inherited types, and enum members.
+- Added Zed palette mappings for common Rust, Pylance, C#, JSON, and embedded-markup semantic token types.
+
 ## [1.0.6-local.5] - 2026-08-27
 
 ### Changed

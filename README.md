@@ -2,7 +2,8 @@
 
 > Local maintenance branch: `local/zed-aligned`. The color theme is exposed to
 > VS Code as **Zed One Dark Local**. Run `npm run sync:theme` after changing
-> `themes/zed-syntax-mapping.json`, then run `npm test` before committing.
+> `themes/zed-syntax-mapping.json`, or `npm run sync:grammar` after updating the
+> vendored Go grammar, then run `npm test` before committing.
 > The vendored `themes/zed-one-theme.upstream.json` was extracted from the
 > locally installed Zed 1.17.2 application. Its normalized hash is pinned in
 > `themes/zed-upstream-metadata.json`, and every generated color is validated
@@ -26,17 +27,19 @@ VS Code with **Onedark Zed** (color theme, file icons, and integrated terminal):
 
 | Contribution        | Id / label                                  | Description                                                      |
 | ------------------- | ------------------------------------------- | ---------------------------------------------------------------- |
-| **Color theme**     | **Onedark Zed**                             | Dark editor and workbench colors, aligned with Zed's Tree-sitter-first highlighting. |
+| **Color theme**     | **Zed One Dark Local**                      | Dark editor and workbench colors aligned with Zed syntax categories.                 |
 | **File icon theme** | **Onedark Zed Icons** (`onedark-zed-icons`) | SVG icons for common languages, tools, and folders.              |
 
 Theme definition: `themes/onedark-zed-color-theme.json`.  
 Icon theme definition: `icons/onedark-zed-icon-theme.json` (assets under `icons/icons/file_icons/`).
 
-The theme leaves semantic highlighting disabled by default because Zed also
-defaults to Tree-sitter-only syntax highlighting. VS Code users who explicitly
-enable `editor.semanticHighlighting.enabled` can still use the bundled semantic
-token palette. The validation script also caps the number of theme rules and
-selectors so language coverage cannot grow into an unbounded matching table.
+The theme prefers semantic highlighting for languages whose language servers
+distinguish fields, methods, types, and constants reliably. Go is intentionally
+kept on a maintained TextMate grammar path because gopls currently reports
+fields as generic variables. The generated Go patch adds only one fallback
+selector rule, and its token-level tests ensure types and calls retain their
+original scopes. Validation caps both TextMate and semantic selector counts so
+coverage cannot grow into an unbounded matching table.
 
 ## Install
 
@@ -52,21 +55,21 @@ Clone [the repository](https://github.com/premier213/one-dark-zed), open the fol
 ## Use the theme and icons
 
 1. Open the Command Palette.
-2. For colors: **Preferences: Color Theme** → choose **Onedark Zed**.
+2. For colors: **Preferences: Color Theme** → choose **Zed One Dark Local**.
 3. For icons: **Preferences: File Icon Theme** → choose **Onedark Zed Icons**.
 
 You can also set them in `settings.json`:
 
 ```json
 {
-  "workbench.colorTheme": "Onedark Zed",
+  "workbench.colorTheme": "Zed One Dark Local",
   "workbench.iconTheme": "onedark-zed-icons"
 }
 ```
 
 ## Requirements
 
-Editor engine compatible with **VS Code `^1.74.0`** or newer (see `package.json` → `engines`). This extension only ships theme JSON; newer-only color keys are ignored on older versions without breaking install.
+Editor engine compatible with **VS Code `^1.74.0`** or newer (see `package.json` → `engines`). The extension contains static theme/icon data and a generated Go TextMate grammar; it has no runtime JavaScript activation code.
 
 ## Font (optional)
 
@@ -118,6 +121,9 @@ LICENSE                               # MIT — extension source and packaged th
 images/icon.png                      # Extension / marketplace logo (128×128)
 docs/preview.png                      # README / marketplace preview screenshot
 themes/onedark-zed-color-theme.json   # UI + syntax colors
+grammars/go.tmLanguage.json           # Generated Go selector-scope patch
+grammars/go.tmLanguage.upstream.json  # Pinned VS Code grammar source
+scripts/sync-go-grammar.sh            # Rebuild the generated Go grammar
 icons/onedark-zed-icon-theme.json     # Icon theme manifest
 icons/icons/file_icons/*.svg          # Per-file-type icons
 package.json                          # Extension manifest

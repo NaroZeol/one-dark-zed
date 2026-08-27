@@ -2,7 +2,7 @@
   "name": "onedark-zed-local",
   "displayName": "OneDark Zed Local",
   "description": "A locally maintained VS Code port aligned with Zed's official One Dark theme.",
-  "version": "1.0.6-local.5",
+  "version": "1.0.6-local.6",
   "publisher": "NaroZeol",
   "icon": "images/icon.png",
   "license": "MIT",
@@ -36,12 +36,26 @@
   ],
   "scripts": {
     "sync:theme": "bash scripts/apply-zed-syntax-map.sh",
-    "test": "bash scripts/validate-theme.sh",
+    "sync:grammar": "bash scripts/sync-go-grammar.sh",
+    "test": "bash scripts/validate-theme.sh && node scripts/test-go-grammar.mjs",
+    "test:grammar": "node scripts/test-go-grammar.mjs",
     "package": "vsce package",
     "publish": "ovsx publish",
     "publish:vscode": "vsce publish"
   },
   "contributes": {
+    "configurationDefaults": {
+      "[go]": {
+        "editor.semanticHighlighting.enabled": false
+      }
+    },
+    "grammars": [
+      {
+        "language": "go",
+        "scopeName": "source.go",
+        "path": "./grammars/go.tmLanguage.json"
+      }
+    ],
     "themes": [
       {
         "label": "Zed One Dark Local",
@@ -59,6 +73,8 @@
   },
   "devDependencies": {
     "@vscode/vsce": "^3.9.1",
-    "ovsx": "^0.10.12"
+    "ovsx": "^0.10.12",
+    "vscode-oniguruma": "^2.0.1",
+    "vscode-textmate": "^9.3.2"
   }
 }

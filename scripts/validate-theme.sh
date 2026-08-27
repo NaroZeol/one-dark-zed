@@ -8,6 +8,9 @@ bindings_file="$repo_dir/themes/zed-style-bindings.json"
 ui_bindings_file="$repo_dir/themes/zed-ui-bindings.json"
 upstream_file="$repo_dir/themes/zed-one-theme.upstream.json"
 upstream_metadata_file="$repo_dir/themes/zed-upstream-metadata.json"
+go_grammar_file="$repo_dir/grammars/go.tmLanguage.json"
+go_upstream_file="$repo_dir/grammars/go.tmLanguage.upstream.json"
+go_upstream_metadata_file="$repo_dir/grammars/go-upstream-metadata.json"
 
 jq empty \
   "$repo_dir/package.json" \
@@ -16,15 +19,37 @@ jq empty \
   "$bindings_file" \
   "$ui_bindings_file" \
   "$upstream_file" \
-  "$upstream_metadata_file"
+  "$upstream_metadata_file" \
+  "$go_grammar_file" \
+  "$go_upstream_file" \
+  "$go_upstream_metadata_file"
 
 expected_upstream_hash="$(jq -r '.normalizedSha256' "$upstream_metadata_file")"
 actual_upstream_hash="$(jq -S . "$upstream_file" | shasum -a 256 | awk '{print $1}')"
 test "$actual_upstream_hash" = "$expected_upstream_hash"
 
+expected_go_upstream_hash="$(jq -r '.normalizedSha256' "$go_upstream_metadata_file")"
+actual_go_upstream_hash="$(jq -S . "$go_upstream_file" | shasum -a 256 | awk '{print $1}')"
+test "$actual_go_upstream_hash" = "$expected_go_upstream_hash"
+
+jq -e '
+  .contributes.configurationDefaults["[go]"]["editor.semanticHighlighting.enabled"] == false
+  and (.contributes.grammars[]
+    | select(.language == "go")
+    | .scopeName == "source.go"
+      and .path == "./grammars/go.tmLanguage.json")
+' "$repo_dir/package.json" >/dev/null
+
+jq -e '
+  .repository.property_variables.patterns[0]
+  | .name == "variable.other.property.go"
+    and (.match | contains("(?<=\\.)"))
+    and (.match | contains("\\s*\\("))
+' "$go_grammar_file" >/dev/null
+
 jq -e '
   .name == "Zed One Dark Local"
-  and .semanticHighlighting == false
+  and .semanticHighlighting == true
   and .colors["editor.background"] == "#282c33ff"
   and .colors["editor.foreground"] == "#acb2beff"
   and .colors["sideBar.background"] == "#2f343eff"
@@ -55,8 +80,8 @@ semantic_selector_count="$(jq '.semanticTokenColors | length' "$theme_file")"
 compound_selector_count="$(jq '[.tokenColors[].scope | if type == "array" then .[] else . end | select(contains(" "))] | length' "$theme_file")"
 
 test "$textmate_rule_count" -le 40
-test "$textmate_selector_count" -le 170
-test "$semantic_selector_count" -le 40
+test "$textmate_selector_count" -le 180
+test "$semantic_selector_count" -le 80
 test "$compound_selector_count" -le 16
 
 # High-risk grammar conflicts must resolve to the same semantic captures used
@@ -67,6 +92,10 @@ jq -e '
   (scopes("Zed: strings") | index("entity.name.import.go") != null)
   and (scopes("Zed: namespaces and packages") | index("entity.name.import.go") == null)
   and (scopes("Zed: properties") | index("entity.name.tag.yaml") != null)
+  and (scopes("Zed: properties") | index("variable.other.object.property") != null)
+  and (scopes("Zed: properties") | index("entity.name.variable.field") != null)
+  and (scopes("Zed: properties") | index("meta.attribute.python") != null)
+  and (scopes("Zed: parameters") | index("entity.name.variable.parameter") != null)
   and (scopes("Zed: properties") | index("punctuation.support.type.property-name") != null)
   and (scopes("Zed: brackets and delimiters") | index("punctuation.definition.tag") != null)
   and (scopes("Zed: tags") | index("punctuation.definition.tag") == null)

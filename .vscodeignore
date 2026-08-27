@@ -22,3 +22,11 @@ pnpm-lock.yaml
 
 # Scaffolding / unused for publish
 vsc-extension-quickstart.md
+grammars/*.upstream.json
+grammars/*-upstream-metadata.json
+scripts/**
+themes/zed-one-theme.upstream.json
+themes/zed-style-bindings.json
+themes/zed-syntax-mapping.json
+themes/zed-ui-bindings.json
+themes/zed-upstream-metadata.json
