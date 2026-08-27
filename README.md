@@ -1,5 +1,9 @@
 # Onedark Zed
 
+> Local maintenance branch: `local/zed-aligned`. The color theme is exposed to
+> VS Code as **Zed One Dark Local**. Run `npm run sync:theme` after changing
+> `themes/zed-syntax-mapping.json`, then run `npm test` before committing.
+
 <p align="center">
   <img src="images/icon.png" width="128" height="128" alt="Onedark Zed extension icon" />
 </p>

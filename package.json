@@ -1,9 +1,9 @@
 {
-  "name": "onedark-zed",
-  "displayName": "OneDark Zed",
-  "description": "A dark theme inspired by One Dark and Zed.",
-  "version": "1.0.6",
-  "publisher": "premier213",
+  "name": "onedark-zed-local",
+  "displayName": "OneDark Zed Local",
+  "description": "A locally maintained VS Code port aligned with Zed's official One Dark theme.",
+  "version": "1.0.6-local.1",
+  "publisher": "NaroZeol",
   "icon": "images/icon.png",
   "license": "MIT",
   "repository": {
@@ -35,6 +35,8 @@
     "Themes"
   ],
   "scripts": {
+    "sync:theme": "bash scripts/apply-zed-syntax-map.sh",
+    "test": "bash scripts/validate-theme.sh",
     "package": "vsce package",
     "publish": "ovsx publish",
     "publish:vscode": "vsce publish"
@@ -42,7 +44,7 @@
   "contributes": {
     "themes": [
       {
-        "label": "Onedark Zed",
+        "label": "Zed One Dark Local",
         "uiTheme": "vs-dark",
         "path": "./themes/onedark-zed-color-theme.json"
       }
