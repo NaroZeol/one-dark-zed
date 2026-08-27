@@ -1,7 +1,7 @@
 {
   "peekView.border": "border",
-  "peekViewEditor.background": "editor.background",
-  "peekViewEditorGutter.background": "editor.gutter.background",
+  "peekViewEditor.background": "editor.active_line.background",
+  "peekViewEditorGutter.background": "editor.active_line.background",
   "peekViewEditor.matchHighlightBackground": "search.active_match_background",
   "peekViewEditor.matchHighlightBorder": "border.transparent",
   "peekViewResult.background": "panel.background",
@@ -13,6 +13,6 @@
   "peekViewTitle.background": "surface.background",
   "peekViewTitleDescription.foreground": "text.muted",
   "peekViewTitleLabel.foreground": "text",
-  "peekViewEditorStickyScroll.background": "editor.background",
-  "peekViewEditorStickyScrollGutter.background": "editor.gutter.background"
+  "peekViewEditorStickyScroll.background": "editor.active_line.background",
+  "peekViewEditorStickyScrollGutter.background": "editor.active_line.background"
 }

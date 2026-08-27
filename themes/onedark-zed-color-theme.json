@@ -295,8 +295,8 @@
     "editorBracketHighlight.foreground5": "#abb2bfff",
     "editorBracketHighlight.foreground6": "#abb2bfff",
     "peekView.border": "#464b57ff",
-    "peekViewEditor.background": "#282c33ff",
-    "peekViewEditorGutter.background": "#282c33ff",
+    "peekViewEditor.background": "#2f343ebf",
+    "peekViewEditorGutter.background": "#2f343ebf",
     "peekViewEditor.matchHighlightBackground": "#e8af7466",
     "peekViewEditor.matchHighlightBorder": "#00000000",
     "peekViewResult.background": "#2f343eff",
@@ -308,8 +308,8 @@
     "peekViewTitle.background": "#2f343eff",
     "peekViewTitleDescription.foreground": "#a9afbcff",
     "peekViewTitleLabel.foreground": "#dce0e5ff",
-    "peekViewEditorStickyScroll.background": "#282c33ff",
-    "peekViewEditorStickyScrollGutter.background": "#282c33ff"
+    "peekViewEditorStickyScroll.background": "#2f343ebf",
+    "peekViewEditorStickyScrollGutter.background": "#2f343ebf"
   },
   "tokenColors": [
     {

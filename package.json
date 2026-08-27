@@ -2,7 +2,7 @@
   "name": "onedark-zed-local",
   "displayName": "OneDark Zed Local",
   "description": "A locally maintained VS Code port aligned with Zed's official One Dark theme.",
-  "version": "1.0.6-local.3",
+  "version": "1.0.6-local.4",
   "publisher": "NaroZeol",
   "icon": "images/icon.png",
   "license": "MIT",

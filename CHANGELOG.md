@@ -12,6 +12,12 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 ## [Unreleased]
 
+## [1.0.6-local.4] - 2026-08-27
+
+### Changed
+
+- Gave the Peek editor and its gutter a subtle Zed-native contrast by using the translucent active-line surface instead of the normal editor background.
+
 ## [1.0.6-local.3] - 2026-08-27
 
 ### Fixed
