@@ -5,6 +5,7 @@ repo_dir="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 theme_file="$repo_dir/themes/onedark-zed-color-theme.json"
 mapping_file="$repo_dir/themes/zed-syntax-mapping.json"
 bindings_file="$repo_dir/themes/zed-style-bindings.json"
+ui_bindings_file="$repo_dir/themes/zed-ui-bindings.json"
 upstream_file="$repo_dir/themes/zed-one-theme.upstream.json"
 upstream_metadata_file="$repo_dir/themes/zed-upstream-metadata.json"
 
@@ -13,6 +14,7 @@ jq empty \
   "$theme_file" \
   "$mapping_file" \
   "$bindings_file" \
+  "$ui_bindings_file" \
   "$upstream_file" \
   "$upstream_metadata_file"
 
@@ -29,6 +31,10 @@ jq -e '
   and .colors["statusBar.background"] == "#3b414dff"
   and .colors["terminal.background"] == "#282c34ff"
   and .colors["editorGhostText.foreground"] == "#5a6a87ff"
+  and .colors["peekViewEditor.background"] == "#282c33ff"
+  and .colors["peekViewEditorGutter.background"] == "#282c33ff"
+  and .colors["peekViewResult.background"] == "#2f343eff"
+  and .colors["peekViewTitle.background"] == "#2f343eff"
   and .semanticTokenColors.string.foreground == "#a1c181ff"
   and .semanticTokenColors.function.foreground == "#73ade9ff"
   and .semanticTokenColors.type.foreground == "#6eb4bfff"
@@ -39,6 +45,11 @@ jq -e '
   and ([.tokenColors[].scope | if type == "array" then .[] else . end] | index("entity.name.type") != null)
   and ([.tokenColors[].scope | if type == "array" then .[] else . end] | index("variable.other.property") != null)
 ' "$theme_file" >/dev/null
+
+jq -e --slurpfile upstream "$upstream_file" --slurpfile theme "$theme_file" '
+  ($upstream[0].themes[] | select(.name == "One Dark") | .style) as $zed
+  | all(to_entries[]; $theme[0].colors[.key] == $zed[.value])
+' "$ui_bindings_file" >/dev/null
 
 jq -e \
   --slurpfile mapping "$mapping_file" \
@@ -83,7 +94,7 @@ jq -e --slurpfile upstream "$upstream_file" '
     | length == 0)
 ' "$theme_file" >/dev/null
 
-if rg -n ':not\(' "$theme_file" "$mapping_file" "$bindings_file"; then
+if rg -n ':not\(' "$theme_file" "$mapping_file" "$bindings_file" "$ui_bindings_file"; then
   echo "Unsupported TextMate selector found" >&2
   exit 1
 fi

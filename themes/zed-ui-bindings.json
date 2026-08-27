@@ -1,0 +1,18 @@
+{
+  "peekView.border": "border",
+  "peekViewEditor.background": "editor.background",
+  "peekViewEditorGutter.background": "editor.gutter.background",
+  "peekViewEditor.matchHighlightBackground": "search.active_match_background",
+  "peekViewEditor.matchHighlightBorder": "border.transparent",
+  "peekViewResult.background": "panel.background",
+  "peekViewResult.fileForeground": "text",
+  "peekViewResult.lineForeground": "text.muted",
+  "peekViewResult.matchHighlightBackground": "search.match_background",
+  "peekViewResult.selectionBackground": "element.selected",
+  "peekViewResult.selectionForeground": "text",
+  "peekViewTitle.background": "surface.background",
+  "peekViewTitleDescription.foreground": "text.muted",
+  "peekViewTitleLabel.foreground": "text",
+  "peekViewEditorStickyScroll.background": "editor.background",
+  "peekViewEditorStickyScrollGutter.background": "editor.gutter.background"
+}

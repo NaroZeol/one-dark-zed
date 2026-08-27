@@ -12,6 +12,12 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 ## [Unreleased]
 
+## [1.0.6-local.3] - 2026-08-27
+
+### Fixed
+
+- Added all Peek Definition/References colors and bound them to Zed editor, panel, surface, selection, and search styles instead of inheriting VS Code defaults.
+
 ## [1.0.6-local.2] - 2026-08-27
 
 ### Changed
