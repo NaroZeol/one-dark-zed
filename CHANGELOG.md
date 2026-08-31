@@ -12,6 +12,12 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 ## [Unreleased]
 
+### Added
+
+- Added `npm run install:local` to validate, package, and install the current
+  working tree into both VS Code and Trae CN through their supported VSIX
+  installers.
+
 ### Fixed
 
 - Restored the semantic-rich implementation while removing the Go member-color

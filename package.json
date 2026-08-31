@@ -53,6 +53,7 @@
     "test:semantic": "node scripts/test-semantic-providers.mjs && node scripts/test-go-semantic-tokens.mjs",
     "test:vscode": "node scripts/test-vscode-grammars.mjs",
     "test:all": "npm test && npm run test:semantic && npm run test:vscode",
+    "install:local": "bash scripts/install-local.sh",
     "package": "vsce package",
     "publish": "ovsx publish",
     "publish:vscode": "vsce publish"

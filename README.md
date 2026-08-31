@@ -74,6 +74,20 @@ npm test
 npm run package -- --out zed-onedark-vscode-1.3.0.vsix
 ```
 
+For local development on a machine with both the `code` and `trae` CLIs,
+install the current working tree into VS Code and Trae CN through their
+supported VSIX installer:
+
+```sh
+npm run install:local
+```
+
+The command runs the base regression suite, builds a temporary VSIX, installs
+it into both editors with `--force`, and removes the temporary package. Reload
+open editor windows afterward. This is intentionally preferred over symlinking
+Marketplace-managed extension directories, whose names and active versions can
+change during editor updates.
+
 ## Activate
 
 Choose **Preferences: Color Theme → Zed One Dark** and **Preferences: File Icon

@@ -147,3 +147,8 @@ semantic request is shared by every visible pane displaying the same document.
    behavior depends on them; do not maintain a separate test-only copy.
 6. Regenerate outputs, run `npm test`, package a VSIX, and inspect its contents.
 7. Keep upstream copyright and license notices with every distribution.
+
+For local iteration, `npm run install:local` performs the base validation,
+packages the current tree, and installs the VSIX into both VS Code and Trae CN.
+Do not symlink or edit Marketplace-managed extension directories: editor
+updates select extensions by ID and version and may replace those paths.
