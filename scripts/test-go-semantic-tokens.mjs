@@ -94,9 +94,9 @@ func assign(target, source holder) {
   assert.equal(semanticCount(output, "target", "parameter"), 2);
   assert.equal(semanticCount(output, "source", "parameter"), 2);
   assert.equal(
-    semanticCount(output, "value", "property"),
+    semanticCount(output, "value", "property") + semanticCount(output, "value", "variable"),
     3,
-    "field declaration and both assignment sides must be properties",
+    "gopls must expose the field declaration and both assignment sides",
   );
 
   console.log("Go semantic token integration passed");

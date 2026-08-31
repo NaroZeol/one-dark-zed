@@ -342,6 +342,7 @@ async function requestSemanticTokens(client, uri) {
 let providerCount = 0;
 let documentCount = 0;
 let expectationCount = 0;
+let lexicalGoVariableCount = 0;
 
 for (const fixture of fixtures.providers) {
   if (requestedProviders.size > 0 && !requestedProviders.has(fixture.id)) continue;
@@ -359,6 +360,9 @@ for (const fixture of fixtures.providers) {
     const initializationOptions = JSON.parse(
       JSON.stringify(rawInitializationOptions).replaceAll("${repoRoot}", repoRoot),
     );
+    const goVariablesOwnedByGrammar =
+      fixture.id === "go" &&
+      initializationOptions["ui.semanticTokenTypes"]?.variable === false;
     client = new LspClient(command, args, fixtureRoot);
     const rootUri = pathToFileURL(fixtureRoot).href;
     await client.initialize(rootUri, initializationOptions);
@@ -394,13 +398,20 @@ for (const fixture of fixtures.providers) {
       });
       const data = await requestSemanticTokens(client, uri);
       const tokens = decodeTokens(data, provider.legend, source);
+      if (goVariablesOwnedByGrammar) {
+        assert.equal(
+          tokens.some(({ type }) => type === "variable"),
+          false,
+          `${fixture.id}:${document.path} must leave variable highlighting to the Go grammar`,
+        );
+      }
       const expressionNamespaceRanges = new Set(
         findExpressionNamespaceRanges(
           source,
           tokens.map((token) => ({ ...token, line: token.line - 1 })),
+          document.languageId,
         ).map(({ line, start }) => `${line}:${start}`),
       );
-
       for (const token of tokens) {
         assert(
           resolveSemanticStyle(styleBindings, token),
@@ -419,11 +430,16 @@ for (const fixture of fixtures.providers) {
 
       for (const expectation of document.expectations) {
         const token = findExpectedToken(tokens, expectation);
+        const expectedTypes = Array.isArray(expectation.type) ? expectation.type : [expectation.type];
+        if (!token && goVariablesOwnedByGrammar && expectedTypes.includes("variable")) {
+          lexicalGoVariableCount += 1;
+          expectationCount += 1;
+          continue;
+        }
         assert(
           token,
           `${fixture.id}:${document.path}:${expectation.line} missing semantic token ${expectation.text} occurrence ${expectation.occurrence ?? 1}`,
         );
-        const expectedTypes = Array.isArray(expectation.type) ? expectation.type : [expectation.type];
         assert(
           expectedTypes.includes(token.type),
           `${fixture.id}:${document.path}:${expectation.line} ${expectation.text}: expected ${expectedTypes.join("|")}, received ${token.type}`,
@@ -434,19 +450,22 @@ for (const fixture of fixtures.providers) {
             `${fixture.id}:${document.path}:${expectation.line} ${expectation.text}: missing ${modifier} modifier`,
           );
         }
-        assert.equal(
-          resolveSemanticStyle(styleBindings, token),
-          expectation.style,
-          `${fixture.id}:${document.path}:${expectation.line} ${expectation.text}: ${token.type}${token.modifiers.map((modifier) => `.${modifier}`).join("")} must map to Zed ${expectation.style}`,
+        const expectedStyles = Array.isArray(expectation.style)
+          ? expectation.style
+          : [expectation.style];
+        assert(
+          expectedStyles.includes(resolveSemanticStyle(styleBindings, token)),
+          `${fixture.id}:${document.path}:${expectation.line} ${expectation.text}: ${token.type}${token.modifiers.map((modifier) => `.${modifier}`).join("")} must map to one of ${expectedStyles.join("|")}`,
         );
         if (expectation.contextStyle) {
-          const contextStyle = expressionNamespaceRanges.has(`${token.line - 1}:${token.start}`)
+          const key = `${token.line - 1}:${token.start}`;
+          const contextStyle = expressionNamespaceRanges.has(key)
             ? "variable"
             : resolveSemanticStyle(styleBindings, token);
           assert.equal(
             contextStyle,
             expectation.contextStyle,
-            `${fixture.id}:${document.path}:${expectation.line} ${expectation.text}: contextual namespace role must map to Zed ${expectation.contextStyle}`,
+            `${fixture.id}:${document.path}:${expectation.line} ${expectation.text}: contextual override must map to Zed ${expectation.contextStyle}`,
           );
         }
         expectationCount += 1;
@@ -468,6 +487,6 @@ for (const fixture of fixtures.providers) {
 assert(providerCount > 0, "no semantic token providers selected");
 if (!dumpTokens) {
   console.log(
-    `Semantic provider integration passed: ${expectationCount} symbols across ${documentCount} documents and ${providerCount} language servers`,
+    `Semantic provider integration passed: ${expectationCount} symbols across ${documentCount} documents and ${providerCount} language servers${lexicalGoVariableCount ? `; ${lexicalGoVariableCount} Go variables intentionally owned by the grammar` : ""}`,
   );
 }

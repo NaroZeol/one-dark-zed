@@ -45,11 +45,10 @@ Tree-sitter syntax trees across every language and corner case. This extension
 therefore maps both standard semantic-token types and shared TextMate scopes to
 the pinned Zed palette.
 
-The extension contributes no language grammar. Installed language providers
-remain responsible for symbol understanding. The manifest enables Go semantic
-highlighting and gopls semantic tokens so qualified packages, types, parameters,
-and fields do not collapse to the same TextMate scope. Generic TextMate mappings
-keep files readable before a provider loads or when a language has no provider.
+Installed language providers remain responsible for symbol understanding. The
+manifest enables Go semantic highlighting and gopls semantic tokens for
+packages, types, parameters, functions, and methods. It also contributes a
+pinned Go grammar for the lexical roles gopls cannot represent accurately.
 
 This boundary is important because semantic-token selectors can match only a
 token type, modifiers, and a language. They cannot see the surrounding
@@ -57,13 +56,31 @@ TextMate scope. For example, gopls classifies both the package in a qualified
 type and the package in a function call as the same unmodified `namespace`.
 The activation layer reads the provider's semantic-token stream and inspects
 the qualified target role: type targets retain the namespace color, while
-function and value targets use the ordinary variable color. This rule is
-provider-driven and language-neutral; it is tested with Go, TypeScript, C++,
-and Rust rather than implemented as separate parsers.
+function and value targets use the ordinary variable color in languages whose
+Zed queries make that distinction. Go follows the same role rule: package
+qualifiers are emphasized before types, but dimmed before functions,
+constants, and other runtime values. The resolver remains provider-driven and
+is tested with Go, TypeScript, C++, and Rust rather than implemented as
+separate full parsers.
 
-The other bounded correction is Go-specific because gopls may classify the
-final package-name segment inside an import string as `namespace`. A small
-lexical decoration restores the whole import literal to the string color.
+Current gopls versions advertise no `property` token and emit struct fields,
+selectors, qualified constants, composite-literal keys, and ordinary variables
+as the same `variable` type. No semantic selector can recover the lost context.
+The shipped default disables only `ui.semanticTokenTypes.variable`; the pinned
+grammar owns those lexical roles while the rest of the gopls semantic stream
+stays enabled. A small decoration still restores import strings when a provider
+places a namespace token inside the literal.
+
+Navigation needs a synchronous first-frame path because VS Code intentionally
+loads TextMate scopes before semantic tokens. The Go grammar classifies
+non-call selector chains immediately, so semantic arrival cannot replace their
+property color with a generic variable color. A linear import scan derives
+explicit aliases and conventional path-basename package names and pre-colors
+package qualifiers according to strong syntax: qualified calls and values use
+the ordinary variable color, while pointer types, declarations, and composite
+literals retain namespace emphasis. Semantic target roles resolve ambiguous
+forms afterward. Decoration results and import analysis remain cached by
+document version and shared across visible panes.
 
 The optional provider harness speaks LSP directly to gopls,
 typescript-language-server, clangd, and rust-analyzer. It verifies Go,
@@ -90,21 +107,21 @@ npm run test:semantic
 - the pinned local VS Code grammar fixture cannot silently lose languages or
   token assertions.
 
-`npm run test:vscode` executes 334 lexical checks across 61 bundled grammars
+`npm run test:vscode` executes 340 lexical checks across 61 bundled grammars
 when `VSCODE_APP_ROOT` points to the matching `resources/app` directory. The
-fixture separately records 20 classifications that cannot be inferred from
-TextMate scopes alone. `npm run test:semantic` executes 223 provider contracts
-across eight documents and four real language servers, plus the focused Go
+fixture separately records 18 classifications that cannot be inferred from
+TextMate scopes alone. `npm run test:semantic` executes 238 provider contracts
+across nine documents and four real language servers, plus the focused Go
 regression fixture. The base test suite also checks 109 custom semantic-token
 type and modifier contracts declared by Pylance, C#, C/C++, rust-analyzer,
 and TOML providers, plus 102 generated role-precedence combinations. Any new
 modifier advertised by a tested language server fails the suite until it is
 classified as a role override or contextual metadata.
 
-The extension contributes no language grammar. Its activation code contains
-the bounded Go import-string correction and the language-neutral qualified
-namespace role resolver described above. If a document has no semantic-token
-provider, both safely leave the normal theme and TextMate fallback untouched.
+The extension contributes the pinned Go grammar and a bounded activation layer
+for import strings, package qualifiers, and the language-neutral qualified
+namespace role resolver. It performs no asynchronous Go property repaint. One
+semantic request is shared by every visible pane displaying the same document.
 
 ## Known limitations
 
@@ -123,7 +140,8 @@ provider, both safely leave the normal theme and TextMate fallback untouched.
 
 1. Inspect the actual semantic token or TextMate scope before changing a color.
 2. Prefer generic selectors where the grammar exposes the right concept.
-3. Do not patch or inject language grammars to emulate semantic analysis.
+3. Keep the Go grammar correction limited to roles gopls cannot express; do not
+   add language patches where the provider already supplies the right role.
 4. Test semantic behavior at the language-provider seam.
 5. Provider tests must consume shipped configuration defaults when editor
    behavior depends on them; do not maintain a separate test-only copy.

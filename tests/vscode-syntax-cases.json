@@ -137,6 +137,7 @@
         "import \"example.com/toolkit/transport/client\"",
         "type LocalRecord sampleapi.ExternalRecord",
         "func greet(name string) string {",
+        "    _ = config.Security.Captcha.Secret",
         "    return user.Profile.Name",
         "}"
       ],
@@ -151,8 +152,12 @@
         { "line": 3, "text": "greet", "style": "function" },
         { "line": 3, "text": "name", "style": "variable" },
         { "line": 3, "text": "string", "style": "type" },
-        { "line": 4, "text": "Profile", "style": "property", "requiresProvider": true },
-        { "line": 4, "text": "Name", "style": "property", "requiresProvider": true }
+        { "line": 5, "text": "Profile", "style": "property" },
+        { "line": 5, "text": "Name", "style": "property" },
+        { "line": 4, "text": "config", "style": "variable" },
+        { "line": 4, "text": "Security", "style": "property" },
+        { "line": 4, "text": "Captcha", "style": "property" },
+        { "line": 4, "text": "Secret", "style": "property" }
       ]
     },
     {

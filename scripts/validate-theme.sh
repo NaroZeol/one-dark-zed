@@ -30,15 +30,15 @@ jq -e '
   and (.languages | length) >= 61
   and ([.languages[].id] | length == (unique | length))
   and ([.languages[].expect | length] | add) >= 354
-  and ([.languages[].expect[] | select(.requiresProvider == true)] | length) == 20
+  and ([.languages[].expect[] | select(.requiresProvider == true)] | length) == 18
 ' "$vscode_fixture_file" >/dev/null
 
 jq -e '
   (.providers | length) == 4
   and ([.providers[].id] | sort) == ["cpp", "go", "rust", "typescript"]
-  and ([.providers[].documents[]] | length) == 8
-  and ([.providers[].documents[].expectations | length] | add) >= 223
-  and ([.providers[].documents[].expectations[] | select(.contextStyle != null)] | length) >= 11
+  and ([.providers[].documents[]] | length) == 9
+  and ([.providers[].documents[].expectations | length] | add) >= 238
+  and ([.providers[].documents[].expectations[] | select(.contextStyle != null)] | length) >= 13
   and ([.providers[].documents[].expectations[] | select(.style == null)] | length) == 0
 ' "$semantic_fixture_file" >/dev/null
 
@@ -47,13 +47,18 @@ actual_upstream_hash="$(jq -S . "$upstream_file" | shasum -a 256 | awk '{print $
 test "$actual_upstream_hash" = "$expected_upstream_hash"
 
 jq -e '
-  (.contributes | has("grammars") | not)
-  and .main == "./src/extension.cjs"
+  .main == "./src/extension.cjs"
   and (.activationEvents | index("onStartupFinished") != null)
+  and (.contributes.grammars | length) == 1
+  and .contributes.grammars[0].language == "go"
+  and .contributes.grammars[0].scopeName == "source.go"
+  and .contributes.grammars[0].path == "./grammars/go.tmLanguage.json"
   and (.contributes.colors | any(.id == "zedOneDark.importStringForeground" and .defaults.dark == "#a1c181"))
+  and (.contributes.colors | any(.id == "zedOneDark.namespaceForeground" and .defaults.dark == "#dce0e5"))
   and (.contributes.colors | any(.id == "zedOneDark.variableForeground" and .defaults.dark == "#acb2be"))
   and .contributes.configurationDefaults["[go]"]["editor.semanticHighlighting.enabled"] == true
   and .contributes.configurationDefaults.gopls["ui.semanticTokens"] == true
+  and .contributes.configurationDefaults.gopls["ui.semanticTokenTypes"].variable == false
 ' "$repo_dir/package.json" >/dev/null
 
 jq -e '

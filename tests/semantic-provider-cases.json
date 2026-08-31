@@ -10,7 +10,8 @@
         "sampleapi/types.go": "package sampleapi\n\ntype AlphaInput struct{}\ntype AlphaOutput struct{}\ntype BetaInput struct{}\ntype BetaOutput struct{}\ntype GammaInput struct{}\ntype GammaOutput struct{}\n\nfunc Build(AlphaInput) AlphaOutput { return AlphaOutput{} }\n",
         "theme.go": "package theme\n\nimport \"example.com/zed-semantics/sampleapi\"\n\nconst MaxRetries = 3\n\ntype LocalAlphaInput sampleapi.AlphaInput\ntype LocalAlphaOutput sampleapi.AlphaOutput\ntype LocalBetaInput sampleapi.BetaInput\ntype LocalBetaOutput sampleapi.BetaOutput\ntype LocalGammaInput sampleapi.GammaInput\ntype LocalGammaOutput sampleapi.GammaOutput\n\ntype holder struct { value int }\n\nfunc (receiver *holder) assign(target, source holder, amount int) int {\n\ttarget.value = source.value\n\treceiver.value = target.value + amount\n\treturn receiver.value\n}\n\nfunc missing(err error) bool {\n\treturn err != nil\n}\n\nfunc builtins(items []int) bool {\n\tempty := len(items) == 0\n\treturn empty || true || false\n}\n\nfunc consume(input sampleapi.AlphaInput) sampleapi.AlphaOutput {\n\treturn sampleapi.Build(input)\n}\n",
         "callable.go": "package theme\n\nfunc makeCleanup() func() { return func() {} }\n\nfunc scheduleCleanup() {\n\tcleanup := makeCleanup()\n\tdefer cleanup()\n}\n\nfunc invoke(callback func()) {\n\tcallback()\n}\n\ntype closer struct { onClose func() }\n\nfunc (value *closer) close() {\n\tvalue.onClose()\n}\n",
-        "format.go": "package theme\n\nimport \"fmt\"\n\nfunc render(value int) string {\n\treturn fmt.Sprintf(\"value=%d\", value)\n}\n"
+        "format.go": "package theme\n\nimport \"fmt\"\n\nfunc render(value int) string {\n\treturn fmt.Sprintf(\"value=%d\", value)\n}\n",
+        "switch.go": "package theme\n\nimport \"net/http\"\n\ntype requestView struct { Method string }\ntype upgrade struct { TargetVersion string; State string }\n\nfunc route(r requestView, data *upgrade) string {\n\tswitch r.Method {\n\tcase http.MethodPost:\n\t\tdata.State = \"post\"\n\tdefault:\n\t\tdata.State = \"other\"\n\t}\n\tdata.TargetVersion = http.MethodGet\n\tresult := upgrade{TargetVersion: data.TargetVersion}\n\treturn result.TargetVersion\n}\n"
       },
       "documents": [
         {
@@ -38,22 +39,23 @@
             { "line": 12, "text": "sampleapi", "type": "namespace", "style": "namespace" },
             { "line": 12, "text": "GammaOutput", "type": "type", "style": "type" },
             { "line": 14, "text": "holder", "type": "type", "modifiers": ["definition"], "style": "type" },
-            { "line": 14, "text": "value", "type": "property", "modifiers": ["definition"], "style": "property" },
-            { "line": 16, "text": "receiver", "type": "parameter", "modifiers": ["definition"], "style": "variable" },
+            { "line": 14, "text": "value", "type": ["property", "variable"], "modifiers": ["definition"], "style": ["property", "variable"] },
+            { "line": 16, "text": "receiver", "type": ["parameter", "variable"], "modifiers": ["definition"], "style": "variable" },
             { "line": 16, "text": "assign", "type": "method", "modifiers": ["definition"], "style": "function" },
             { "line": 16, "text": "target", "type": "parameter", "modifiers": ["definition"], "style": "variable" },
             { "line": 16, "text": "source", "type": "parameter", "modifiers": ["definition"], "style": "variable" },
             { "line": 16, "text": "amount", "type": "parameter", "modifiers": ["definition"], "style": "variable" },
             { "line": 17, "text": "target", "type": "parameter", "style": "variable" },
-            { "line": 17, "text": "value", "occurrence": 1, "type": "property", "style": "property" },
+            { "line": 17, "text": "value", "occurrence": 1, "type": ["property", "variable"], "style": ["property", "variable"] },
             { "line": 17, "text": "source", "type": "parameter", "style": "variable" },
-            { "line": 17, "text": "value", "occurrence": 2, "type": "property", "style": "property" },
-            { "line": 18, "text": "receiver", "type": "parameter", "style": "variable" },
-            { "line": 18, "text": "value", "occurrence": 1, "type": "property", "style": "property" },
+            { "line": 17, "text": "value", "occurrence": 2, "type": ["property", "variable"], "style": ["property", "variable"] },
+            { "line": 18, "text": "receiver", "type": ["parameter", "variable"], "style": "variable" },
+            { "line": 18, "text": "value", "occurrence": 1, "type": ["property", "variable"], "style": ["property", "variable"] },
             { "line": 18, "text": "target", "type": "parameter", "style": "variable" },
-            { "line": 18, "text": "value", "occurrence": 2, "type": "property", "style": "property" },
+            { "line": 18, "text": "value", "occurrence": 2, "type": ["property", "variable"], "style": ["property", "variable"] },
             { "line": 18, "text": "amount", "type": "parameter", "style": "variable" },
-            { "line": 19, "text": "value", "type": "property", "style": "property" },
+            { "line": 19, "text": "receiver", "type": ["parameter", "variable"], "style": "variable" },
+            { "line": 19, "text": "value", "type": ["property", "variable"], "style": ["property", "variable"] },
             { "line": 23, "text": "nil", "type": "variable", "modifiers": ["readonly", "defaultLibrary"], "style": "constant" },
             { "line": 26, "text": "builtins", "type": "function", "modifiers": ["definition"], "style": "function" },
             { "line": 26, "text": "items", "type": "parameter", "modifiers": ["definition"], "style": "variable" },
@@ -87,9 +89,9 @@
             { "line": 10, "text": "callback", "type": "parameter", "modifiers": ["definition", "signature"], "style": "function" },
             { "line": 11, "text": "callback", "type": "parameter", "modifiers": ["signature"], "style": "function" },
             { "line": 14, "text": "closer", "type": "type", "modifiers": ["definition"], "style": "type" },
-            { "line": 14, "text": "onClose", "type": "property", "modifiers": ["definition", "signature"], "style": "function" },
+            { "line": 14, "text": "onClose", "type": ["property", "variable"], "modifiers": ["definition", "signature"], "style": "function" },
             { "line": 16, "text": "close", "type": "method", "modifiers": ["definition"], "style": "function" },
-            { "line": 17, "text": "onClose", "type": "property", "modifiers": ["signature"], "style": "function" }
+            { "line": 17, "text": "onClose", "type": ["property", "variable"], "modifiers": ["signature"], "style": "function" }
           ]
         },
         {
@@ -102,6 +104,26 @@
             { "line": 6, "text": "Sprintf", "type": "function", "style": "function" },
             { "line": 6, "text": "%d", "type": "string", "modifiers": ["format"], "style": "string.escape" },
             { "line": 6, "text": "value", "type": "parameter", "style": "variable" }
+          ]
+        },
+        {
+          "path": "switch.go",
+          "languageId": "go",
+          "expectations": [
+            { "line": 5, "text": "Method", "type": ["property", "variable"], "modifiers": ["definition"], "style": ["property", "variable"] },
+            { "line": 6, "text": "TargetVersion", "type": ["property", "variable"], "modifiers": ["definition"], "style": ["property", "variable"] },
+            { "line": 6, "text": "State", "type": ["property", "variable"], "modifiers": ["definition"], "style": ["property", "variable"] },
+            { "line": 9, "text": "Method", "type": ["property", "variable"], "style": ["property", "variable"] },
+            { "line": 10, "text": "http", "type": "namespace", "style": "namespace", "contextStyle": "variable" },
+            { "line": 10, "text": "MethodPost", "type": ["property", "variable"], "style": ["property", "variable"] },
+            { "line": 11, "text": "State", "type": ["property", "variable"], "style": ["property", "variable"] },
+            { "line": 13, "text": "State", "type": ["property", "variable"], "style": ["property", "variable"] },
+            { "line": 15, "text": "TargetVersion", "type": ["property", "variable"], "style": ["property", "variable"] },
+            { "line": 15, "text": "http", "type": "namespace", "style": "namespace", "contextStyle": "variable" },
+            { "line": 15, "text": "MethodGet", "type": ["property", "variable"], "style": ["property", "variable"] },
+            { "line": 16, "text": "TargetVersion", "occurrence": 1, "type": ["property", "variable"], "style": ["property", "variable"] },
+            { "line": 16, "text": "TargetVersion", "occurrence": 2, "type": ["property", "variable"], "style": ["property", "variable"] },
+            { "line": 17, "text": "TargetVersion", "type": ["property", "variable"], "style": ["property", "variable"] }
           ]
         }
       ]

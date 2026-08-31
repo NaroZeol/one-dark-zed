@@ -38,15 +38,26 @@ function decodeSemanticTokens(data, legend) {
     const deltaStart = data[index + 1];
     const length = data[index + 2];
     const type = legend.tokenTypes[data[index + 3]];
+    const modifierBits = data[index + 4];
     line += deltaLine;
     start = deltaLine === 0 ? start + deltaStart : deltaStart;
-    if (type) tokens.push({ line, start, length, type });
+    if (type) {
+      tokens.push({
+        line,
+        start,
+        length,
+        type,
+        modifiers: (legend.tokenModifiers ?? []).filter(
+          (_, modifierIndex) => modifierBits & 2 ** modifierIndex,
+        ),
+      });
+    }
   }
 
   return tokens;
 }
 
-function findExpressionNamespaceRanges(source, semanticTokens) {
+function findExpressionNamespaceRanges(source, semanticTokens, languageId) {
   const lines = source.split(/\r?\n/);
   const tokenAt = new Map(
     semanticTokens.map((token) => [`${token.line}:${token.start}`, token]),
@@ -70,7 +81,11 @@ function findExpressionNamespaceRanges(source, semanticTokens) {
     visiting.add(key);
 
     const target = qualifiedTarget(token);
-    let result = false;
+    // The shipped Go configuration deliberately suppresses gopls `variable`
+    // tokens because they erase field/property scopes. A missing qualified
+    // target in Go therefore represents a runtime value; type and callable
+    // targets still have semantic tokens and take the normal branch below.
+    let result = languageId === "go" && !target;
     if (target) {
       result = NAMESPACE_TYPES.has(target.type)
         ? resolvesRuntimeValue(target, visiting)

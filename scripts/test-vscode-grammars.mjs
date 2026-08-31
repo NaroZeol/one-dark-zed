@@ -52,6 +52,9 @@ for (const path of await grammarFiles(resolve(appRoot, "extensions"))) {
     // Some extension resources resemble TextMate files but are not standalone grammars.
   }
 }
+// The extension deliberately owns Go lexical classification so member chains
+// have their final Zed colors before gopls semantic tokens arrive.
+grammarPaths.set("source.go", resolve(repoDir, "grammars/go.tmLanguage.json"));
 
 const rawTheme = {
   settings: [

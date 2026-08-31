@@ -25,13 +25,27 @@ theme, with a matching file icon theme and carefully aligned syntax colors.
 | Color theme | **Zed One Dark** | Workbench, editor, terminal, semantic-token, and TextMate colors generated from a pinned Zed One Dark palette. |
 | File icon theme | **Onedark Zed Icons** (`onedark-zed-icons`) | Icons for common languages, tools, and folders. |
 
-The extension enables semantic highlighting for Go and gopls so packages,
-types, parameters, and fields receive the classifications consumed by the
-theme. A provider-driven context layer keeps type qualifiers namespace-colored
-while runtime function and value qualifiers use the normal variable color. A
-small Go-only decoration keeps import paths uniformly string-colored when gopls
-emits a namespace token inside the import literal. TextMate scopes remain the
-fallback before a provider loads or where none is available.
+The extension keeps semantic highlighting enabled for Go, including packages,
+types, parameters, functions, and methods. Current gopls versions do not expose
+a `property` token and classify both ordinary variables and fields such as
+`config.Security.Captcha.Secret` as `variable`. The shipped gopls default
+therefore disables only that lossy token type; all other semantic roles remain
+enabled.
+
+A pinned Go TextMate grammar owns variables, struct fields, selectors,
+qualified constants, and composite-literal keys. Member chains consequently
+start with their final Zed property color on the first frame instead of being
+recolored after navigation. The activation layer remains limited to import
+strings, synchronous package-qualifier previews, and the language-neutral
+namespace-role correction used by other providers. It no longer applies an
+asynchronous Go property decoration.
+
+Package qualifiers follow the role of the symbol they introduce. In Go,
+`dal.Instance` and `dal.FindInstanceOption{}` emphasize `dal` because the
+qualified symbols are types, while `dal.FindInstanceById(...)` renders `dal`
+as an ordinary variable and leaves the callable itself emphasized. Strong
+lexical forms are classified on the first frame; semantic tokens provide the
+final answer for ambiguous contexts.
 
 ## Install
 
@@ -104,13 +118,15 @@ npm run sync:theme
 npm test
 ```
 
-The pinned VS Code 1.135.0 TextMate integration suite verifies 334 lexical
-tokens across 61 bundled grammars and records 20 classifications that cannot
+The pinned VS Code 1.135.0 TextMate integration suite verifies 340 lexical
+tokens across 61 bundled grammars and records 18 classifications that cannot
 be derived from those grammars alone. The provider suite separately verifies
-223 real semantic symbols across Go, TypeScript/JavaScript, C/C++, and Rust,
+238 provider contracts across Go, TypeScript/JavaScript, C/C++, and Rust,
 including declaration/reference pairs and properties on both sides of
-assignments. It also checks namespace qualifiers in both type and runtime-value
-contexts. The Go test consumes the same gopls defaults shipped in the
+assignments. Go variable-shaped tokens are intentionally absent from the gopls
+stream and covered by the first-frame grammar suite instead. It also checks
+namespace qualifiers in both type and runtime-value contexts. The Go test
+consumes the same gopls defaults shipped in the
 extension manifest so test and editor behavior cannot silently diverge. Point
 the TextMate suite at that VS Code installation's `resources/app` directory.
 The provider suite requires `gopls`, `clangd`, and `rust-analyzer` on `PATH`:

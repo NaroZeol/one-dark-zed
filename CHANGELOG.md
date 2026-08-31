@@ -12,7 +12,24 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 ## [Unreleased]
 
-Nothing yet.
+### Fixed
+
+- Restored the semantic-rich implementation while removing the Go member-color
+  swap after navigation: gopls now leaves only `variable` tokens to the pinned
+  grammar, while types, functions, methods, parameters, and namespaces remain
+  semantic.
+- Made `config.Security.Captcha.Secret` and other non-call selector chains use
+  their final Zed property color on the first frame.
+- Removed the asynchronous Go property decoration and its extra repaint; the
+  grammar now owns fields, selectors, qualified constants, and literal keys.
+- Made Go package qualifiers follow the qualified symbol's role: they retain
+  namespace emphasis before types and use the ordinary variable color before
+  functions, constants, and runtime values.
+- Added a first-frame member-chain regression and verified that the production
+  gopls configuration emits no competing `variable` tokens.
+- Coalesced semantic correction requests per document and broadcast each result
+  to every visible pane, preventing split views of the same Go file from
+  cancelling one another's coloring update.
 
 ## [1.3.0] - 2026-08-28
 

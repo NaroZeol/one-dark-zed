@@ -11,8 +11,8 @@ function token(line, start, text, type) {
   return { line, start, length: text.length, type };
 }
 
-function selectedText(source, tokens) {
-  return findExpressionNamespaceRanges(source, tokens).map(
+function selectedText(source, tokens, languageId) {
+  return findExpressionNamespaceRanges(source, tokens, languageId).map(
     ({ line, start, end }) => source.split("\n")[line].slice(start, end),
   );
 }
@@ -58,6 +58,20 @@ assert.deepEqual(selectedText(source, semanticTokens), [
   "tree",
   "branch",
 ]);
+assert.deepEqual(
+  selectedText(source, semanticTokens, "go"),
+  ["samplepkg", "samplepkg", "tree", "branch"],
+  "Go package qualifiers must follow the qualified target role",
+);
+assert.deepEqual(
+  selectedText(
+    source,
+    semanticTokens.filter(({ type }) => type !== "variable"),
+    "go",
+  ),
+  ["samplepkg", "samplepkg", "tree", "branch"],
+  "suppressed gopls variable targets must still classify Go qualifiers as runtime values",
+);
 
 const encoded = new Uint32Array([
   0, 2, 4, 0, 0,
@@ -67,9 +81,9 @@ const encoded = new Uint32Array([
 assert.deepEqual(
   decodeSemanticTokens(encoded, { tokenTypes: ["namespace", "function"] }),
   [
-    { line: 0, start: 2, length: 4, type: "namespace" },
-    { line: 0, start: 8, length: 5, type: "function" },
-    { line: 1, start: 3, length: 6, type: "namespace" },
+    { line: 0, start: 2, length: 4, type: "namespace", modifiers: [] },
+    { line: 0, start: 8, length: 5, type: "function", modifiers: [] },
+    { line: 1, start: 3, length: 6, type: "namespace", modifiers: [] },
   ],
 );
 

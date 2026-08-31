@@ -32,6 +32,7 @@
   },
   "main": "./src/extension.cjs",
   "activationEvents": [
+    "onLanguage:go",
     "onStartupFinished"
   ],
   "categories": [
@@ -46,9 +47,9 @@
   ],
   "scripts": {
     "sync:theme": "bash scripts/apply-zed-syntax-map.sh",
-    "test": "bash scripts/validate-theme.sh && node scripts/test-theme-token-colors.mjs && node scripts/test-go-import-decorations.mjs && node scripts/test-semantic-namespace-context.mjs && node scripts/test-semantic-token-contracts.mjs && node scripts/test-semantic-role-model.mjs",
+    "test": "bash scripts/validate-theme.sh && node scripts/test-theme-token-colors.mjs && node scripts/test-go-first-frame.mjs && node scripts/test-go-import-decorations.mjs && node scripts/test-semantic-namespace-context.mjs && node scripts/test-semantic-token-contracts.mjs && node scripts/test-semantic-role-model.mjs && node scripts/test-package-contents.mjs",
     "test:textmate": "node scripts/test-theme-token-colors.mjs",
-    "test:semantic:go": "node scripts/test-go-semantic-tokens.mjs",
+    "test:semantic:go": "node scripts/test-semantic-providers.mjs --provider=go && node scripts/test-go-semantic-tokens.mjs",
     "test:semantic": "node scripts/test-semantic-providers.mjs && node scripts/test-go-semantic-tokens.mjs",
     "test:vscode": "node scripts/test-vscode-grammars.mjs",
     "test:all": "npm test && npm run test:semantic && npm run test:vscode",
@@ -71,6 +72,13 @@
         "path": "./icons/onedark-zed-icon-theme.json"
       }
     ],
+    "grammars": [
+      {
+        "language": "go",
+        "scopeName": "source.go",
+        "path": "./grammars/go.tmLanguage.json"
+      }
+    ],
     "colors": [
       {
         "id": "zedOneDark.importStringForeground",
@@ -83,8 +91,18 @@
         }
       },
       {
+        "id": "zedOneDark.namespaceForeground",
+        "description": "Foreground used to pre-color Go package qualifiers before semantic tokens arrive.",
+        "defaults": {
+          "dark": "#dce0e5",
+          "light": "#dce0e5",
+          "highContrast": "#dce0e5",
+          "highContrastLight": "#dce0e5"
+        }
+      },
+      {
         "id": "zedOneDark.variableForeground",
-        "description": "Foreground used for namespace and module qualifiers that carry runtime values.",
+        "description": "Foreground used for runtime namespace and module qualifiers in languages where Zed colors them by target role.",
         "defaults": {
           "dark": "#acb2be",
           "light": "#acb2be",
@@ -98,7 +116,10 @@
         "editor.semanticHighlighting.enabled": true
       },
       "gopls": {
-        "ui.semanticTokens": true
+        "ui.semanticTokens": true,
+        "ui.semanticTokenTypes": {
+          "variable": false
+        }
       }
     }
   },
