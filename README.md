@@ -63,7 +63,7 @@ Download a `.vsix` from the repository releases, then run **Extensions: Install
 from VSIX…** in the Command Palette. From a terminal:
 
 ```powershell
-code --install-extension .\zed-onedark-vscode-1.3.0.vsix --force
+code --install-extension .\zed-onedark-vscode-1.3.1.vsix --force
 ```
 
 To build the package yourself:
@@ -71,7 +71,7 @@ To build the package yourself:
 ```sh
 npm ci
 npm test
-npm run package -- --out zed-onedark-vscode-1.3.0.vsix
+npm run package -- --out zed-onedark-vscode-1.3.1.vsix
 ```
 
 For local development on a machine with both the `code` and `trae` CLIs,
